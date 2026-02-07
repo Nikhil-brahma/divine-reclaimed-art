@@ -20,7 +20,7 @@ const Navbar = () => {
             पुनर्वसु
           </span>
           <span className="font-display text-xs tracking-[0.3em] uppercase text-muted-foreground">
-            Punarvasu
+            Punarvsu
           </span>
         </a>
 

@@ -52,7 +52,7 @@ const StorySection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="font-body text-xs tracking-[0.4em] uppercase text-gold mb-4 block">
-              The Punarvasu Story
+              The Punarvsu Story
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-light mb-6 leading-tight">
               Where Devotion Meets
@@ -67,7 +67,7 @@ const StorySection = () => {
             <p className="font-body text-ivory/70 leading-relaxed mb-10">
               Our skilled artisans carefully clean, sanitize, and transform these vibrant, intricate
               textiles into stunning, one-of-a-kind bags and accessories. Each piece tells a story
-              of devotion, faith, and renewal — the essence of <strong className="text-gold">Punarvasu</strong>.
+              of devotion, faith, and renewal — the essence of <strong className="text-gold">Punarvsu</strong>.
             </p>
 
             <div className="space-y-6">
