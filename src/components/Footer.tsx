@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <span className="font-display text-3xl font-bold block mb-1">पुनर्वसु</span>
             <span className="font-display text-sm tracking-[0.3em] uppercase text-ivory/60 block mb-4">
-              Punarvasu
+              Punarvsu
             </span>
             <p className="font-body text-sm text-ivory/50 leading-relaxed">
               Transforming sacred temple textiles into extraordinary handcrafted luxury.
@@ -37,8 +37,8 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-lg mb-4 text-gold">Connect</h4>
             <div className="flex flex-col gap-3">
-              <a href="mailto:namaste@punarvasu.in" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
-                <Mail size={14} /> namaste@punarvasu.in
+              <a href="mailto:namaste@punarvsu.in" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
+                <Mail size={14} /> namaste@punarvsu.in
               </a>
               <span className="flex items-center gap-3 font-body text-sm text-ivory/50">
                 <Phone size={14} /> +91 98XXX XXXXX
@@ -54,7 +54,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-body text-xs text-ivory/30">
-            © 2026 Punarvasu. All rights reserved. Crafted with devotion.
+            © 2026 Punarvsu. All rights reserved. Crafted with devotion.
           </p>
           <div className="flex gap-6">
             {["Privacy", "Terms", "Shipping"].map((link) => (
