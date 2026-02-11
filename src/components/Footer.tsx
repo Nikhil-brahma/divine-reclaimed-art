@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import logo from "@/assets/logo-punarvsu.png";
 
 const Footer = () => {
   return (
@@ -7,10 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <span className="font-display text-3xl font-bold block mb-1">पुनर्वसु</span>
-            <span className="font-display text-sm tracking-[0.3em] uppercase text-ivory/60 block mb-4">
-              Punarvsu
-            </span>
+            <img src={logo} alt="Punarvsu" className="h-16 w-auto mb-4 brightness-0 invert opacity-80" />
             <p className="font-body text-sm text-ivory/50 leading-relaxed">
               Transforming sacred temple textiles into extraordinary handcrafted luxury.
               Carry the divine with you.
