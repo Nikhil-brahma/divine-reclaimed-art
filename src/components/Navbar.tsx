@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag } from "lucide-react";
-
+import { Menu, X } from "lucide-react";
+import { CartDrawer } from "@/components/CartDrawer";
+import logo from "@/assets/logo-punarvsu.png";
 const navLinks = [
   { label: "Collections", href: "#collections" },
   { label: "Our Story", href: "#story" },
@@ -15,13 +16,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#" className="flex flex-col items-start">
-          <span className="font-display text-2xl md:text-3xl font-bold tracking-wide text-foreground">
-            पुनर्वसु
-          </span>
-          <span className="font-display text-xs tracking-[0.3em] uppercase text-muted-foreground">
-            Punarvsu
-          </span>
+        <a href="#" className="flex items-center">
+          <img src={logo} alt="Punarvsu" className="h-12 md:h-14 w-auto" />
         </a>
 
         {/* Desktop Nav */}
@@ -35,13 +31,7 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <a
-            href="#collections"
-            className="flex items-center gap-2 bg-gradient-saffron text-primary-foreground px-5 py-2.5 rounded-sm font-body text-sm tracking-wider uppercase hover:opacity-90 transition-opacity"
-          >
-            <ShoppingBag size={16} />
-            Shop Now
-          </a>
+          <CartDrawer />
         </div>
 
         {/* Mobile Toggle */}
@@ -74,14 +64,9 @@ const Navbar = () => {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#collections"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 bg-gradient-saffron text-primary-foreground px-5 py-3 rounded-sm font-body text-sm tracking-wider uppercase mt-2"
-              >
-                <ShoppingBag size={16} />
-                Shop Now
-              </a>
+              <div className="mt-2">
+                <CartDrawer />
+              </div>
             </div>
           </motion.div>
         )}
