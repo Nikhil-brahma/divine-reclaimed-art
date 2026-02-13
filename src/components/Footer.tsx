@@ -17,9 +17,13 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-lg mb-4 text-gold">Explore</h4>
             <div className="flex flex-col gap-3">
-              {["Collections", "Our Story", "Process", "Gift Cards"].map(link => <a key={link} href={`#${link.toLowerCase().replace(" ", "-")}`} className="font-body text-sm text-ivory/50 hover:text-gold transition-colors">
+              {["Collections", "Our Story", "Process", "Blog", "FAQ"].map(link => {
+                const href = link === "Blog" ? "/blog" : link === "FAQ" ? "#faq" : `#${link.toLowerCase().replace(" ", "-")}`;
+                const Tag = link === "Blog" ? "a" : "a";
+                return <a key={link} href={href} className="font-body text-sm text-ivory/50 hover:text-gold transition-colors">
                   {link}
-                </a>)}
+                </a>;
+              })}
             </div>
           </div>
 
@@ -30,11 +34,11 @@ const Footer = () => {
               <a href="mailto:namaste@punarvsu.in" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
                 <Mail size={14} /> namaste@punarvsu.in
               </a>
-              <span className="flex items-center gap-3 font-body text-sm text-ivory/50">
-                <Phone size={14} /> +91 98XXX XXXXX
-              </span>
-              <span className="flex items-center gap-3 font-body text-sm text-ivory/50">
-                <MapPin size={14} /> Vrindavan, Uttar Pradesh, India
+              <a href="tel:09220464425" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
+                <Phone size={14} /> 09220464425
+              </a>
+              <span className="flex items-start gap-3 font-body text-sm text-ivory/50">
+                <MapPin size={14} className="mt-0.5 shrink-0" /> Basement No. 35, Vinoba Kunj, Rajapur Market, Razapur, Sector 9, Rohini, Delhi — 110085
               </span>
             </div>
           </div>

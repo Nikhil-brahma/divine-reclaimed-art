@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { CartDrawer } from "@/components/CartDrawer";
 import logo from "@/assets/logo-punarvsu.png";
 const navLinks = [{
@@ -10,8 +11,11 @@ const navLinks = [{
   label: "Our Story",
   href: "#story"
 }, {
-  label: "Process",
-  href: "#process"
+  label: "Blog",
+  href: "/blog"
+}, {
+  label: "FAQ",
+  href: "#faq"
 }, {
   label: "Contact",
   href: "#contact"
@@ -26,9 +30,15 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => <a key={link.label} href={link.href} className="font-body text-sm tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors duration-300">
+          {navLinks.map((link) => link.href.startsWith("/") ? (
+            <Link key={link.label} to={link.href} className="font-body text-sm tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors duration-300">
               {link.label}
-            </a>)}
+            </Link>
+          ) : (
+            <a key={link.label} href={link.href} className="font-body text-sm tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors duration-300">
+              {link.label}
+            </a>
+          ))}
           <CartDrawer />
         </div>
 
@@ -51,9 +61,15 @@ const Navbar = () => {
         height: 0
       }} className="md:hidden bg-background border-b border-border overflow-hidden">
             <div className="px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) => <a key={link.label} href={link.href} onClick={() => setIsOpen(false)} className="font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors">
+              {navLinks.map((link) => link.href.startsWith("/") ? (
+                <Link key={link.label} to={link.href} onClick={() => setIsOpen(false)} className="font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors">
                   {link.label}
-                </a>)}
+                </Link>
+              ) : (
+                <a key={link.label} href={link.href} onClick={() => setIsOpen(false)} className="font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors">
+                  {link.label}
+                </a>
+              ))}
               <div className="mt-2">
                 <CartDrawer />
               </div>
