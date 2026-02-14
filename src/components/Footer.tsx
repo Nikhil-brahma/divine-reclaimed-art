@@ -38,7 +38,7 @@ const Footer = () => {
                 <Phone size={14} /> 09220464425
               </a>
               <span className="flex items-start gap-3 font-body text-sm text-ivory/50">
-                <MapPin size={14} className="mt-0.5 shrink-0" /> Basement No. 35, Vinoba Kunj, Rajapur Market, Razapur, Sector 9, Rohini, Delhi — 110085
+                <MapPin size={14} className="mt-0.5 shrink-0" /> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi — 110085
               </span>
             </div>
           </div>
