@@ -4,7 +4,7 @@ const steps = [
   {
     number: "01",
     title: "Collection",
-    description: "We partner with devotees and temples who generously donate their used Bhagwan Ke Kapde.",
+    description: "We partner with devotees and temples like Khatushyam Delhi Dham who generously donate their retired Bhagwan Ki Poshak.",
   },
   {
     number: "02",

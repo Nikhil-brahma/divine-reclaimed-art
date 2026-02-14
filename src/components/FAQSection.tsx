@@ -10,15 +10,15 @@ import {
 const faqs = [
   {
     q: "What is 'Bhagwan ki Poshak' and how do you source it?",
-    a: "Bhagwan ki Poshak refers to the sacred garments that adorn deities in temples across India. After a certain period, these garments are ceremonially retired. We collect them respectfully from 47+ temple partnerships and individual devotees, ensuring every fabric is treated with reverence throughout our process.",
+    a: "Bhagwan ki Poshak refers to the sacred garments that adorn deities in temples across India. After a certain period, these garments are ceremonially retired. We collect them respectfully from our temple partners — most prominently Khatushyam Delhi Dham — and from individual devotees, ensuring every fabric is treated with reverence throughout our process.",
   },
   {
     q: "Are your products truly handcrafted?",
-    a: "Absolutely. Every Punarvsu product is 100% handcrafted by skilled artisans in our Vrindavan workshop. Each piece takes between 8-15 hours of dedicated work — from sanitization and design cutting to stitching and quality checks. No two products are identical because each sacred textile is unique.",
+    a: "Absolutely. Every Punarvsu product is 100% handcrafted by skilled artisans at our manufacturing unit in Rohini, Delhi, managed by Sampurna NGO — an organisation with over 35 years of dedication to social work. Under the expert guidance of our head artisans Kiran Mam and Samar Mam, each piece takes between 8–15 hours of dedicated work — from sanitisation and design cutting to stitching and quality checks. No two products are identical because each sacred textile is unique.",
   },
   {
-    q: "How do you sanitize the temple fabrics?",
-    a: "We follow a rigorous 3-step sanitization process: UV sterilization, eco-friendly fabric cleaning with plant-based solutions, and steam treatment. This ensures every product is hygienically perfect while preserving the sacred essence and vibrant colors of the original textiles.",
+    q: "How do you sanitise the temple fabrics?",
+    a: "We follow a rigorous 3-step sanitisation process: UV sterilisation, eco-friendly fabric cleaning with plant-based solutions, and steam treatment. This ensures every product is hygienically perfect while preserving the sacred essence and vibrant colours of the original textiles.",
   },
   {
     q: "Can I request a custom bag from a specific temple's fabric?",
@@ -34,11 +34,11 @@ const faqs = [
   },
   {
     q: "How does buying from Punarvsu help the environment?",
-    a: "Every purchase diverts sacred textiles from landfills, supports our zero-waste mission, and funds artisan livelihoods. We've already saved 3,200+ kg of temple cloth from disposal, and each bag reduces textile waste while honoring tradition — true circular fashion with purpose.",
+    a: "Every purchase diverts sacred textiles from landfills, supports our zero-waste mission, and funds artisan livelihoods through Sampurna NGO. We've already saved 3,200+ kg of temple cloth from disposal, and each bag reduces textile waste while honouring tradition — true circular fashion with purpose.",
   },
   {
     q: "Do you offer wholesale or bulk orders for gifting?",
-    a: "Yes! We offer special wholesale pricing for corporate gifting, wedding favors, and festive bulk orders. Our team can customize packaging and add personalized messages. Contact us at namaste@punarvsu.in or call 09220464425 for wholesale inquiries.",
+    a: "Yes! We offer special wholesale pricing for corporate gifting, wedding favours, and festive bulk orders. Our team can customise packaging and add personalised messages. Contact us at namaste@punarvsu.in or call 09220464425 for wholesale inquiries.",
   },
 ];
 

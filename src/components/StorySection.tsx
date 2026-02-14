@@ -36,7 +36,7 @@ const StorySection = () => {
             <div className="aspect-[4/5] rounded-sm overflow-hidden">
               <img
                 src={artisanImg}
-                alt="Artisan handcrafting a sacred bag"
+                alt="Artisan handcrafting a sacred bag at Punarvsu workshop"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -62,12 +62,14 @@ const StorySection = () => {
             <p className="font-body text-ivory/70 leading-relaxed mb-6">
               The Bhagwan Ki Poshak is more than fabric — it is imbued with the energy of countless
               prayers, rituals, and acts of devotion. When these sacred clothes are replaced at
-              temples, instead of being discarded, we give them a second life.
+              temples like Khatushyam Delhi Dham, instead of being discarded, we give them a second life.
             </p>
             <p className="font-body text-ivory/70 leading-relaxed mb-10">
-              Our skilled artisans carefully clean, sanitize, and transform these vibrant, intricate
-              textiles into stunning, one-of-a-kind bags and accessories. Each piece tells a story
-              of devotion, faith, and renewal — the essence of <strong className="text-gold">Punarvsu</strong>.
+              At our manufacturing unit in Rohini, Delhi — managed by <strong className="text-gold">Sampurna NGO</strong>, 
+              an organisation with over 35 years in social work — our head artisans <strong className="text-gold">Kiran Mam</strong> and 
+              <strong className="text-gold"> Samar Mam</strong> lead a team of skilled craftswomen who carefully clean, sanitise, and 
+              transform these vibrant, intricate textiles into stunning, one-of-a-kind bags and accessories. 
+              Each piece tells a story of devotion, faith, and renewal — the essence of <strong className="text-gold">Punarvsu</strong>.
             </p>
 
             <div className="space-y-6">
