@@ -13,7 +13,7 @@ const stats: StatItem[] = [
   { value: 12000, suffix: "+", label: "Blessings Carried", sublabel: "Sacred garments transformed into timeless pieces", icon: "🙏" },
   { value: 850, suffix: "+", label: "Artisan Hours", sublabel: "Handcrafted with devotion in every stitch", icon: "✋" },
   { value: 3200, suffix: " kg", label: "Sacred Cloth Collected", sublabel: "Temple textiles saved from disposal", icon: "🧵" },
-  { value: 47, suffix: "", label: "Temple Partnerships", sublabel: "Holy sites contributing to circular fashion", icon: "🕉️" },
+  { value: 47, suffix: "+", label: "Temple Partnerships", sublabel: "Including Khatushyam Delhi Dham and more", icon: "🕉️" },
   { value: 5000, suffix: "+", label: "Devotees Connected", sublabel: "Carrying the divine in their everyday", icon: "💛" },
   { value: 0, suffix: "%", label: "Zero Waste", sublabel: "Every thread finds purpose, nothing is discarded", icon: "♻️" },
 ];
