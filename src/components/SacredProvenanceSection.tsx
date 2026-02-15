@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const provenanceFeatures = [
   {
     icon: Fingerprint,
-    title: "One-of-One Origin",
+    title: "Rooted in Devotion",
     description:
-      "Every Punarvasu piece is born from a unique sacred textile — no two bags share the same fabric. Your piece carries a story that belongs only to you.",
+      "Every Punarvasu piece is crafted from authentic sacred textiles — fabrics that have witnessed prayers, rituals, and devotion. Each carries a spiritual energy no factory can replicate.",
     accent: "from-primary to-accent",
   },
   {
