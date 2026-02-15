@@ -19,9 +19,9 @@ const provenanceFeatures = [
   },
   {
     icon: Heart,
-    title: "Blessing Inside™",
+    title: "Blessed by Intention™",
     description:
-      "Hidden within every lining is a hand-stamped mantra by our artisans — a silent blessing for the one who carries it. Discovered only by you.",
+      "Every Punarvasu piece is crafted with reverence and intention — our artisans begin each creation with a moment of prayer. The devotion woven into the original textile lives on in what you carry.",
     accent: "from-accent to-primary",
   },
   {
