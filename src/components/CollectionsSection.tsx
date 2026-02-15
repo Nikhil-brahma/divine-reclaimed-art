@@ -89,11 +89,11 @@ const CollectionsSection = () => {
                 transition={{ duration: 0.8 }}
                 className="grid md:grid-cols-2 gap-0 mb-8 rounded-sm overflow-hidden shadow-sacred bg-card"
               >
-                <Link to={`/product/${products[0].node.handle}`} className="aspect-square md:aspect-auto overflow-hidden">
+                <Link to={`/product/${products[0].node.handle}`} className="aspect-[4/5] md:aspect-auto overflow-hidden">
                   <img
                     src={products[0].node.images.edges[0]?.node.url || "/placeholder.svg"}
                     alt={products[0].node.images.edges[0]?.node.altText || products[0].node.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                   />
                 </Link>
                 <div className="flex flex-col justify-center p-8 md:p-16">
@@ -131,11 +131,11 @@ const CollectionsSection = () => {
                   className="group bg-card rounded-sm overflow-hidden shadow-sm hover:shadow-sacred transition-shadow duration-500"
                 >
                   <Link to={`/product/${product.node.handle}`} className="block">
-                    <div className="aspect-square overflow-hidden">
+                    <div className="aspect-[3/4] overflow-hidden bg-muted">
                       <img
                         src={product.node.images.edges[0]?.node.url || "/placeholder.svg"}
                         alt={product.node.images.edges[0]?.node.altText || product.node.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                         loading="lazy"
                       />
                     </div>
