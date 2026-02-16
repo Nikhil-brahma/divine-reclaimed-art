@@ -3,20 +3,20 @@ import { ArrowRight } from "lucide-react";
 
 const comparisons = [
   {
-    ordinary: "Mass-produced in factories",
-    punarvasu: "Handcrafted from sacred temple textiles",
+    ordinary: "Made in a factory, thousands at a time",
+    punarvsu: "Handcrafted one by one from sacred temple cloth",
   },
   {
-    ordinary: "Made by machines, forgotten in closets",
-    punarvasu: "Made with devotion, cherished for generations",
+    ordinary: "Sits in your closet, forgotten after a month",
+    punarvsu: "Gets compliments everywhere — and sparks real conversations",
   },
   {
-    ordinary: "A brand logo you wear for status",
-    punarvasu: "A blessing you carry for purpose",
+    ordinary: "A logo you wear to fit in",
+    punarvsu: "A story you carry because it matters to you",
   },
   {
-    ordinary: "Adds to landfill waste",
-    punarvasu: "Gives sacred cloth a second life",
+    ordinary: "Ends up in a landfill eventually",
+    punarvsu: "Gives beautiful fabric a second chance at life",
   },
 ];
 
@@ -31,12 +31,12 @@ const WhyYouDeserveSection = () => {
           className="text-center mb-16"
         >
           <span className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4 block">
-            The Choice Is Clear
+            Think About It
           </span>
           <h2 className="font-display text-4xl md:text-6xl font-light text-foreground mb-4">
-            You Don't Need Another Bag.
+            You Already Have Enough Bags.
             <br />
-            <span className="italic text-gradient-gold">You Deserve a Story.</span>
+            <span className="italic text-gradient-gold">This One's Different.</span>
           </h2>
           <div className="ornament-line w-20 mx-auto mt-6" />
         </motion.div>
@@ -47,12 +47,12 @@ const WhyYouDeserveSection = () => {
             {/* Headers */}
             <div className="p-4 md:p-6 bg-muted text-center border-b border-r border-border">
               <span className="font-body text-xs tracking-wider uppercase text-muted-foreground">
-                Ordinary Bags
+                Regular Bags
               </span>
             </div>
             <div className="p-4 md:p-6 bg-gradient-sacred text-center border-b border-border">
               <span className="font-body text-xs tracking-wider uppercase text-accent">
-                Punarvasu
+                Punarvsu
               </span>
             </div>
 
@@ -73,7 +73,7 @@ const WhyYouDeserveSection = () => {
                 </div>
                 <div className="p-4 md:p-6 border-b border-border flex items-center justify-center text-center bg-card">
                   <p className="font-body text-sm text-foreground font-medium">
-                    ✨ {row.punarvasu}
+                    ✨ {row.punarvsu}
                   </p>
                 </div>
               </motion.div>
@@ -89,14 +89,14 @@ const WhyYouDeserveSection = () => {
           className="text-center max-w-2xl mx-auto"
         >
           <p className="font-display text-xl md:text-2xl text-foreground/80 italic mb-8 leading-relaxed">
-            Somewhere, a sacred cloth that witnessed thousands of prayers is waiting to become yours.
-            Will you let it pass you by?
+            Right now, a piece of sacred cloth — one that's been part of someone's prayers
+            for years — is waiting to become something you'll love carrying.
           </p>
           <a
             href="#collections"
             className="inline-flex items-center gap-2 bg-gradient-saffron text-primary-foreground px-10 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-sacred"
           >
-            Find Your Sacred Piece <ArrowRight className="w-4 h-4" />
+            Browse the Collection <ArrowRight className="w-4 h-4" />
           </a>
         </motion.div>
       </div>

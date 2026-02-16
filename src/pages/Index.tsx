@@ -10,21 +10,27 @@ import ProcessSection from "@/components/ProcessSection";
 import ImpactSection from "@/components/ImpactSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead />
+      <StructuredData />
       <Navbar />
-      <HeroSection />
-      <CollectionsSection />
-      <SacredProvenanceSection />
-      <SocialProofSection />
-      <WhyYouDeserveSection />
-      <StorySection />
-      <ProcessSection />
-      <UrgencySection />
-      <ImpactSection />
-      <FAQSection />
+      <main>
+        <HeroSection />
+        <CollectionsSection />
+        <SacredProvenanceSection />
+        <SocialProofSection />
+        <WhyYouDeserveSection />
+        <StorySection />
+        <ProcessSection />
+        <UrgencySection />
+        <ImpactSection />
+        <FAQSection />
+      </main>
       <Footer />
     </div>
   );

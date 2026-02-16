@@ -9,36 +9,36 @@ import {
 
 const faqs = [
   {
-    q: "What is 'Bhagwan ki Poshak' and how do you source it?",
-    a: "Bhagwan ki Poshak refers to the sacred garments that adorn deities in temples across India. After a certain period, these garments are ceremonially retired. We collect them respectfully from our temple partners — most prominently Khatushyam Delhi Dham — and from individual devotees, ensuring every fabric is treated with reverence throughout our process.",
+    q: "What exactly is 'Bhagwan ki Poshak'?",
+    a: "It's the sacred garment that dresses deities in temples. After a while, temples replace these clothes with new ones. Instead of letting them go to waste, we collect them — respectfully — from temple partners like Khatushyam Delhi Dham and from individual devotees.",
   },
   {
-    q: "Are your products truly handcrafted?",
-    a: "Absolutely. Every Punarvsu product is 100% handcrafted by skilled artisans at our manufacturing unit in Rohini, Delhi, managed by Sampurna NGO — an organisation with over 35 years of dedication to social work. Under the expert guidance of our head artisans Kiran Mam and Samar Mam, each piece takes between 8–15 hours of dedicated work — from sanitisation and design cutting to stitching and quality checks. No two products are identical because each sacred textile is unique.",
+    q: "Is everything really handmade?",
+    a: "Yes, 100%. Every single piece is made by hand at our workshop in Rohini, Delhi. It's managed by Sampurna NGO — they've been doing social work for over 35 years. Our head artisans Kiran Mam and Samar Mam lead a team of skilled women, and each bag takes 8–15 hours to complete. No machines, no shortcuts.",
   },
   {
-    q: "How do you sanitise the temple fabrics?",
-    a: "We follow a rigorous 3-step sanitisation process: UV sterilisation, eco-friendly fabric cleaning with plant-based solutions, and steam treatment. This ensures every product is hygienically perfect while preserving the sacred essence and vibrant colours of the original textiles.",
+    q: "How do you clean the temple fabrics?",
+    a: "We use a three-step process: UV sterilisation, gentle washing with plant-based solutions, and steam treatment. It makes everything perfectly hygienic while keeping the fabric's colours and character intact.",
   },
   {
-    q: "Can I request a custom bag from a specific temple's fabric?",
-    a: "Yes! We offer bespoke services for special requests. If you have a specific temple or deity preference, or even your own sacred cloth you'd like transformed, reach out to us at namaste@punarvsu.in and we'll work with you to create something truly personal.",
+    q: "Can I send you my own sacred cloth to make into a bag?",
+    a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at namaste@punarvsu.in and we'll work out the details together.",
   },
   {
-    q: "Do you ship internationally?",
-    a: "Currently we ship across India with free shipping on orders above ₹5,000. International shipping is coming soon — join our newsletter to be the first to know when we launch worldwide delivery. For urgent international requests, contact us directly.",
+    q: "Do you deliver outside India?",
+    a: "Not yet, but we're working on it. Right now we ship across India with free delivery on orders above ₹5,000. Join our newsletter and we'll let you know the moment international shipping goes live. For urgent requests, drop us a line directly.",
   },
   {
-    q: "What is your return and exchange policy?",
-    a: "Since each product is one-of-a-kind, we don't accept returns. However, if your product arrives damaged or significantly different from the description, we'll gladly exchange it within 7 days. We include detailed photos and descriptions so you know exactly what you're receiving.",
+    q: "What if I'm not happy with my order?",
+    a: "Since every piece is one-of-a-kind, we can't accept returns. But if something arrives damaged or looks very different from what was described, we'll exchange it within 7 days — no questions asked. We share detailed photos before shipping so you know exactly what you're getting.",
   },
   {
-    q: "How does buying from Punarvsu help the environment?",
-    a: "Every purchase diverts sacred textiles from landfills, supports our zero-waste mission, and funds artisan livelihoods through Sampurna NGO. We've already saved 3,200+ kg of temple cloth from disposal, and each bag reduces textile waste while honouring tradition — true circular fashion with purpose.",
+    q: "How does buying from Punarvsu actually help?",
+    a: "In a few real ways: you're keeping beautiful fabric out of landfills (we've saved 3,200+ kg so far), supporting artisan livelihoods through Sampurna NGO, and helping preserve a tradition that might otherwise be forgotten. It's fashion that does something good — without making a big deal about it.",
   },
   {
-    q: "Do you offer wholesale or bulk orders for gifting?",
-    a: "Yes! We offer special wholesale pricing for corporate gifting, wedding favours, and festive bulk orders. Our team can customise packaging and add personalised messages. Contact us at namaste@punarvsu.in or call 09220464425 for wholesale inquiries.",
+    q: "Can I order in bulk — for gifts, weddings, or corporate events?",
+    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at namaste@punarvsu.in or call 09220464425 and we'll sort it out.",
   },
 ];
 
@@ -48,7 +48,6 @@ const FAQSection = () => {
 
   return (
     <section ref={ref} id="faq" className="py-24 bg-card relative overflow-hidden">
-      {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-primary/5 blur-[100px]" />
       <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/5 blur-[120px]" />
 
@@ -60,14 +59,14 @@ const FAQSection = () => {
           transition={{ duration: 0.7 }}
         >
           <span className="font-body text-xs tracking-[0.4em] uppercase text-primary/60 block mb-3">
-            Questions & Answers
+            Got Questions?
           </span>
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
-            Frequently Asked{" "}
-            <span className="text-gradient-gold">Questions</span>
+            We've Got{" "}
+            <span className="text-gradient-gold">Answers</span>
           </h2>
           <p className="font-body text-muted-foreground mt-3 max-w-md mx-auto text-sm">
-            Everything you need to know about our sacred craft.
+            Here's what people usually ask us. If you don't find your answer, just email us.
           </p>
         </motion.div>
 

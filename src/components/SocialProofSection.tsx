@@ -6,39 +6,39 @@ const testimonials = [
   {
     name: "Priya M.",
     location: "Mumbai",
-    text: "I've owned luxury bags from European brands, but nothing compares to the soul of my Punarvasu piece. People stop me everywhere to ask about it.",
+    text: "I wasn't sure what to expect honestly. But when I held it, I could feel the texture, the weight — it's nothing like a regular bag. My friends keep asking where I got it.",
     rating: 5,
     product: "Temple Tote",
   },
   {
     name: "Ananya R.",
     location: "Bangalore",
-    text: "My mother cried when she saw the Provenance Card. She said it reminded her of her grandmother's temple visits. This isn't a bag — it's an emotion.",
+    text: "I gave one to my mom for her birthday. She read the provenance card and got emotional — said it reminded her of visiting temples as a kid. Best gift I've ever picked.",
     rating: 5,
     product: "Krishna Clutch",
   },
   {
     name: "Kavita S.",
     location: "Delhi",
-    text: "I bought one for myself and ended up gifting three more. Everyone who receives a Punarvasu piece feels something. It's the most meaningful gift I've ever given.",
+    text: "Bought one, then bought three more for Diwali gifts. There's something about giving someone a Punarvsu piece — it just feels more thoughtful than anything else.",
     rating: 5,
     product: "Radha Pouch",
   },
   {
     name: "Meera T.",
     location: "Jaipur",
-    text: "The fabric has a warmth that no new material can match. When I hold my Punarvsu bag, I feel connected to something timeless.",
+    text: "The colours are so rich — you can tell this fabric has lived a life. It's hard to explain but it feels different carrying something with real history.",
     rating: 5,
     product: "Saffron Crossbody",
   },
 ];
 
 const livePulseMessages = [
-  "Someone in Pune just added a Temple Tote to cart",
-  "2 Krishna Clutches sold in the last hour",
-  "A devotee from Chennai just placed an order",
-  "Saffron Crossbody is trending today",
-  "Someone in Hyderabad is viewing the Radha Pouch",
+  "Someone in Pune just added a Temple Tote to their cart",
+  "2 Krishna Clutches ordered in the last hour",
+  "A customer from Chennai just placed an order",
+  "Saffron Crossbody is getting a lot of love today",
+  "Someone in Hyderabad is checking out the Radha Pouch",
 ];
 
 const SocialProofSection = () => {
@@ -85,11 +85,11 @@ const SocialProofSection = () => {
           className="text-center mb-16"
         >
           <span className="font-body text-xs tracking-[0.4em] uppercase text-muted-foreground mb-4 block">
-            Words From Our Devotees
+            Real People, Real Stories
           </span>
           <h2 className="font-display text-4xl md:text-6xl font-light text-foreground mb-4">
-            They Didn't Just <span className="italic text-gradient-gold">Buy</span> — They{" "}
-            <span className="italic text-gradient-gold">Felt</span>
+            Don't Take Our Word —{" "}
+            <span className="italic text-gradient-gold">Take Theirs</span>
           </h2>
           <div className="ornament-line w-20 mx-auto mt-6" />
         </motion.div>
@@ -103,8 +103,8 @@ const SocialProofSection = () => {
         >
           {[
             { icon: ShieldCheck, text: "Verified Artisan Craft" },
-            { icon: Star, text: "4.9/5 Customer Rating" },
-            { icon: TrendingUp, text: "2000+ Happy Customers" },
+            { icon: Star, text: "4.9/5 Average Rating" },
+            { icon: TrendingUp, text: "2,000+ Happy Customers" },
           ].map((badge) => (
             <div
               key={badge.text}

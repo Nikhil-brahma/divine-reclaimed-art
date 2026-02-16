@@ -28,14 +28,14 @@ const HeroSection = () => {
           <div className="ornament-line w-24 mx-auto mb-8" />
           
           <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light text-ivory leading-tight mb-6">
-            From Sacred Cloth
+            Sacred Cloth,
             <br />
-            <span className="text-gradient-gold font-semibold italic">to Living Art</span>
+            <span className="text-gradient-gold font-semibold italic">New Purpose</span>
           </h1>
 
           <p className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-10 leading-relaxed">
-            We transform blessed temple textiles into extraordinary handcrafted accessories.
-            Each piece carries centuries of devotion, reborn as timeless luxury.
+            Temple textiles that once dressed the divine — now handcrafted into bags
+            you'll actually want to carry every day. Real fabric. Real history. Made by real hands.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -43,13 +43,13 @@ const HeroSection = () => {
               href="#collections"
               className="bg-gradient-saffron text-primary-foreground px-8 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-sacred"
             >
-              Explore Collection
+              See the Collection
             </a>
             <a
               href="#story"
               className="border border-ivory/30 text-ivory px-8 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase hover:bg-ivory/10 transition-colors"
             >
-              Our Story
+              How It's Made
             </a>
           </div>
         </motion.div>
