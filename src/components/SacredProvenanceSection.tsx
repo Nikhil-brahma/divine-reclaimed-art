@@ -1,34 +1,33 @@
 import { motion } from "framer-motion";
 import { Shield, Fingerprint, Heart, Sparkles, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const provenanceFeatures = [
   {
     icon: Fingerprint,
     title: "Rooted in Devotion",
     description:
-      "Every Punarvasu piece is crafted from authentic sacred textiles — fabrics that have witnessed prayers, rituals, and devotion. Each carries a spiritual energy no factory can replicate.",
+      "These aren't just fabrics we picked off a shelf. They come from temples — places where people have prayed, celebrated, and found peace for years. That energy? It stays in every thread.",
     accent: "from-primary to-accent",
   },
   {
     icon: Shield,
-    title: "Certificate of Sanctity",
+    title: "A Card That Tells You Everything",
     description:
-      "Each product ships with a handwritten Provenance Card detailing the temple, the textile's age, and the artisan who transformed it — your proof of sacred authenticity.",
+      "Every bag comes with a handwritten Provenance Card. It tells you which temple the fabric came from, how old it is, and who crafted your piece. No mystery — just honesty.",
     accent: "from-secondary to-primary",
   },
   {
     icon: Heart,
     title: "Blessed by Intention™",
     description:
-      "Every Punarvasu piece is crafted with reverence and intention — our artisans begin each creation with a moment of prayer. The devotion woven into the original textile lives on in what you carry.",
+      "Our artisans don't just stitch — they sit down, take a moment, and begin each piece with quiet intention. The care that went into the original textile carries forward into what you hold.",
     accent: "from-accent to-primary",
   },
   {
     icon: Sparkles,
-    title: "Living Heritage Number",
+    title: "Trace Its Journey",
     description:
-      "Scan the NFC tag on your Punarvasu piece to unlock its full journey: the temple it came from, the hands that crafted it, and the prayers woven into its threads.",
+      "Each piece has an NFC tag. Tap it with your phone and you'll see the full story — where the fabric came from, whose hands shaped it, and the prayers it witnessed.",
     accent: "from-primary to-secondary",
   },
 ];
@@ -50,14 +49,14 @@ const SacredProvenanceSection = () => {
           className="text-center mb-16"
         >
           <span className="font-body text-xs tracking-[0.4em] uppercase text-accent mb-4 block">
-            What Makes Us Sacred
+            Why People Trust Us
           </span>
           <h2 className="font-display text-4xl md:text-6xl font-light mb-4">
-            The <span className="italic text-gradient-gold">Punarvasu</span> Promise
+            What Makes <span className="italic text-gradient-gold">Punarvsu</span> Different
           </h2>
           <p className="font-body text-sm md:text-base text-primary-foreground/70 max-w-2xl mx-auto mt-4 leading-relaxed">
-            We don't just make bags — we resurrect stories. Every stitch is an act of devotion,
-            every piece a bridge between the divine and the everyday.
+            We're not trying to be another bag brand. We take sacred cloth that would otherwise be discarded,
+            and give it a second life — with full transparency about where it comes from.
           </p>
           <div className="ornament-line w-20 mx-auto mt-6" />
         </motion.div>
@@ -83,7 +82,7 @@ const SacredProvenanceSection = () => {
           ))}
         </div>
 
-        {/* Sticky emotional CTA */}
+        {/* Emotional CTA */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -94,16 +93,16 @@ const SacredProvenanceSection = () => {
           <div className="inline-block p-px rounded-sm bg-gradient-to-r from-accent via-primary to-secondary">
             <div className="bg-gradient-sacred rounded-sm px-10 py-8 md:px-16 md:py-10">
               <p className="font-display text-2xl md:text-3xl italic mb-2">
-                "You don't buy a Punarvasu — you inherit a blessing."
+                "It's not just a bag. It's something you feel."
               </p>
               <p className="font-body text-xs tracking-[0.3em] uppercase text-accent/80 mb-6">
-                — From our artisan family to yours
+                — That's what our customers keep telling us
               </p>
               <a
                 href="#collections"
                 className="inline-flex items-center gap-2 bg-gradient-saffron text-primary-foreground px-8 py-3 rounded-sm font-body text-xs tracking-[0.2em] uppercase hover:opacity-90 transition-opacity"
               >
-                Discover Your Piece <ArrowRight className="w-4 h-4" />
+                See for Yourself <ArrowRight className="w-4 h-4" />
               </a>
             </div>
           </div>

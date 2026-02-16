@@ -58,10 +58,10 @@ const CollectionsSection = () => {
           className="text-center mb-16"
         >
           <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">
-            Handcrafted with Devotion
+            Made by Hand, Meant for You
           </span>
           <h2 className="font-display text-4xl md:text-6xl font-light text-foreground mb-4">
-            Our <span className="italic text-gradient-gold">Collections</span>
+            The <span className="italic text-gradient-gold">Collection</span>
           </h2>
           <div className="ornament-line w-20 mx-auto mt-6" />
         </motion.div>

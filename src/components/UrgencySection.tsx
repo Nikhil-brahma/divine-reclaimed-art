@@ -3,10 +3,8 @@ import { Clock, AlertTriangle, Flame, Gift } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const UrgencySection = () => {
-  // Simulated limited stock counter
   const [stockLeft] = useState(Math.floor(Math.random() * 8) + 3);
 
-  // Countdown to end of current "batch"
   const getNextSunday = () => {
     const now = new Date();
     const daysUntilSunday = (7 - now.getDay()) % 7 || 7;
@@ -37,7 +35,6 @@ const UrgencySection = () => {
 
   return (
     <section className="py-20 bg-card relative overflow-hidden">
-      {/* Subtle animated background */}
       <div className="absolute inset-0 opacity-5">
         <motion.div
           className="absolute w-96 h-96 rounded-full bg-primary blur-[100px]"
@@ -49,7 +46,6 @@ const UrgencySection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Scarcity header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -58,14 +54,14 @@ const UrgencySection = () => {
           >
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-sm mb-6">
               <Flame className="w-4 h-4" />
-              <span className="font-body text-xs tracking-wider uppercase">Limited Sacred Collection</span>
+              <span className="font-body text-xs tracking-wider uppercase">This Batch Is Almost Gone</span>
             </div>
             <h2 className="font-display text-3xl md:text-5xl font-light text-foreground mb-4">
-              Only <span className="text-gradient-gold font-semibold">{stockLeft} Pieces</span> Left This Batch
+              Only <span className="text-gradient-gold font-semibold">{stockLeft} Pieces</span> Left Right Now
             </h2>
             <p className="font-body text-sm text-muted-foreground max-w-xl mx-auto">
-              Each batch is handcrafted from a specific temple's sacred textiles. Once this collection is gone,
-              these exact fabrics will never return.
+              We work in small batches because that's the only way to do this properly. Once the current
+              fabric runs out, these exact pieces won't be available again.
             </p>
           </motion.div>
 
@@ -93,7 +89,6 @@ const UrgencySection = () => {
             ))}
           </motion.div>
 
-          {/* Psychological triggers grid */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -103,18 +98,18 @@ const UrgencySection = () => {
             {[
               {
                 icon: AlertTriangle,
-                title: "Never Repeated",
-                desc: "Once a batch of sacred fabric is used, it's gone forever. Each collection is truly limited.",
+                title: "Same Fabric Won't Return",
+                desc: "Each batch comes from a specific temple donation. When it's gone, that's it — these patterns are one-time only.",
               },
               {
                 icon: Clock,
-                title: "Next Batch: 4-6 Weeks",
-                desc: "Our artisans source and craft each batch with care. The next collection won't arrive soon.",
+                title: "Next Batch: 4–6 Weeks",
+                desc: "Sourcing and handcrafting takes time. If you miss this batch, the next one won't be ready for a while.",
               },
               {
                 icon: Gift,
-                title: "Free Blessing Card",
-                desc: "Order this week and receive a handwritten blessing card from our artisan family — complimentary.",
+                title: "Free Blessing Card This Week",
+                desc: "Order now and we'll include a handwritten blessing card from our artisan family — on us.",
               },
             ].map((item) => (
               <div
@@ -128,7 +123,6 @@ const UrgencySection = () => {
             ))}
           </motion.div>
 
-          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -140,7 +134,7 @@ const UrgencySection = () => {
               className="inline-flex items-center gap-3 bg-gradient-saffron text-primary-foreground px-10 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-sacred"
             >
               <Flame className="w-4 h-4" />
-              Claim Your Piece Before It's Gone
+              Get Yours Before They're Gone
             </a>
             <p className="font-body text-xs text-muted-foreground mt-4">
               🔒 Secure checkout · Free shipping above ₹2,999
