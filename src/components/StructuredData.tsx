@@ -37,7 +37,7 @@ const localBusinessSchema = {
   image: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png`,
   url: SITE_URL,
   telephone: "+919220464425",
-  email: "namaste@punarvsu.in",
+  email: "punarvsu.com@gmail.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Maharana Pratap Community Centre, Sector-9, Rohini",
