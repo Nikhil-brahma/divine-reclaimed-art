@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Can I send you my own sacred cloth to make into a bag?",
-    a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at namaste@punarvsu.in and we'll work out the details together.",
+    a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at punarvsu.com@gmail.com and we'll work out the details together.",
   },
   {
     q: "Do you deliver outside India?",
