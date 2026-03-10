@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import SEODashboard from "./pages/SEODashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
