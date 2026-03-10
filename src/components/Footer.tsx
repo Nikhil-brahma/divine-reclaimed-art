@@ -33,8 +33,8 @@ const Footer = () => {
           <div>
             <h4 className="font-display text-lg mb-4 text-gold">Get in Touch</h4>
             <address className="flex flex-col gap-3 not-italic">
-              <a href="mailto:namaste@punarvsu.in" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
-                <Mail size={14} /> namaste@punarvsu.in
+              <a href="mailto:punarvsu.com@gmail.com" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
+                <Mail size={14} /> punarvsu.com@gmail.com
               </a>
               <a href="tel:09220464425" className="flex items-center gap-3 font-body text-sm text-ivory/50 hover:text-gold transition-colors">
                 <Phone size={14} /> 09220464425

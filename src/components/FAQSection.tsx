@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Can I send you my own sacred cloth to make into a bag?",
-    a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at namaste@punarvsu.in and we'll work out the details together.",
+    a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at punarvsu.com@gmail.com and we'll work out the details together.",
   },
   {
     q: "Do you deliver outside India?",
@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "Can I order in bulk — for gifts, weddings, or corporate events?",
-    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at namaste@punarvsu.in or call 09220464425 and we'll sort it out.",
+    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at punarvsu.com@gmail.com or call 09220464425 and we'll sort it out.",
   },
 ];
 

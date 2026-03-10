@@ -11,7 +11,7 @@ const organizationSchema = {
   logo: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png`,
   description:
     "Handcrafted bags and accessories made from upcycled sacred temple textiles by skilled artisans in Delhi, India.",
-  email: "namaste@punarvsu.in",
+  email: "punarvsu.com@gmail.com",
   telephone: "+919220464425",
   address: {
     "@type": "PostalAddress",
@@ -37,7 +37,7 @@ const localBusinessSchema = {
   image: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png`,
   url: SITE_URL,
   telephone: "+919220464425",
-  email: "namaste@punarvsu.in",
+  email: "punarvsu.com@gmail.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Maharana Pratap Community Centre, Sector-9, Rohini",
@@ -89,7 +89,7 @@ const faqSchema = {
       name: "Can I send my own sacred cloth to make into a bag?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Absolutely! If you have a special piece of cloth from a temple visit or family heirloom, Punarvsu can turn it into something you carry every day. Email namaste@punarvsu.in to discuss.",
+        text: "Absolutely! If you have a special piece of cloth from a temple visit or family heirloom, Punarvsu can turn it into something you carry every day. Email punarvsu.com@gmail.com to discuss.",
       },
     },
     {

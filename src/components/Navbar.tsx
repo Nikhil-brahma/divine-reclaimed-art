@@ -20,18 +20,25 @@ const Navbar = () => {
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     const sectionId = href.replace("#", "");
-    if (location.pathname !== "/") {
-      navigate("/");
-      // Wait for homepage to render then scroll
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        el?.scrollIntoView({ behavior: "smooth" });
-      }, 300);
-    } else {
+    
+    // Close mobile menu first, then scroll after it animates out
+    const wasMobileOpen = isOpen;
+    setIsOpen(false);
+    
+    const scrollToSection = () => {
       const el = document.getElementById(sectionId);
       el?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(scrollToSection, 500);
+    } else if (wasMobileOpen) {
+      // Wait for mobile menu exit animation before scrolling
+      setTimeout(scrollToSection, 350);
+    } else {
+      scrollToSection();
     }
-    setIsOpen(false);
   };
 
   const renderLink = (link: typeof navLinks[0], className: string) => {
