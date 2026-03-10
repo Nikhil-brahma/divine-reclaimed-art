@@ -89,7 +89,7 @@ const faqSchema = {
       name: "Can I send my own sacred cloth to make into a bag?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Absolutely! If you have a special piece of cloth from a temple visit or family heirloom, Punarvsu can turn it into something you carry every day. Email namaste@punarvsu.in to discuss.",
+        text: "Absolutely! If you have a special piece of cloth from a temple visit or family heirloom, Punarvsu can turn it into something you carry every day. Email punarvsu.com@gmail.com to discuss.",
       },
     },
     {

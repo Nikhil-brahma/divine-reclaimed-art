@@ -38,7 +38,7 @@ const faqs = [
   },
   {
     q: "Can I order in bulk — for gifts, weddings, or corporate events?",
-    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at namaste@punarvsu.in or call 09220464425 and we'll sort it out.",
+    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at punarvsu.com@gmail.com or call 09220464425 and we'll sort it out.",
   },
 ];
 
