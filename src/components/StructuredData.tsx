@@ -11,7 +11,7 @@ const organizationSchema = {
   logo: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png`,
   description:
     "Handcrafted bags and accessories made from upcycled sacred temple textiles by skilled artisans in Delhi, India.",
-  email: "namaste@punarvsu.in",
+  email: "punarvsu.com@gmail.com",
   telephone: "+919220464425",
   address: {
     "@type": "PostalAddress",
