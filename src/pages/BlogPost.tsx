@@ -1,14 +1,62 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Share2, Sparkles } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { blogPosts } from "@/pages/Blog";
+import { staticBlogPosts } from "@/pages/Blog";
+import { supabase } from "@/integrations/supabase/client";
+import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
 
 const BlogPost = () => {
-  const { slug } = useParams();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const { slug, "*": aiSlug } = useParams();
+  const isAiPost = slug === "ai" && aiSlug;
+  const actualSlug = isAiPost ? aiSlug : slug;
 
+  // For AI posts, fetch from database
+  const { data: aiPost, isLoading } = useQuery({
+    queryKey: ["auto-blog-post", actualSlug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("auto_blog_posts")
+        .select("*")
+        .eq("slug", actualSlug)
+        .eq("published", true)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!isAiPost,
+  });
+
+  // For static posts
+  const staticPost = !isAiPost ? staticBlogPosts.find((p) => p.slug === actualSlug) : null;
+
+  const post = isAiPost
+    ? aiPost
+      ? {
+          title: aiPost.title,
+          content: aiPost.content,
+          category: aiPost.category,
+          date: new Date(aiPost.created_at).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
+          readTime: `${Math.ceil(aiPost.content.length / 1200)} min read`,
+          image: blogTempleTextiles,
+          isAiGenerated: true,
+        }
+      : null
+    : staticPost
+      ? { ...staticPost, isAiGenerated: false }
+      : null;
+
+  if (!isAiPost && !staticPost) return <Navigate to="/blog" replace />;
+  if (isAiPost && !isLoading && !aiPost) return <Navigate to="/blog" replace />;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse font-body text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
   if (!post) return <Navigate to="/blog" replace />;
 
   return (
@@ -28,11 +76,18 @@ const BlogPost = () => {
               <ArrowLeft size={16} /> Back to Journal
             </Link>
 
-            <span className="bg-primary/10 text-primary font-body text-xs tracking-wider uppercase px-3 py-1 rounded-full">
-              {post.category}
-            </span>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="bg-primary/10 text-primary font-body text-xs tracking-wider uppercase px-3 py-1 rounded-full">
+                {post.category}
+              </span>
+              {post.isAiGenerated && (
+                <span className="bg-accent/10 text-accent-foreground font-body text-xs tracking-wider uppercase px-3 py-1 rounded-full flex items-center gap-1">
+                  <Sparkles size={12} /> AI Generated
+                </span>
+              )}
+            </div>
 
-            <h1 className="font-display text-3xl md:text-5xl text-foreground mt-4 mb-4 leading-tight">
+            <h1 className="font-display text-3xl md:text-5xl text-foreground mb-4 leading-tight">
               {post.title}
             </h1>
 
@@ -63,6 +118,8 @@ const BlogPost = () => {
               {post.content.split("\n\n").map((para, i) => (
                 <p key={i} dangerouslySetInnerHTML={{
                   __html: para
+                    .replace(/^## (.*)/gm, '<strong class="text-foreground font-display text-xl block mt-6 mb-2">$1</strong>')
+                    .replace(/^### (.*)/gm, '<strong class="text-foreground font-display text-lg block mt-4 mb-1">$1</strong>')
                     .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground font-display">$1</strong>')
                 }} />
               ))}
