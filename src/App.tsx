@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import SEODashboard from "./pages/SEODashboard";
 import NotFound from "./pages/NotFound";
+import ChatWidget from "./components/ChatWidget";
 
 const queryClient = new QueryClient();
 
