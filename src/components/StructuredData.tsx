@@ -210,7 +210,7 @@ interface StructuredDataProps {
 const StructuredData = ({ productData }: StructuredDataProps) => {
   const location = useLocation();
 
-  const schemas: object[] = [organizationSchema, localBusinessSchema, websiteSchema, buildBreadcrumbs(location.pathname)];
+  const schemas: object[] = [organizationSchema, localBusinessSchema, websiteSchema, brandKnowledgeSchema, speakableSchema, buildBreadcrumbs(location.pathname)];
 
   // Add FAQ on homepage
   if (location.pathname === "/") {
