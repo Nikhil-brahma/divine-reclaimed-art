@@ -31,7 +31,6 @@ const AppContent = () => {
       <ChatWidget />
     </>
   );
-  );
 };
 
 const App = () => (
