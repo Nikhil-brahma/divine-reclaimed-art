@@ -161,7 +161,7 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Punarvsu",
-  url: "https://divine-reclaimed-art.lovable.app",
+  url: "https://punarvsu.com",
   description: "Handcrafted bags from sacred temple textiles. India's first brand transforming Bhagwan ki Poshak into luxury accessories.",
   potentialAction: {
     "@type": "SearchAction",
