@@ -41,7 +41,7 @@ But what happens when these garments are ceremonially retired? Traditionally, th
 
 Our journey begins at the temple doors. Being Delhi-based, our strongest temple partnership is with the iconic Khatushyam Delhi Dham, along with several other revered temples across Delhi and North India. When fabrics are retired from deity service, our collection team carefully gathers them with full reverence — no fabric touches the ground, every piece is handled with the same devotion as when it draped the divine.
 
-The transformation process is meticulous. At our manufacturing unit in Rohini, managed by Sampurna NGO — an organisation with deep roots in social work spanning over 35 years — each fabric undergoes UV sterilisation, eco-friendly cleaning, and steam treatment. Our head artisans, Kiran Mam and Samar Mam, then study the patterns, colours, and textures to determine the perfect product for each textile. A Krishna Leela fabric might become a peacock-motif clutch, while a Durga Mata cloth transforms into a bold statement bag.
+The transformation process is meticulous. At our manufacturing unit in Rohini, managed by Sampurna NGO — an organisation with deep roots in social work spanning over 35 years — each fabric undergoes UV sterilisation, eco-friendly cleaning, and steam treatment. Our head artisan, Kiran Mam, then studies the patterns, colours, and textures to determine the perfect product for each textile. A Krishna Leela fabric might become a peacock-motif clutch, while a Durga Mata cloth transforms into a bold statement bag.
 
 The result? Accessories that don't just look beautiful — they carry centuries of spiritual energy. When you carry a Punarvsu bag, you carry blessings woven into every fibre.`,
   },
@@ -59,7 +59,7 @@ Upcycled luxury isn't about compromise. It's about elevation. When we take a sac
 
 Each Punarvsu piece represents our commitment to zero waste. We've collected over 3,200 kg of temple textiles that would otherwise end up in landfills. Every scrap finds purpose — larger pieces become bags and clutches, smaller fragments become lining, and even the tiniest remnants are woven into our packaging.
 
-The circular economy isn't just a buzzword for us — it's our dharma. Our artisans, led by Kiran Mam and Samar Mam at our Rohini workshop managed by Sampurna NGO, earn sustainable livelihoods while preserving traditional craft techniques that are disappearing in the age of machine-made fashion. Sampurna NGO has been dedicated to social work for over 35 years, making them the perfect custodians of this sacred mission.
+The circular economy isn't just a buzzword for us — it's our dharma. Our artisans, led by Kiran Mam at our Rohini workshop managed by Sampurna NGO, earn sustainable livelihoods while preserving traditional craft techniques that are disappearing in the age of machine-made fashion. Sampurna NGO has been dedicated to social work for over 35 years, making them the perfect custodians of this sacred mission.
 
 When you choose Punarvsu, you're voting for a world where luxury and responsibility aren't contradictions. You're choosing fashion that feeds souls, not landfills.`,
   },
@@ -73,11 +73,11 @@ When you choose Punarvsu, you're voting for a world where luxury and responsibil
     category: "Artisans",
     content: `In our manufacturing unit tucked in Rohini, Delhi, a team of dedicated artisans gathers every morning with a prayer. Before their hands touch sacred cloth, they light an incense stick and offer a moment of gratitude. This is where Punarvsu products are born — under the guidance of Sampurna NGO, an organisation with over 35 years of impactful social work.
 
-Kiran Mam, one of our two head artisans, has been working with textiles for decades. "When I hold temple cloth," she says, "I feel the energy of a thousand prayers. My stitches must honour that energy." Her precision is legendary — she can cut a pattern freehand with barely a millimetre of deviation.
+Kiran Mam, our head artisan, has been working with textiles for decades. "When I hold temple cloth," she says, "I feel the energy of a thousand prayers. My stitches must honour that energy." Her precision is legendary — she can cut a pattern freehand with barely a millimetre of deviation.
 
-Samar Mam, our other head artisan, brings a unique artistic vision to every piece. Together, Kiran Mam and Samar Mam lead a talented team of craftswomen, mentoring them in pattern-making, stitching techniques, and the art of working with sacred materials. Their combined expertise ensures that every Punarvsu product meets the highest standards of quality and reverence.
+Kiran Mam leads a talented team of craftswomen, mentoring them in pattern-making, stitching techniques, and the art of working with sacred materials. Her expertise ensures that every Punarvsu product meets the highest standards of quality and reverence.
 
-Our artisans undergo months of training under Kiran Mam and Samar Mam's watchful guidance. But the most important lesson? Reverence. Every artisan understands that the material they work with isn't ordinary fabric — it's cloth that has been blessed at temples like Khatushyam Delhi Dham.
+Our artisans undergo months of training under Kiran Mam's watchful guidance. But the most important lesson? Reverence. Every artisan understands that the material they work with isn't ordinary fabric — it's cloth that has been blessed at temples like Khatushyam Delhi Dham.
 
 We invest in our artisans' growth through Sampurna NGO's social welfare programmes. Regular skill workshops, health insurance, and children's education support are part of our commitment. Because when artisans thrive, the art thrives. And when the art thrives, tradition lives on.
 
