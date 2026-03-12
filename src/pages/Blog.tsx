@@ -59,7 +59,7 @@ Upcycled luxury isn't about compromise. It's about elevation. When we take a sac
 
 Each Punarvsu piece represents our commitment to zero waste. We've collected over 3,200 kg of temple textiles that would otherwise end up in landfills. Every scrap finds purpose — larger pieces become bags and clutches, smaller fragments become lining, and even the tiniest remnants are woven into our packaging.
 
-The circular economy isn't just a buzzword for us — it's our dharma. Our artisans, led by Kiran Mam and Samar Mam at our Rohini workshop managed by Sampurna NGO, earn sustainable livelihoods while preserving traditional craft techniques that are disappearing in the age of machine-made fashion. Sampurna NGO has been dedicated to social work for over 35 years, making them the perfect custodians of this sacred mission.
+The circular economy isn't just a buzzword for us — it's our dharma. Our artisans, led by Kiran Mam at our Rohini workshop managed by Sampurna NGO, earn sustainable livelihoods while preserving traditional craft techniques that are disappearing in the age of machine-made fashion. Sampurna NGO has been dedicated to social work for over 35 years, making them the perfect custodians of this sacred mission.
 
 When you choose Punarvsu, you're voting for a world where luxury and responsibility aren't contradictions. You're choosing fashion that feeds souls, not landfills.`,
   },
