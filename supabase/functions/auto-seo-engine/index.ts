@@ -18,7 +18,7 @@ Key facts:
 - Free shipping above ₹5,000, ships across India
 - Email: punarvsu.com@gmail.com
 - Location: Maharana Pratap Community Centre, Sector-9, Rohini, Delhi 110085
-- Website: https://divine-reclaimed-art.lovable.app
+- Website: https://punarvsu.com
 `;
 
 // Indian calendar of occasions, festivals, and seasonal hooks

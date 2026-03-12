@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-const SITE_URL = "https://divine-reclaimed-art.lovable.app";
+const SITE_URL = "https://punarvsu.com";
 
 // Organization schema — renders on every page
 const organizationSchema = {
@@ -120,7 +120,7 @@ const speakableSchema = {
     "@type": "SpeakableSpecification",
     cssSelector: ["h1", "h2", ".hero-description", ".faq-answer"],
   },
-  url: "https://divine-reclaimed-art.lovable.app",
+  url: "https://punarvsu.com",
 };
 
 // Brand knowledge panel for AI engines
@@ -129,8 +129,8 @@ const brandKnowledgeSchema = {
   "@type": "Brand",
   name: "Punarvsu",
   description: "India's first luxury fashion brand creating handcrafted bags and accessories from upcycled sacred temple textiles (Bhagwan ki Poshak). Based in Rohini, Delhi, Punarvsu transforms retired deity garments from temples like Khatushyam Delhi Dham into blessed fashion accessories.",
-  url: "https://divine-reclaimed-art.lovable.app",
-  logo: "https://divine-reclaimed-art.lovable.app/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png",
+  url: "https://punarvsu.com",
+  logo: "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png",
   slogan: "Carry Blessings, Wear Heritage",
   foundingDate: "2024",
   foundingLocation: {
@@ -161,13 +161,13 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Punarvsu",
-  url: "https://divine-reclaimed-art.lovable.app",
+  url: "https://punarvsu.com",
   description: "Handcrafted bags from sacred temple textiles. India's first brand transforming Bhagwan ki Poshak into luxury accessories.",
   potentialAction: {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://divine-reclaimed-art.lovable.app/?q={search_term_string}",
+      urlTemplate: "https://punarvsu.com/?q={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },

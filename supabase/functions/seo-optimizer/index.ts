@@ -5,7 +5,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SITE_URL = "https://divine-reclaimed-art.lovable.app";
+const SITE_URL = "https://punarvsu.com";
 
 const BRAND_CONTEXT = `
 Punarvsu is a Delhi-based brand that handcrafts bags and accessories from upcycled sacred temple textiles (Bhagwan ki Poshak). 
