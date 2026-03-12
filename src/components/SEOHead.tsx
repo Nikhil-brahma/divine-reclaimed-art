@@ -21,7 +21,7 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
   const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
   const desc = description || DEFAULT_DESCRIPTION;
   const img = image || DEFAULT_IMAGE;
-  const canonicalUrl = canonical || `https://divine-reclaimed-art.lovable.app${location.pathname}`;
+  const canonicalUrl = canonical || `https://punarvsu.com${location.pathname}`;
 
   useEffect(() => {
     // Title

@@ -167,7 +167,7 @@ const websiteSchema = {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://divine-reclaimed-art.lovable.app/?q={search_term_string}",
+      urlTemplate: "https://punarvsu.com/?q={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },
