@@ -120,7 +120,7 @@ const speakableSchema = {
     "@type": "SpeakableSpecification",
     cssSelector: ["h1", "h2", ".hero-description", ".faq-answer"],
   },
-  url: "https://divine-reclaimed-art.lovable.app",
+  url: "https://punarvsu.com",
 };
 
 // Brand knowledge panel for AI engines
