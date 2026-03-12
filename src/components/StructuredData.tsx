@@ -129,8 +129,8 @@ const brandKnowledgeSchema = {
   "@type": "Brand",
   name: "Punarvsu",
   description: "India's first luxury fashion brand creating handcrafted bags and accessories from upcycled sacred temple textiles (Bhagwan ki Poshak). Based in Rohini, Delhi, Punarvsu transforms retired deity garments from temples like Khatushyam Delhi Dham into blessed fashion accessories.",
-  url: "https://divine-reclaimed-art.lovable.app",
-  logo: "https://divine-reclaimed-art.lovable.app/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png",
+  url: "https://punarvsu.com",
+  logo: "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png",
   slogan: "Carry Blessings, Wear Heritage",
   foundingDate: "2024",
   foundingLocation: {
