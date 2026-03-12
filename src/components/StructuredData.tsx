@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-const SITE_URL = "https://divine-reclaimed-art.lovable.app";
+const SITE_URL = "https://punarvsu.com";
 
 // Organization schema — renders on every page
 const organizationSchema = {
