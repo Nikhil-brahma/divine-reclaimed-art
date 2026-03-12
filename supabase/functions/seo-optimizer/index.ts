@@ -11,7 +11,7 @@ const BRAND_CONTEXT = `
 Punarvsu is a Delhi-based brand that handcrafts bags and accessories from upcycled sacred temple textiles (Bhagwan ki Poshak). 
 Key facts:
 - Workshop in Rohini, Delhi managed by Sampurna NGO
-- Artisans: women-led team led by Kiran Mam and Samar Mam
+- Artisans: women-led team led by Kiran Mam
 - Each bag takes 8-15 hours, fully handmade
 - 3,200+ kg textile saved from landfills
 - Temple partners include Khatushyam Delhi Dham

@@ -66,10 +66,10 @@ const StorySection = () => {
             </p>
             <p className="font-body text-ivory/70 leading-relaxed mb-10">
               So we started giving them a new life. At our workshop in Rohini, Delhi — run by{" "}
-              <strong className="text-gold">Sampurna NGO</strong> (35+ years of social work) — our head artisans{" "}
-              <strong className="text-gold">Kiran Mam</strong> and{" "}
-              <strong className="text-gold">Samar Mam</strong> lead a team of skilled women who carefully
+              <strong className="text-gold">Sampurna NGO</strong> (35+ years of social work) — our head artisan{" "}
+              <strong className="text-gold">Kiran Mam</strong> leads a team of skilled women who carefully
               clean, design, and handcraft each piece. What comes out the other end isn't just a bag —
+              it's something that carries real meaning.
               it's something that carries real meaning.
             </p>
 

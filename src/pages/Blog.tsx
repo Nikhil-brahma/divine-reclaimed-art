@@ -73,11 +73,11 @@ When you choose Punarvsu, you're voting for a world where luxury and responsibil
     category: "Artisans",
     content: `In our manufacturing unit tucked in Rohini, Delhi, a team of dedicated artisans gathers every morning with a prayer. Before their hands touch sacred cloth, they light an incense stick and offer a moment of gratitude. This is where Punarvsu products are born — under the guidance of Sampurna NGO, an organisation with over 35 years of impactful social work.
 
-Kiran Mam, one of our two head artisans, has been working with textiles for decades. "When I hold temple cloth," she says, "I feel the energy of a thousand prayers. My stitches must honour that energy." Her precision is legendary — she can cut a pattern freehand with barely a millimetre of deviation.
+Kiran Mam, our head artisan, has been working with textiles for decades. "When I hold temple cloth," she says, "I feel the energy of a thousand prayers. My stitches must honour that energy." Her precision is legendary — she can cut a pattern freehand with barely a millimetre of deviation.
 
-Samar Mam, our other head artisan, brings a unique artistic vision to every piece. Together, Kiran Mam and Samar Mam lead a talented team of craftswomen, mentoring them in pattern-making, stitching techniques, and the art of working with sacred materials. Their combined expertise ensures that every Punarvsu product meets the highest standards of quality and reverence.
+Kiran Mam leads a talented team of craftswomen, mentoring them in pattern-making, stitching techniques, and the art of working with sacred materials. Her expertise ensures that every Punarvsu product meets the highest standards of quality and reverence.
 
-Our artisans undergo months of training under Kiran Mam and Samar Mam's watchful guidance. But the most important lesson? Reverence. Every artisan understands that the material they work with isn't ordinary fabric — it's cloth that has been blessed at temples like Khatushyam Delhi Dham.
+Our artisans undergo months of training under Kiran Mam's watchful guidance. But the most important lesson? Reverence. Every artisan understands that the material they work with isn't ordinary fabric — it's cloth that has been blessed at temples like Khatushyam Delhi Dham.
 
 We invest in our artisans' growth through Sampurna NGO's social welfare programmes. Regular skill workshops, health insurance, and children's education support are part of our commitment. Because when artisans thrive, the art thrives. And when the art thrives, tradition lives on.
 

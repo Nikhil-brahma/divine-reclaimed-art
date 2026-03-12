@@ -90,7 +90,7 @@ BRAND IDENTITY:
 - Punarvsu is India's first brand making luxury bags from sacred temple textiles (Bhagwan ki Poshak)
 - Workshop: Maharana Pratap Community Centre, Sector-9, Rohini, Delhi 110085
 - Managed by Sampurna NGO (35+ years of social work)
-- Head artisans: Kiran Mam & Samar Mam (women-led team)
+- Head artisan: Kiran Mam (women-led team)
 - Temple partner: Khatushyam Delhi Dham + other Delhi/North India temples
 - 3,200+ kg sacred textile saved from landfills
 - Each piece: 8-15 hours handcrafted, UV sterilized, no machines
