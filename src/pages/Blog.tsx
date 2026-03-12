@@ -41,7 +41,7 @@ But what happens when these garments are ceremonially retired? Traditionally, th
 
 Our journey begins at the temple doors. Being Delhi-based, our strongest temple partnership is with the iconic Khatushyam Delhi Dham, along with several other revered temples across Delhi and North India. When fabrics are retired from deity service, our collection team carefully gathers them with full reverence — no fabric touches the ground, every piece is handled with the same devotion as when it draped the divine.
 
-The transformation process is meticulous. At our manufacturing unit in Rohini, managed by Sampurna NGO — an organisation with deep roots in social work spanning over 35 years — each fabric undergoes UV sterilisation, eco-friendly cleaning, and steam treatment. Our head artisans, Kiran Mam and Samar Mam, then study the patterns, colours, and textures to determine the perfect product for each textile. A Krishna Leela fabric might become a peacock-motif clutch, while a Durga Mata cloth transforms into a bold statement bag.
+The transformation process is meticulous. At our manufacturing unit in Rohini, managed by Sampurna NGO — an organisation with deep roots in social work spanning over 35 years — each fabric undergoes UV sterilisation, eco-friendly cleaning, and steam treatment. Our head artisan, Kiran Mam, then studies the patterns, colours, and textures to determine the perfect product for each textile. A Krishna Leela fabric might become a peacock-motif clutch, while a Durga Mata cloth transforms into a bold statement bag.
 
 The result? Accessories that don't just look beautiful — they carry centuries of spiritual energy. When you carry a Punarvsu bag, you carry blessings woven into every fibre.`,
   },
