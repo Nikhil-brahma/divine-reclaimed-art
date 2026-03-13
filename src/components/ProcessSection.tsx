@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const steps = [
   {
@@ -28,51 +29,103 @@ const steps = [
   },
 ];
 
-const ProcessSection = () => {
+const ProcessStep = ({ step, index }: { step: typeof steps[0]; index: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? -80 : 80, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1, 1]);
+  const numberScale = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section id="process" className="py-24 bg-card">
-      <div className="container mx-auto px-6">
+    <motion.div
+      ref={ref}
+      style={{ opacity, x, scale }}
+      className="flex gap-6 md:gap-10 mb-16 last:mb-0"
+    >
+      <div className="flex flex-col items-center relative">
+        <motion.span
+          style={{ scale: numberScale }}
+          className="font-display text-4xl md:text-5xl text-gradient-gold font-semibold relative z-10"
+        >
+          {step.number}
+        </motion.span>
+        {index < steps.length - 1 && (
+          <div className="w-px flex-1 mt-3 bg-border relative overflow-hidden">
+            <motion.div
+              style={{ height: lineHeight }}
+              className="absolute top-0 left-0 w-full bg-gradient-to-b from-gold to-transparent"
+            />
+          </div>
+        )}
+      </div>
+      <div className="pb-8">
+        <h3 className="font-display text-2xl md:text-3xl text-foreground mb-3">{step.title}</h3>
+        <p className="font-body text-muted-foreground leading-relaxed text-base">
+          {step.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
+
+const ProcessSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+  return (
+    <section ref={sectionRef} id="process" className="py-32 bg-card relative overflow-hidden">
+      {/* Floating decorative elements */}
+      <motion.div
+        style={{ y: bgY }}
+        className="absolute top-20 right-10 w-40 h-40 rounded-full border border-gold/10 opacity-30"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [-20, 20]) }}
+        className="absolute bottom-40 left-10 w-24 h-24 rounded-full border border-gold/10 opacity-20"
+      />
+
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center mb-20"
         >
-          <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">
+          <motion.span
+            initial={{ opacity: 0, letterSpacing: "0.2em" }}
+            whileInView={{ opacity: 1, letterSpacing: "0.4em" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2 }}
+            className="font-body text-xs uppercase text-primary mb-4 block"
+          >
             From Temple to You
-          </span>
-          <h2 className="font-display text-4xl md:text-6xl font-light text-foreground mb-4">
+          </motion.span>
+          <h2 className="font-display text-5xl md:text-7xl font-light text-foreground mb-4">
             How It's <span className="italic text-gradient-gold">Made</span>
           </h2>
-          <div className="ornament-line w-20 mx-auto mt-6" />
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: 80 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="ornament-line mx-auto mt-6"
+          />
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
           {steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="flex gap-6 md:gap-10 mb-12 last:mb-0"
-            >
-              <div className="flex flex-col items-center">
-                <span className="font-display text-3xl md:text-4xl text-gradient-gold font-semibold">
-                  {step.number}
-                </span>
-                {i < steps.length - 1 && (
-                  <div className="w-px flex-1 mt-3 bg-gradient-to-b from-gold/30 to-transparent" />
-                )}
-              </div>
-              <div className="pb-8">
-                <h3 className="font-display text-2xl text-foreground mb-2">{step.title}</h3>
-                <p className="font-body text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            </motion.div>
+            <ProcessStep key={step.number} step={step} index={i} />
           ))}
         </div>
       </div>

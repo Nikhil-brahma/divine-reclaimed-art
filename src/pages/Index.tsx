@@ -12,23 +12,33 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
+import SectionDivider from "@/components/SectionDivider";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <SEOHead />
       <StructuredData />
       <Navbar />
       <main>
         <HeroSection />
+        <SectionDivider variant="gold" />
         <CollectionsSection />
+        <SectionDivider variant="sacred" />
         <SacredProvenanceSection />
+        <SectionDivider variant="subtle" />
         <SocialProofSection />
+        <SectionDivider variant="gold" />
         <WhyYouDeserveSection />
+        <SectionDivider variant="sacred" />
         <StorySection />
+        <SectionDivider variant="gold" />
         <ProcessSection />
+        <SectionDivider variant="subtle" />
         <UrgencySection />
+        <SectionDivider variant="sacred" />
         <ImpactSection />
+        <SectionDivider variant="gold" />
         <FAQSection />
       </main>
       <Footer />
