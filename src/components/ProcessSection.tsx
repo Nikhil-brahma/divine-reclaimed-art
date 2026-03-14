@@ -33,14 +33,14 @@ const ProcessStep = ({ step, index }: { step: typeof steps[0]; index: number }) 
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "center center"],
+    offset: ["start 0.95", "start 0.4"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
-  const x = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? -80 : 80, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1, 1]);
-  const numberScale = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4, 1], [0, 1, 1]);
+  const x = useTransform(scrollYProgress, [0, 0.6], [index % 2 === 0 ? -40 : 40, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.95, 1]);
+  const numberScale = useTransform(scrollYProgress, [0, 0.4], [0.7, 1]);
+  const lineHeight = useTransform(scrollYProgress, [0.2, 1], ["0%", "100%"]);
 
   return (
     <motion.div
