@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import CollectionsSection from "@/components/CollectionsSection";
@@ -14,11 +15,21 @@ import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 
+const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <SEOHead />
       <StructuredData />
+
+      {/* Golden cursor trail — desktop only */}
+      <Suspense fallback={null}>
+        <div className="hidden md:block">
+          <GoldenCursor />
+        </div>
+      </Suspense>
+
       <Navbar />
       <main>
         <HeroSection />

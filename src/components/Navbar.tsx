@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -12,6 +12,40 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+const MagneticLink = ({ children, className, ...props }: any) => {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+    setOffset({ x, y });
+  };
+
+  const handleMouseLeave = () => setOffset({ x: 0, y: 0 });
+
+  const El = props.to ? Link : "a";
+
+  return (
+    <El
+      {...props}
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={className}
+      style={{
+        transform: `translate(${offset.x}px, ${offset.y}px)`,
+        transition: "transform 0.2s ease-out",
+        display: "inline-block",
+      }}
+    >
+      {children}
+    </El>
+  );
+};
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -20,11 +54,9 @@ const Navbar = () => {
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     const sectionId = href.replace("#", "");
-    
-    // Close mobile menu first, then scroll after it animates out
     const wasMobileOpen = isOpen;
     setIsOpen(false);
-    
+
     const scrollToSection = () => {
       const el = document.getElementById(sectionId);
       el?.scrollIntoView({ behavior: "smooth" });
@@ -34,40 +66,51 @@ const Navbar = () => {
       navigate("/");
       setTimeout(scrollToSection, 500);
     } else if (wasMobileOpen) {
-      // Wait for mobile menu exit animation before scrolling
       setTimeout(scrollToSection, 350);
     } else {
       scrollToSection();
     }
   };
 
-  const renderLink = (link: typeof navLinks[0], className: string) => {
+  const linkClass = "font-body text-sm tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors duration-300 relative group";
+
+  const renderLink = (link: typeof navLinks[0]) => {
     if (link.href.startsWith("/")) {
       return (
-        <Link key={link.label} to={link.href} onClick={() => setIsOpen(false)} className={className}>
+        <MagneticLink key={link.label} to={link.href} onClick={() => setIsOpen(false)} className={linkClass}>
           {link.label}
-        </Link>
+          <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-500" />
+        </MagneticLink>
       );
     }
     return (
-      <a key={link.label} href={link.href} onClick={(e) => handleAnchorClick(e, link.href)} className={className}>
+      <MagneticLink key={link.label} href={link.href} onClick={(e: React.MouseEvent) => handleAnchorClick(e, link.href)} className={linkClass}>
         {link.label}
-      </a>
+        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-500" />
+      </MagneticLink>
     );
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50" style={{
+      background: "hsla(36, 33%, 97%, 0.6)",
+      backdropFilter: "blur(20px) saturate(1.5)",
+      borderBottom: "1px solid hsla(42, 85%, 55%, 0.08)",
+    }}>
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center mx-0">
-          <img alt="Punarvsu" className="h-12 md:h-14 w-auto" src="/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png" />
+        <Link to="/" className="flex items-center mx-0 group">
+          <motion.img
+            alt="Punarvsu"
+            className="h-12 md:h-14 w-auto"
+            src="/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png"
+            whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
+            transition={{ duration: 0.3 }}
+          />
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) =>
-            renderLink(link, "font-body text-sm tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors duration-300")
-          )}
+          {navLinks.map(renderLink)}
           <CartDrawer />
         </div>
 
@@ -84,15 +127,31 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-border overflow-hidden"
+            className="md:hidden overflow-hidden"
+            style={{
+              background: "hsla(36, 33%, 97%, 0.95)",
+              backdropFilter: "blur(20px)",
+              borderBottom: "1px solid hsla(42, 85%, 55%, 0.1)",
+            }}
           >
             <div className="px-6 py-6 flex flex-col gap-4">
-              {navLinks.map((link) =>
-                renderLink(link, "font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors")
-              )}
-              <div className="mt-2">
-                <CartDrawer />
-              </div>
+              {navLinks.map((link) => {
+                if (link.href.startsWith("/")) {
+                  return (
+                    <Link key={link.label} to={link.href} onClick={() => setIsOpen(false)}
+                      className="font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors">
+                      {link.label}
+                    </Link>
+                  );
+                }
+                return (
+                  <a key={link.label} href={link.href} onClick={(e) => handleAnchorClick(e, link.href)}
+                    className="font-body text-base tracking-wider uppercase text-muted-foreground hover:text-primary transition-colors">
+                    {link.label}
+                  </a>
+                );
+              })}
+              <div className="mt-2"><CartDrawer /></div>
             </div>
           </motion.div>
         )}

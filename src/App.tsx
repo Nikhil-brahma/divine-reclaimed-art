@@ -4,13 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import SEODashboard from "./pages/SEODashboard";
 import NotFound from "./pages/NotFound";
-import ChatWidget from "./components/ChatWidget";
+
+const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
 
 const queryClient = new QueryClient();
 
@@ -28,7 +30,9 @@ const AppContent = () => {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ChatWidget />
+      <Suspense fallback={null}>
+        <SacredAIOrb />
+      </Suspense>
     </>
   );
 };
