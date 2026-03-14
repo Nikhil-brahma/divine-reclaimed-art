@@ -16,7 +16,6 @@ import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
-const SacredAIOrb = lazy(() => import("@/components/SacredAIOrb"));
 
 const Index = () => {
   return (
@@ -54,11 +53,6 @@ const Index = () => {
         <FAQSection />
       </main>
       <Footer />
-
-      {/* Sacred AI Orb */}
-      <Suspense fallback={null}>
-        <SacredAIOrb />
-      </Suspense>
     </div>
   );
 };

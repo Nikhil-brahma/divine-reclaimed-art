@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
+import TextReveal from "@/components/TextReveal";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -37,6 +38,14 @@ const HeroSection = () => {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/90 via-transparent to-temple-dark/40" />
 
+      {/* Scan lines for futuristic feel */}
+      <div
+        className="absolute inset-0 z-[4] pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, hsla(42, 85%, 55%, 0.15) 2px, hsla(42, 85%, 55%, 0.15) 3px)",
+        }}
+      />
+
       {/* 3D Sacred Particles */}
       <Suspense fallback={null}>
         <SacredParticles className="z-[5]" />
@@ -61,34 +70,27 @@ const HeroSection = () => {
             className="ornament-line mx-auto mb-8 overflow-hidden"
           />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8"
-          >
-            <motion.span
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+          <div className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
+            <TextReveal
+              text="Sacred Cloth,"
+              as="span"
               className="block"
-            >
-              Sacred Cloth,
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="block text-gradient-gold font-semibold italic"
-            >
-              New Purpose
-            </motion.span>
-          </motion.h1>
+              delay={0.4}
+              stagger={0.04}
+            />
+            <TextReveal
+              text="New Purpose"
+              as="span"
+              className="block text-gradient-gold font-semibold italic mt-2"
+              delay={0.9}
+              stagger={0.05}
+            />
+          </div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
+            transition={{ duration: 1, delay: 1.8 }}
             className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Temple textiles that once dressed the divine — now handcrafted into bags
@@ -98,7 +100,7 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
+            transition={{ duration: 0.8, delay: 2.2 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <motion.a
@@ -129,7 +131,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
+          transition={{ delay: 2.5 }}
           className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
           <motion.span className="font-body text-[10px] tracking-[0.3em] uppercase text-ivory/40">
