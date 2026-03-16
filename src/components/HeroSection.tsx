@@ -46,6 +46,33 @@ const HeroSection = () => {
         }}
       />
 
+      {/* Incense smoke particles */}
+      <div className="absolute bottom-0 left-0 right-0 h-64 z-[3] pointer-events-none overflow-hidden">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute bottom-0 w-1 rounded-full"
+            style={{
+              left: `${15 + i * 18}%`,
+              height: "120px",
+              background: "linear-gradient(to top, hsla(42, 85%, 55%, 0.08), transparent)",
+              filter: "blur(8px)",
+            }}
+            animate={{
+              y: [0, -80, -160],
+              opacity: [0, 0.3, 0],
+              scaleX: [1, 2, 3],
+            }}
+            transition={{
+              duration: 6 + i,
+              repeat: Infinity,
+              delay: i * 1.2,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+      </div>
+
       {/* 3D Sacred Particles */}
       <Suspense fallback={null}>
         <SacredParticles className="z-[5]" />
@@ -72,14 +99,14 @@ const HeroSection = () => {
 
           <div className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
             <TextReveal
-              text="Sacred Cloth,"
+              text="Where Devotion"
               as="span"
               className="block"
               delay={0.4}
               stagger={0.04}
             />
             <TextReveal
-              text="New Purpose"
+              text="Becomes Legacy"
               as="span"
               className="block text-gradient-gold font-semibold italic mt-2"
               delay={0.9}
@@ -91,11 +118,23 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.8 }}
-            className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            Temple textiles that once dressed the divine — now handcrafted into bags
-            you'll actually want to carry every day. Real fabric. Real history. Made by real hands.
+            From Temple to Timeless Luxury — Carry Divine Blessings.
+            Sacred textiles that once dressed the divine, now handcrafted into bags you'll treasure forever.
           </motion.p>
+
+          {/* Tagline badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 2 }}
+            className="inline-block mb-10"
+          >
+            <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/60 px-4 py-2 border border-gold/20 rounded-sm">
+              Sustainability Meets Spirituality
+            </span>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -117,12 +156,12 @@ const HeroSection = () => {
               />
             </motion.a>
             <motion.a
-              href="#story"
+              href="#sacred-journey"
               whileHover={{ scale: 1.05, borderColor: "hsl(42 85% 55% / 0.5)" }}
               whileTap={{ scale: 0.98 }}
               className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              How It's Made
+              The Sacred Journey
             </motion.a>
           </motion.div>
         </motion.div>
