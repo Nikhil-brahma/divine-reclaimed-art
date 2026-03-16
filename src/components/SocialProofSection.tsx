@@ -67,7 +67,7 @@ const SocialProofSection = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="fixed bottom-6 left-6 z-50 bg-foreground text-background px-5 py-3 rounded-sm shadow-sacred flex items-center gap-3 max-w-xs"
+        className="fixed bottom-6 left-4 z-30 bg-foreground text-background px-5 py-3 rounded-sm shadow-sacred flex items-center gap-3 max-w-[calc(100vw-5rem)]"
       >
         <span className="relative flex h-2.5 w-2.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
