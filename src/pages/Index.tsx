@@ -7,7 +7,7 @@ import SocialProofSection from "@/components/SocialProofSection";
 import UrgencySection from "@/components/UrgencySection";
 import WhyYouDeserveSection from "@/components/WhyYouDeserveSection";
 import StorySection from "@/components/StorySection";
-import ProcessSection from "@/components/ProcessSection";
+
 import ImpactSection from "@/components/ImpactSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
