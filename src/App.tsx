@@ -14,6 +14,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
+import ScrollToTop from "./components/ScrollToTop";
 
 const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
 
@@ -23,6 +24,7 @@ const AppContent = () => {
   useCartSync();
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/product/:handle" element={<ProductDetail />} />
