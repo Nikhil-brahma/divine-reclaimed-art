@@ -53,8 +53,6 @@ const Index = () => {
         <SectionDivider variant="sacred" />
         <StorySection />
         <SectionDivider variant="gold" />
-        <ProcessSection />
-        <SectionDivider variant="subtle" />
         <UrgencySection />
         <SectionDivider variant="sacred" />
         <ImpactSection />
