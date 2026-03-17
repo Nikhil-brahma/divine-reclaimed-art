@@ -24,6 +24,7 @@ const AppContent = () => {
   useCartSync();
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/product/:handle" element={<ProductDetail />} />
