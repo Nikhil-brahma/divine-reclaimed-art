@@ -5,10 +5,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CartDrawer } from "@/components/CartDrawer";
 
 const navLinks = [
-  { label: "Collections", href: "#collections" },
-  { label: "About", href: "/about" },
+  { label: "Shop", href: "#collections" },
+  { label: "Our Story", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Bulk Orders", href: "/contact" },
   { label: "Contact", href: "/contact" },
 ];
 
