@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import SEODashboard from "./pages/SEODashboard";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import AdminMessages from "./pages/AdminMessages";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
@@ -34,6 +35,7 @@ const AppContent = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/seo-dashboard" element={<SEODashboard />} />
+        <Route path="/admin/messages" element={<AdminMessages />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
