@@ -8,8 +8,7 @@ const navLinks = [
   { label: "Shop", href: "#collections" },
   { label: "Our Story", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Bulk Orders", href: "/contact" },
-  { label: "Contact", href: "/contact" },
+  { label: "Contact & Bulk Orders", href: "/contact" },
 ];
 
 const MagneticLink = ({ children, className, ...props }: any) => {
