@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ShieldCheck, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -8,42 +8,64 @@ const testimonials = [
     location: "Mumbai",
     text: "I wasn't sure what to expect honestly. But when I held it, I could feel the texture, the weight — it's nothing like a regular bag. My friends keep asking where I got it.",
     rating: 5,
-    product: "Temple Tote",
+    product: "Sacred Heritage Potli",
   },
   {
     name: "Ananya R.",
     location: "Bangalore",
     text: "I gave one to my mom for her birthday. She read the provenance card and got emotional — said it reminded her of visiting temples as a kid. Best gift I've ever picked.",
     rating: 5,
-    product: "Krishna Clutch",
+    product: "Crimson Velvet Potli",
   },
   {
     name: "Kavita S.",
     location: "Delhi",
     text: "Bought one, then bought three more for Diwali gifts. There's something about giving someone a Punarvsu piece — it just feels more thoughtful than anything else.",
     rating: 5,
-    product: "Radha Pouch",
+    product: "Grand Heritage Potli",
   },
   {
     name: "Meera T.",
     location: "Jaipur",
     text: "The colours are so rich — you can tell this fabric has lived a life. It's hard to explain but it feels different carrying something with real history.",
     rating: 5,
-    product: "Saffron Crossbody",
+    product: "Mustard Silk Potli",
   },
 ];
 
-const livePulseMessages = [
-  "Someone in Pune just added a Temple Tote to their cart",
-  "2 Krishna Clutches ordered in the last hour",
-  "A customer from Chennai just placed an order",
-  "Saffron Crossbody is getting a lot of love today",
-  "Someone in Hyderabad is checking out the Radha Pouch",
+// Real Shopify product names synced with actual catalog
+const realProducts = [
+  "Crimson Velvet Potli",
+  "Grand Heritage Potli",
+  "Mustard Silk Potli",
+  "Sacred Heritage Potli – Classic Edition",
+  "Sacred Heritage Potli – Premium Zari Edition",
+  "Saffron & Teal Potli",
+  "Sacred Heritage Potli – Devotion Edition",
+  "Sacred Heritage Potli – Lite Edition",
 ];
+
+const cities = ["Pune", "Chennai", "Hyderabad", "Mumbai", "Bangalore", "Delhi", "Jaipur", "Kolkata", "Ahmedabad", "Lucknow"];
+
+const templates = [
+  (product: string, city: string) => `Someone in ${city} just added a ${product} to their cart`,
+  (product: string, _city: string) => `2 ${product} ordered in the last hour`,
+  (_product: string, city: string) => `A customer from ${city} just placed an order`,
+  (product: string, _city: string) => `${product} is getting a lot of love today`,
+  (product: string, city: string) => `Someone in ${city} is checking out the ${product}`,
+];
+
+function generatePulseMessage(): string {
+  const product = realProducts[Math.floor(Math.random() * realProducts.length)];
+  const city = cities[Math.floor(Math.random() * cities.length)];
+  const template = templates[Math.floor(Math.random() * templates.length)];
+  return template(product, city);
+}
 
 const SocialProofSection = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [pulseMessage, setPulseMessage] = useState(0);
+  const [pulseMessage, setPulseMessage] = useState(() => generatePulseMessage());
+  const [pulseKey, setPulseKey] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -54,27 +76,31 @@ const SocialProofSection = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPulseMessage((prev) => (prev + 1) % livePulseMessages.length);
+      setPulseMessage(generatePulseMessage());
+      setPulseKey((prev) => prev + 1);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
 
   return (
     <section className="py-24 bg-background relative overflow-hidden">
-      {/* Live activity pulse */}
-      <motion.div
-        key={pulseMessage}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        className="fixed bottom-6 left-4 z-30 bg-foreground text-background px-5 py-3 rounded-sm shadow-sacred flex items-center gap-3 max-w-[calc(100vw-5rem)]"
-      >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-        </span>
-        <p className="font-body text-xs">{livePulseMessages[pulseMessage]}</p>
-      </motion.div>
+      {/* Live activity pulse - fixed for mobile visibility */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={pulseKey}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+          className="fixed bottom-4 left-3 right-3 md:left-4 md:right-auto z-50 bg-foreground text-background px-4 py-3 rounded-lg shadow-sacred flex items-center gap-3 md:max-w-sm"
+        >
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
+          </span>
+          <p className="font-body text-xs leading-snug">{pulseMessage}</p>
+        </motion.div>
+      </AnimatePresence>
 
       <div className="container mx-auto px-6">
         {/* Header */}
