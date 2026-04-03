@@ -41,13 +41,13 @@ const Index = () => {
 
       <Navbar />
       <main>
-        <SacredHeroBanner />
-        <SectionDivider variant="gold" />
-        <WhyHowWhatStrip />
-        <SectionDivider variant="sacred" />
         <HeroSection />
         <SectionDivider variant="gold" />
         <CollectionsSection />
+        <SectionDivider variant="sacred" />
+        <SacredHeroBanner />
+        <SectionDivider variant="gold" />
+        <WhyHowWhatStrip />
         <SectionDivider variant="sacred" />
         <div id="sacred-journey">
           <SacredJourneyTimeline />

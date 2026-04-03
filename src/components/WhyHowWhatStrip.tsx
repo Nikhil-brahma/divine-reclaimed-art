@@ -24,15 +24,17 @@ const WhyHowWhatStrip = () => {
   const isMobile = useIsMobile();
 
   return (
-    <section className="relative py-16 md:py-24 px-4" style={{ background: "#0a0804" }}>
-      <div className="max-w-6xl mx-auto">
+    <section className="relative py-16 md:py-24 px-4 bg-temple-dark">
+      {/* Scan lines */}
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, hsla(42, 85%, 55%, 0.15) 2px, hsla(42, 85%, 55%, 0.15) 3px)",
+        }}
+      />
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.h2
-          className="text-center font-display text-2xl md:text-4xl font-bold mb-12"
-          style={{
-            background: "linear-gradient(135deg, #c9a84c, #e8d48b, #c9a84c)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
+          className="text-center font-display text-2xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-gold via-saffron to-gold bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -51,25 +53,15 @@ const WhyHowWhatStrip = () => {
               whileHover={isMobile ? {} : { y: -8 }}
             >
               <HolographicCard
-                className="rounded-xl p-6 md:p-8 h-full"
+                className="rounded-xl h-full"
                 glowColor="42, 85%, 55%"
               >
-                <div
-                  className="h-full flex flex-col items-center text-center backdrop-blur-md rounded-xl"
-                  style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(201,168,76,0.2)",
-                    padding: "2rem 1.5rem",
-                  }}
-                >
+                <div className="h-full flex flex-col items-center text-center backdrop-blur-md rounded-xl p-6 md:p-8 bg-foreground/5 border border-gold/20">
                   <span className="text-5xl mb-4 block">{card.icon}</span>
-                  <h3
-                    className="font-display text-xl md:text-2xl font-semibold mb-3"
-                    style={{ color: "#c9a84c" }}
-                  >
+                  <h3 className="font-display text-xl md:text-2xl font-semibold mb-3 text-gold">
                     {card.title}
                   </h3>
-                  <p className="text-sm md:text-base leading-relaxed" style={{ color: "#d4c9a8" }}>
+                  <p className="text-sm md:text-base leading-relaxed text-ivory/70 font-body">
                     {card.text}
                   </p>
                 </div>
