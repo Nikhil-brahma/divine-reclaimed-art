@@ -41,6 +41,10 @@ const Index = () => {
 
       <Navbar />
       <main>
+        <SacredHeroBanner />
+        <SectionDivider variant="gold" />
+        <WhyHowWhatStrip />
+        <SectionDivider variant="sacred" />
         <HeroSection />
         <SectionDivider variant="gold" />
         <CollectionsSection />
@@ -60,6 +64,10 @@ const Index = () => {
         <UrgencySection />
         <SectionDivider variant="sacred" />
         <ImpactSection />
+        <SectionDivider variant="gold" />
+        <BulkGiftingBanner />
+        <SectionDivider variant="sacred" />
+        <BrandStoryStrip />
         <SectionDivider variant="gold" />
         <FAQSection />
       </main>
