@@ -16,10 +16,6 @@ import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
-import SacredHeroBanner from "@/components/SacredHeroBanner";
-import WhyHowWhatStrip from "@/components/WhyHowWhatStrip";
-import BulkGiftingBanner from "@/components/BulkGiftingBanner";
-import BrandStoryStrip from "@/components/BrandStoryStrip";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
 
@@ -45,10 +41,6 @@ const Index = () => {
         <SectionDivider variant="gold" />
         <CollectionsSection />
         <SectionDivider variant="sacred" />
-        <SacredHeroBanner />
-        <SectionDivider variant="gold" />
-        <WhyHowWhatStrip />
-        <SectionDivider variant="sacred" />
         <div id="sacred-journey">
           <SacredJourneyTimeline />
         </div>
@@ -64,10 +56,6 @@ const Index = () => {
         <UrgencySection />
         <SectionDivider variant="sacred" />
         <ImpactSection />
-        <SectionDivider variant="gold" />
-        <BulkGiftingBanner />
-        <SectionDivider variant="sacred" />
-        <BrandStoryStrip />
         <SectionDivider variant="gold" />
         <FAQSection />
       </main>
