@@ -16,6 +16,10 @@ import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
+import SacredHeroBanner from "@/components/SacredHeroBanner";
+import WhyHowWhatStrip from "@/components/WhyHowWhatStrip";
+import BulkGiftingBanner from "@/components/BulkGiftingBanner";
+import BrandStoryStrip from "@/components/BrandStoryStrip";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
 
