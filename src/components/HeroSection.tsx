@@ -148,7 +148,7 @@ const HeroSection = () => {
               whileTap={{ scale: 0.98 }}
               className="bg-gradient-saffron text-primary-foreground px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase shadow-sacred relative overflow-hidden group"
             >
-              <span className="relative z-10">See the Collection</span>
+              <span className="relative z-10">Explore the Sacred Collection</span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-ivory/10 to-transparent"
                 animate={{ x: ["-100%", "200%"] }}
