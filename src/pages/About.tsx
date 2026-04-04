@@ -155,7 +155,31 @@ const About = () => {
 
         <SectionDivider variant="gold" />
 
-        {/* CTA */}
+        {/* Founder */}
+        <section className="py-24 bg-background">
+          <div className="container mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-2xl mx-auto"
+            >
+              <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">Meet the Founder</span>
+              <h2 className="font-display text-4xl md:text-5xl font-light text-foreground mb-6">
+                Nikhil <span className="italic text-gradient-gold">Visionary at 20</span>
+              </h2>
+              <p className="font-body text-muted-foreground leading-relaxed mb-4">
+                At just 20, Nikhil — CEO & Founder of Punarvsu — saw what others overlooked: sacred temple textiles being discarded after rituals. What started as a heartfelt mission to honour the divine has grown into a purpose-driven brand that bridges faith, sustainability, and artisan empowerment.
+              </p>
+              <p className="font-body text-muted-foreground leading-relaxed">
+                Under his leadership, Punarvsu partners with Sampurna NGO to create dignified livelihoods for women artisans while ensuring that every fabric once blessed by devotion finds a meaningful second life.
+              </p>
+              <div className="ornament-line w-20 mx-auto mt-8" />
+            </motion.div>
+          </div>
+        </section>
+
+        <SectionDivider variant="sacred" />
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-sacred" />
           <div className="container mx-auto px-6 relative z-10 text-center">

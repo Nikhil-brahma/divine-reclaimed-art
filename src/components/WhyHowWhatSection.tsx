@@ -36,10 +36,10 @@ const WhyHowWhatSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="font-body text-xs uppercase tracking-[0.3em] text-gold mb-4 block">
+          <span className="font-body text-xs uppercase tracking-[0.3em] text-primary mb-4 block">
             Our Purpose
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-light text-ivory leading-tight">
+          <h2 className="font-display text-3xl md:text-5xl font-light text-foreground leading-tight">
             What Makes This <span className="text-gradient-gold italic">Sacred</span>
           </h2>
         </motion.div>
@@ -54,21 +54,21 @@ const WhyHowWhatSection = () => {
               transition={{ duration: 0.7, delay: i * 0.15 }}
               className="text-center group"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full border border-gold/30 mb-6 group-hover:border-gold/60 transition-colors">
-                <col.icon className="w-6 h-6 text-gold" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full border border-primary/30 mb-6 group-hover:border-primary/60 transition-colors">
+                <col.icon className="w-6 h-6 text-primary" />
               </div>
 
-              <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/60 block mb-2">
+              <span className="font-body text-[10px] tracking-[0.3em] uppercase text-primary/60 block mb-2">
                 {col.tag} — {col.label}
               </span>
 
-              <div className="w-8 h-px bg-gold/30 mx-auto mb-4" />
+              <div className="w-8 h-px bg-primary/30 mx-auto mb-4" />
 
-              <h3 className="font-display text-xl md:text-2xl font-light text-ivory mb-4">
+              <h3 className="font-display text-xl md:text-2xl font-light text-foreground mb-4">
                 {col.heading}
               </h3>
 
-              <p className="font-body text-sm text-ivory/60 leading-relaxed max-w-xs mx-auto">
+              <p className="font-body text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
                 {col.body}
               </p>
             </motion.div>
