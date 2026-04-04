@@ -40,6 +40,8 @@ const Index = () => {
       <main>
         <HeroSection />
         <SectionDivider variant="gold" />
+        <WhyHowWhatSection />
+        <SectionDivider variant="sacred" />
         <CollectionsSection />
         <SectionDivider variant="sacred" />
         <div id="sacred-journey">

@@ -156,12 +156,12 @@ const HeroSection = () => {
               />
             </motion.a>
             <motion.a
-              href="#sacred-journey"
+              href="#why-how-what"
               whileHover={{ scale: 1.05, borderColor: "hsl(42 85% 55% / 0.5)" }}
               whileTap={{ scale: 0.98 }}
               className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              The Sacred Journey
+              Want to Carry a Blessing?
             </motion.a>
           </motion.div>
         </motion.div>
