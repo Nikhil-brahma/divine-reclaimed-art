@@ -107,7 +107,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-body text-xs text-ivory/30">
-            © 2026 Punarvsu. All rights reserved. Made with care in Delhi.
+            © 2026 Punarvsu. All rights reserved. Founded by Nikhil. Made with care in Delhi.
           </p>
           <p className="font-body text-[10px] tracking-[0.2em] uppercase text-ivory/20">
             From Temple to Timeless Luxury
