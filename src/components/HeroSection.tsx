@@ -99,14 +99,14 @@ const HeroSection = () => {
 
           <div className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
             <TextReveal
-              text="Where Devotion"
+              text="Because Devotion"
               as="span"
               className="block"
               delay={0.4}
               stagger={0.04}
             />
             <TextReveal
-              text="Becomes Legacy"
+              text="Never Ends."
               as="span"
               className="block text-gradient-gold font-semibold italic mt-2"
               delay={0.9}
