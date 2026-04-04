@@ -120,8 +120,8 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 1.8 }}
             className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            From Temple to Timeless Luxury — Carry Divine Blessings.
-            Sacred textiles that once dressed the divine, now handcrafted into bags you'll treasure forever.
+            Upcycled from sacred temple offerings. Handcrafted by women artisans.
+            A bag that carries a soul.
           </motion.p>
 
           {/* Tagline badge */}
