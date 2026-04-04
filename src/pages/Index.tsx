@@ -15,6 +15,7 @@ import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
+import WhyHowWhatSection from "@/components/WhyHowWhatSection";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
@@ -39,6 +40,8 @@ const Index = () => {
       <main>
         <HeroSection />
         <SectionDivider variant="gold" />
+        <WhyHowWhatSection />
+        <SectionDivider variant="sacred" />
         <CollectionsSection />
         <SectionDivider variant="sacred" />
         <div id="sacred-journey">

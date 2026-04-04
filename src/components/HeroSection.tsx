@@ -99,14 +99,14 @@ const HeroSection = () => {
 
           <div className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
             <TextReveal
-              text="Where Devotion"
+              text="Because Devotion"
               as="span"
               className="block"
               delay={0.4}
               stagger={0.04}
             />
             <TextReveal
-              text="Becomes Legacy"
+              text="Never Ends."
               as="span"
               className="block text-gradient-gold font-semibold italic mt-2"
               delay={0.9}
@@ -120,8 +120,8 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 1.8 }}
             className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            From Temple to Timeless Luxury — Carry Divine Blessings.
-            Sacred textiles that once dressed the divine, now handcrafted into bags you'll treasure forever.
+            Upcycled from sacred temple offerings. Handcrafted by women artisans.
+            A bag that carries a soul.
           </motion.p>
 
           {/* Tagline badge */}
@@ -148,7 +148,7 @@ const HeroSection = () => {
               whileTap={{ scale: 0.98 }}
               className="bg-gradient-saffron text-primary-foreground px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase shadow-sacred relative overflow-hidden group"
             >
-              <span className="relative z-10">See the Collection</span>
+              <span className="relative z-10">Explore the Sacred Collection</span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-ivory/10 to-transparent"
                 animate={{ x: ["-100%", "200%"] }}
@@ -156,12 +156,12 @@ const HeroSection = () => {
               />
             </motion.a>
             <motion.a
-              href="#sacred-journey"
+              href="#why-how-what"
               whileHover={{ scale: 1.05, borderColor: "hsl(42 85% 55% / 0.5)" }}
               whileTap={{ scale: 0.98 }}
               className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              The Sacred Journey
+              Want to Carry a Blessing?
             </motion.a>
           </motion.div>
         </motion.div>

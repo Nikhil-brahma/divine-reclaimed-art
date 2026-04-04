@@ -103,7 +103,7 @@ const StorySection = () => {
                 transition={{ duration: 1.2 }}
                 className="font-body text-xs uppercase text-gold mb-4 block"
               >
-                How It Started
+                The Full Story
               </motion.span>
               <h2 className="font-display text-4xl md:text-6xl font-light mb-6 leading-tight text-ivory">
                 A Simple Idea That
