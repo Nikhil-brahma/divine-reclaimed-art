@@ -157,46 +157,77 @@ const About = () => {
         <SectionDivider variant="gold" />
 
         {/* Founder */}
-        <section className="py-24 bg-background">
-          <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-16 items-center max-w-5xl mx-auto">
+        <section className="py-28 bg-background relative overflow-hidden">
+          {/* Subtle decorative background */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: "radial-gradient(circle at 20% 50%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(var(--primary)) 0%, transparent 50%)"
+          }} />
+
+          <div className="container mx-auto px-6 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">Meet the Founder</span>
+              <h2 className="font-display text-4xl md:text-6xl font-light text-foreground">
+                The <span className="italic text-gradient-gold">Visionary</span>
+              </h2>
+              <div className="ornament-line w-20 mx-auto mt-6" />
+            </motion.div>
+
+            <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
+              {/* Image — takes 2 cols */}
               <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 1 }}
+                className="lg:col-span-2"
               >
-                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto bg-temple-dark">
-                  <img
-                    src={nikhilImg}
-                    alt="Nikhil — CEO & Founder of Punarvsu"
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/80">CEO & Founder</span>
+                <div className="relative mx-auto max-w-xs lg:max-w-none">
+                  {/* Gold border frame */}
+                  <div className="absolute -inset-3 border border-primary/20 rounded-sm pointer-events-none" />
+                  <div className="absolute -inset-1.5 border border-primary/10 rounded-sm pointer-events-none" />
+                  
+                  <div className="relative overflow-hidden rounded-sm">
+                    <img
+                      src={nikhilImg}
+                      alt="Nikhil — CEO & Founder of Punarvsu"
+                      className="w-full h-auto block group-hover:scale-105 transition-transform duration-1000"
+                      loading="lazy"
+                    />
+                    {/* Bottom gradient overlay with title */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-temple-dark/80 via-temple-dark/30 to-transparent p-6 pt-16">
+                      <p className="font-display text-2xl text-ivory">Nikhil</p>
+                      <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/80">CEO & Founder · Age 20</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
 
+              {/* Text — takes 3 cols */}
               <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                className="lg:col-span-3"
               >
-                <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">Meet the Founder</span>
-                <h2 className="font-display text-4xl md:text-5xl font-light text-foreground mb-6">
-                  Nikhil <span className="italic text-gradient-gold">Visionary at 20</span>
-                </h2>
+                <blockquote className="font-display text-2xl md:text-3xl font-light text-foreground leading-relaxed mb-8 border-l-2 border-primary/30 pl-6">
+                  "I saw sacred fabrics being discarded after rituals — textiles that once dressed the divine. That didn't sit right with me."
+                </blockquote>
                 <p className="font-body text-muted-foreground leading-relaxed mb-4">
-                  At just 20, Nikhil — CEO & Founder of Punarvsu — saw what others overlooked: sacred temple textiles being discarded after rituals. What started as a heartfelt mission to honour the divine has grown into a purpose-driven brand that bridges faith, sustainability, and artisan empowerment.
+                  At just 20, Nikhil founded Punarvsu with a singular belief: devotion is eternal. What started as a heartfelt mission to honour sacred temple textiles has grown into a purpose-driven brand that bridges faith, sustainability, and artisan empowerment.
                 </p>
-                <p className="font-body text-muted-foreground leading-relaxed">
-                  Under his leadership, Punarvsu partners with Sampurna NGO to create dignified livelihoods for women artisans while ensuring that every fabric once blessed by devotion finds a meaningful second life.
+                <p className="font-body text-muted-foreground leading-relaxed mb-8">
+                  Under his leadership, Punarvsu partners with Sampurna NGO to create dignified livelihoods for women artisans — ensuring that every fabric once blessed by devotion finds a meaningful second life.
                 </p>
-                <div className="ornament-line w-20 mt-8" />
+                <div className="flex items-center gap-4">
+                  <div className="ornament-line w-12" />
+                  <span className="font-body text-[10px] tracking-[0.3em] uppercase text-primary/60">Temple to Fashion · Handcrafted Heritage · Sacred Textiles Reborn</span>
+                </div>
               </motion.div>
             </div>
           </div>
