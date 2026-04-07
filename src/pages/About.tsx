@@ -166,11 +166,11 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto">
+                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto bg-temple-dark">
                   <img
                     src={nikhilImg}
                     alt="Nikhil — CEO & Founder of Punarvsu"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/50 via-transparent to-transparent" />
