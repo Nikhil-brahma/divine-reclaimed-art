@@ -166,7 +166,7 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto">
+                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto bg-temple-dark">
                   <img
                     src={nikhilImg}
                     alt="Nikhil — CEO & Founder of Punarvsu"
