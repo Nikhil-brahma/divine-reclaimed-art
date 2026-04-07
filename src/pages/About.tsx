@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import artisanImg from "@/assets/artisan-crafting.jpg";
+import nikhilImg from "@/assets/nikhil-ceo.jpg";
 import SectionDivider from "@/components/SectionDivider";
 
 const values = [
