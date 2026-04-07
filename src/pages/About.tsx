@@ -170,7 +170,7 @@ const About = () => {
                   <img
                     src={nikhilImg}
                     alt="Nikhil — CEO & Founder of Punarvsu"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/50 via-transparent to-transparent" />
