@@ -159,24 +159,46 @@ const About = () => {
         {/* Founder */}
         <section className="py-24 bg-background">
           <div className="container mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-2xl mx-auto"
-            >
-              <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">Meet the Founder</span>
-              <h2 className="font-display text-4xl md:text-5xl font-light text-foreground mb-6">
-                Nikhil <span className="italic text-gradient-gold">Visionary at 20</span>
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed mb-4">
-                At just 20, Nikhil — CEO & Founder of Punarvsu — saw what others overlooked: sacred temple textiles being discarded after rituals. What started as a heartfelt mission to honour the divine has grown into a purpose-driven brand that bridges faith, sustainability, and artisan empowerment.
-              </p>
-              <p className="font-body text-muted-foreground leading-relaxed">
-                Under his leadership, Punarvsu partners with Sampurna NGO to create dignified livelihoods for women artisans while ensuring that every fabric once blessed by devotion finds a meaningful second life.
-              </p>
-              <div className="ornament-line w-20 mx-auto mt-8" />
-            </motion.div>
+            <div className="grid lg:grid-cols-2 gap-16 items-center max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="aspect-[3/4] rounded-sm overflow-hidden relative group max-w-sm mx-auto">
+                  <img
+                    src={nikhilImg}
+                    alt="Nikhil — CEO & Founder of Punarvsu"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/80">CEO & Founder</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span className="font-body text-xs tracking-[0.4em] uppercase text-primary mb-4 block">Meet the Founder</span>
+                <h2 className="font-display text-4xl md:text-5xl font-light text-foreground mb-6">
+                  Nikhil <span className="italic text-gradient-gold">Visionary at 20</span>
+                </h2>
+                <p className="font-body text-muted-foreground leading-relaxed mb-4">
+                  At just 20, Nikhil — CEO & Founder of Punarvsu — saw what others overlooked: sacred temple textiles being discarded after rituals. What started as a heartfelt mission to honour the divine has grown into a purpose-driven brand that bridges faith, sustainability, and artisan empowerment.
+                </p>
+                <p className="font-body text-muted-foreground leading-relaxed">
+                  Under his leadership, Punarvsu partners with Sampurna NGO to create dignified livelihoods for women artisans while ensuring that every fabric once blessed by devotion finds a meaningful second life.
+                </p>
+                <div className="ornament-line w-20 mt-8" />
+              </motion.div>
+            </div>
           </div>
         </section>
 
