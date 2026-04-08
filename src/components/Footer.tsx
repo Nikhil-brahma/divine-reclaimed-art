@@ -30,7 +30,7 @@ const Footer = () => {
             </p>
             {/* Sacred geometry social icons */}
             <div className="flex gap-3">
-              <SacredGeoIcon href="https://instagram.com">
+              <SacredGeoIcon href="https://www.instagram.com/punarvsu_?igsh=dXQ1emdsa2JoYTQx">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
                   <rect x="2" y="2" width="20" height="20" rx="5" />
                   <circle cx="12" cy="12" r="5" />
