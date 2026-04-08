@@ -76,8 +76,8 @@ const Footer = () => {
                 { label: "About Us", href: "/about" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy", href: "/privacy" },
-                { label: "Terms", href: "#" },
-                { label: "Shipping", href: "#" },
+                { label: "Terms", href: "/terms" },
+                { label: "Shipping", href: "/shipping" },
               ].map(link => (
                 <Link key={link.label} to={link.href} className="font-body text-sm text-ivory/50 hover:text-gold transition-colors">
                   {link.label}
