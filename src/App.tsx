@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import SEODashboard from "./pages/SEODashboard";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
 import AdminMessages from "./pages/AdminMessages";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
