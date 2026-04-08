@@ -75,7 +75,7 @@ const Footer = () => {
               {[
                 { label: "About Us", href: "/about" },
                 { label: "Contact", href: "/contact" },
-                { label: "Privacy", href: "#" },
+                { label: "Privacy", href: "/privacy" },
                 { label: "Terms", href: "#" },
                 { label: "Shipping", href: "#" },
               ].map(link => (
