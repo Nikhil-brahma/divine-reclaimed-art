@@ -33,12 +33,12 @@ const Privacy = () => {
                 When we use the term "personal information," we are referring to information that identifies or can reasonably be linked to you or another person. We may collect or process the following categories of personal information:
               </p>
               <ul className="list-disc list-inside space-y-3 pl-2">
-                <li><strong className="text-ivory">Contact details:</strong> Name, billing address, shipping address, phone number, and email address.</li>
-                <li><strong className="text-ivory">Financial information:</strong> Payment card information, transaction details, and payment confirmation.</li>
-                <li><strong className="text-ivory">Account information:</strong> Username, password, security questions, and preferences.</li>
-                <li><strong className="text-ivory">Transaction information:</strong> Items you view, put in your cart, or purchase. Note: Because our products are one-of-a-kind, unique creations, all sales are final and we do not accept returns or exchanges. We collect transaction data strictly to fulfill your order and manage business records.</li>
-                <li><strong className="text-ivory">Communications:</strong> Information included in communications with us, such as customer support inquiries.</li>
-                <li><strong className="text-ivory">Device & Usage information:</strong> IP address, browser type, and interaction data regarding how you navigate the Services.</li>
+                <li><strong className="text-foreground">Contact details:</strong> Name, billing address, shipping address, phone number, and email address.</li>
+                <li><strong className="text-foreground">Financial information:</strong> Payment card information, transaction details, and payment confirmation.</li>
+                <li><strong className="text-foreground">Account information:</strong> Username, password, security questions, and preferences.</li>
+                <li><strong className="text-foreground">Transaction information:</strong> Items you view, put in your cart, or purchase. Note: Because our products are one-of-a-kind, unique creations, all sales are final and we do not accept returns or exchanges. We collect transaction data strictly to fulfill your order and manage business records.</li>
+                <li><strong className="text-foreground">Communications:</strong> Information included in communications with us, such as customer support inquiries.</li>
+                <li><strong className="text-foreground">Device & Usage information:</strong> IP address, browser type, and interaction data regarding how you navigate the Services.</li>
               </ul>
             </section>
 
@@ -46,11 +46,11 @@ const Privacy = () => {
               <h2 className="font-display text-2xl text-gold mb-4">How We Use Your Personal Information</h2>
               <p className="mb-4">Depending on how you interact with us, we may use personal information for the following purposes:</p>
               <ul className="list-disc list-inside space-y-3 pl-2">
-                <li><strong className="text-ivory">Provide, Tailor, and Improve the Services:</strong> We use your information to perform our contract with you, process payments, fulfill orders, arrange shipping, and create a customized shopping experience.</li>
-                <li><strong className="text-ivory">Marketing and Advertising:</strong> To send promotional communications and show online advertisements for products based on your activity.</li>
-                <li><strong className="text-ivory">Security and Fraud Prevention:</strong> To authenticate your account, provide a secure payment experience, and detect illegal or fraudulent activity.</li>
-                <li><strong className="text-ivory">Communicating with You:</strong> To provide customer support and maintain our business relationship with you.</li>
-                <li><strong className="text-ivory">Legal Reasons:</strong> To comply with applicable laws or respond to valid legal processes.</li>
+                <li><strong className="text-foreground">Provide, Tailor, and Improve the Services:</strong> We use your information to perform our contract with you, process payments, fulfill orders, arrange shipping, and create a customized shopping experience.</li>
+                <li><strong className="text-foreground">Marketing and Advertising:</strong> To send promotional communications and show online advertisements for products based on your activity.</li>
+                <li><strong className="text-foreground">Security and Fraud Prevention:</strong> To authenticate your account, provide a secure payment experience, and detect illegal or fraudulent activity.</li>
+                <li><strong className="text-foreground">Communicating with You:</strong> To provide customer support and maintain our business relationship with you.</li>
+                <li><strong className="text-foreground">Legal Reasons:</strong> To comply with applicable laws or respond to valid legal processes.</li>
               </ul>
             </section>
 
@@ -103,11 +103,11 @@ const Privacy = () => {
                 Should you have any questions about our privacy practices or this Privacy Policy, or if you would like to exercise any of your rights, please contact us:
               </p>
               <p>
-                <strong className="text-ivory">Email:</strong>{" "}
+                <strong className="text-foreground">Email:</strong>{" "}
                 <a href="mailto:nikhilrawat508@gmail.com" className="text-gold hover:underline">nikhilrawat508@gmail.com</a>
               </p>
               <p>
-                <strong className="text-ivory">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN
+                <strong className="text-foreground">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN
               </p>
             </section>
           </div>
