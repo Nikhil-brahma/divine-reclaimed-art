@@ -17,7 +17,7 @@ const Terms = () => {
           <h1 className="font-display text-4xl md:text-5xl text-gold mb-4">Terms & Conditions</h1>
           <p className="text-muted-foreground text-sm mb-12">Last updated: April 8, 2026</p>
 
-          <div className="prose-custom space-y-8 font-body text-ivory/80 leading-relaxed text-sm">
+          <div className="prose-custom space-y-8 font-body text-foreground/80 leading-relaxed text-sm">
             <section>
               <h2 className="font-display text-2xl text-gold mb-4">Overview</h2>
               <p>
@@ -48,7 +48,7 @@ const Terms = () => {
             <section>
               <h2 className="font-display text-2xl text-gold mb-4">All Sales Are Final — No Returns or Exchanges</h2>
               <p>
-                Because every Punarvsu product is a unique, one-of-a-kind creation made from retired sacred textiles, <strong className="text-ivory">all sales are final</strong>. We do not accept returns, exchanges, or refunds under any circumstances.
+                Because every Punarvsu product is a unique, one-of-a-kind creation made from retired sacred textiles, <strong className="text-foreground">all sales are final</strong>. We do not accept returns, exchanges, or refunds under any circumstances.
               </p>
               <p className="mt-4">
                 We encourage you to review product descriptions, dimensions, and photographs carefully before purchasing. If you have any questions about a specific item, please{" "}
@@ -63,7 +63,7 @@ const Terms = () => {
                 All prices are listed in Indian Rupees (₹) and are inclusive of applicable taxes unless stated otherwise. We reserve the right to modify prices without prior notice. Payment is processed securely through Shopify's payment gateway.
               </p>
               <p className="mt-4">
-                Orders above <strong className="text-ivory">₹2,999</strong> qualify for free shipping within India. For orders below this threshold, standard shipping charges will apply at checkout.
+                Orders above <strong className="text-foreground">₹2,999</strong> qualify for free shipping within India. For orders below this threshold, standard shipping charges will apply at checkout.
               </p>
             </section>
 
@@ -120,11 +120,11 @@ const Terms = () => {
               <h2 className="font-display text-2xl text-gold mb-4">Contact</h2>
               <p className="mb-2">Questions about these Terms & Conditions can be directed to:</p>
               <p>
-                <strong className="text-ivory">Email:</strong>{" "}
+                <strong className="text-foreground">Email:</strong>{" "}
                 <a href="mailto:nikhilrawat508@gmail.com" className="text-gold hover:underline">nikhilrawat508@gmail.com</a>
               </p>
               <p>
-                <strong className="text-ivory">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN
+                <strong className="text-foreground">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN
               </p>
             </section>
           </div>
