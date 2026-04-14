@@ -16,7 +16,7 @@ const Privacy = () => {
           <h1 className="font-display text-4xl md:text-5xl text-gold mb-4">Privacy Policy</h1>
           <p className="text-muted-foreground text-sm mb-12">Last updated: April 8, 2026</p>
 
-          <div className="prose-custom space-y-8 font-body text-ivory/80 leading-relaxed text-sm">
+          <div className="prose-custom space-y-8 font-body text-foreground/80 leading-relaxed text-sm">
             <p>
               Punarvsu operates this store and website, including all related information, content, features, tools, products and services, in order to provide you, the customer, with a curated shopping experience (the "Services"). Punarvsu is powered by Shopify, which enables us to provide the Services to you.
             </p>

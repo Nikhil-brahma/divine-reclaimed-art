@@ -32,7 +32,7 @@ const Shipping = () => {
           <h1 className="font-display text-4xl md:text-5xl text-gold mb-4">Shipping Policy</h1>
           <p className="text-muted-foreground text-sm mb-12">Last updated: April 8, 2026</p>
 
-          <div className="space-y-8 font-body text-ivory/80 leading-relaxed text-sm">
+          <div className="space-y-8 font-body text-foreground/80 leading-relaxed text-sm">
             <p>
               At Punarvsu, every product is handcrafted with care from sacred temple textiles. We ensure each piece is carefully packaged and shipped to you with the reverence it deserves.
             </p>

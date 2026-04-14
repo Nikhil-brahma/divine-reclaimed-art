@@ -17,7 +17,7 @@ const Terms = () => {
           <h1 className="font-display text-4xl md:text-5xl text-gold mb-4">Terms & Conditions</h1>
           <p className="text-muted-foreground text-sm mb-12">Last updated: April 8, 2026</p>
 
-          <div className="prose-custom space-y-8 font-body text-ivory/80 leading-relaxed text-sm">
+          <div className="prose-custom space-y-8 font-body text-foreground/80 leading-relaxed text-sm">
             <section>
               <h2 className="font-display text-2xl text-gold mb-4">Overview</h2>
               <p>
