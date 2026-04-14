@@ -97,7 +97,7 @@ const faqSchema = {
       name: "Does Punarvsu ship internationally?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Currently Punarvsu ships across India with free delivery on orders above ₹5,000. International shipping is coming soon.",
+        text: "Yes! Punarvsu ships worldwide. Within India, delivery takes 3–10 business days with free shipping on orders above ₹2,999. International shipping takes 10–21 business days with rates calculated at checkout.",
       },
     },
     {

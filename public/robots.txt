@@ -25,4 +25,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://divine-reclaimed-art.lovable.app/sitemap.xml
+Sitemap: https://punarvsu.com/sitemap.xml
