@@ -100,7 +100,7 @@ const Navbar = () => {
         <Link to="/" className="flex items-center mx-0 group">
           <motion.img
             alt="Punarvsu"
-            className="h-12 md:h-14 w-auto"
+            className="h-20 md:h-24 w-auto"
             src="/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png"
             whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
             transition={{ duration: 0.3 }}
