@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -47,8 +47,16 @@ const MagneticLink = ({ children, className, ...props }: any) => {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleAnchorClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
@@ -91,18 +99,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50" style={{
-      background: "hsla(36, 33%, 97%, 0.6)",
-      backdropFilter: "blur(20px) saturate(1.5)",
-      borderBottom: "1px solid hsla(42, 85%, 55%, 0.08)",
-    }}>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      style={{
+        background: scrolled ? "transparent" : "hsla(36, 33%, 97%, 0.6)",
+        backdropFilter: scrolled ? "none" : "blur(20px) saturate(1.5)",
+        WebkitBackdropFilter: scrolled ? "none" : "blur(20px) saturate(1.5)",
+        borderBottom: scrolled ? "1px solid transparent" : "1px solid hsla(42, 85%, 55%, 0.08)",
+      }}
+    >
       <div className="container mx-auto px-6 py-2 flex items-center justify-between">
         <Link to="/" className="flex items-center mx-0 group -my-2">
           <motion.img
             alt="Punarvasu — Sacred Threads, Sustainable Art"
-            className="h-20 md:h-28 w-auto object-contain mix-blend-multiply"
+            className="h-20 md:h-28 w-auto object-contain"
             src="/lovable-uploads/punarvasu-logo-new.png"
-            style={{ background: "transparent" }}
+            style={{ background: "transparent", filter: scrolled ? "drop-shadow(0 2px 8px rgba(0,0,0,0.15))" : "none" }}
             whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
             transition={{ duration: 0.3 }}
           />
