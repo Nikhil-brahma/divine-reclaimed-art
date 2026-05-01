@@ -1,38 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://punarvsu.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/privacy</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/terms</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://punarvsu.com/shipping</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
+  <url><loc>https://punarvsu.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://punarvsu.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://punarvsu.com/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://punarvsu.com/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://punarvsu.com/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://punarvsu.com/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://punarvsu.com/shipping</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
+
+  <!-- Product pages — synced with Shopify handles -->
+  <url><loc>https://punarvsu.com/products/sacred-heritage-potli-handcrafted-from-bhagwan-vastra-temple-idol-poshak</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/recycled-cotton-tote-bags-sacred-potli</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/pooja-bags-temple-bags-mandir-bags</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/artisan-sacred-heritage-potli-from-temple-idol-poshak-bhagwan-vastra</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/grand-heritage-potli-hand-painted-base-art-bhagwan-vastra-punarvsus-finest</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/sita-potli-sacred-offering-bag-for-maa-sita</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/crimson-velvet-potli-zari-pearl-embroidered-bridal-bag</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/saffron-teal-potli-zari-embroidered-festive-bag</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://punarvsu.com/products/mustard-silk-potli-floral-embroidered-festive-bag</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
 </urlset>
