@@ -96,12 +96,13 @@ const Navbar = () => {
       backdropFilter: "blur(20px) saturate(1.5)",
       borderBottom: "1px solid hsla(42, 85%, 55%, 0.08)",
     }}>
-      <div className="container mx-auto px-6 py-1 flex items-center justify-between">
-        <Link to="/" className="flex items-center mx-0 group">
+      <div className="container mx-auto px-6 py-2 flex items-center justify-between">
+        <Link to="/" className="flex items-center mx-0 group -my-2">
           <motion.img
             alt="Punarvasu — Sacred Threads, Sustainable Art"
-            className="h-24 md:h-32 w-auto"
-            src="/lovable-uploads/punarvasu-logo-new.jpg"
+            className="h-20 md:h-28 w-auto object-contain mix-blend-multiply"
+            src="/lovable-uploads/punarvasu-logo-new.png"
+            style={{ background: "transparent" }}
             whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
             transition={{ duration: 0.3 }}
           />
