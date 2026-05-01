@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
 import { Package, Truck, Globe, Clock } from "lucide-react";
 
-const ShippingCard = ({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) => (
+const ShippingCard = ({ icon: Icon, title, children }: { icon: React.ComponentType<{ className?: string }>; title: string; children: React.ReactNode }) => (
   <div className="border border-gold/10 rounded-xl p-6 bg-card/30 backdrop-blur-sm hover:border-gold/30 transition-colors">
     <div className="flex items-center gap-3 mb-4">
       <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center">
