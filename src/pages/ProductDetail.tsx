@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
-  const [product, setProduct] = useState<ShopifyProduct["node"] | null>(null);
+  const [product, setProduct] = useState<(ShopifyProduct["node"] & { descriptionHtml?: string }) | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -116,7 +116,18 @@ const ProductDetail = () => {
                   {price.currencyCode === 'INR' ? '₹' : price.currencyCode} {parseFloat(price.amount).toFixed(2)}
                 </p>
               )}
-              <p className="font-body text-muted-foreground leading-relaxed mb-8">{product.description}</p>
+              <div
+                className="font-body text-muted-foreground leading-relaxed mb-8 product-description prose prose-sm max-w-none
+                  prose-p:my-3 prose-p:leading-7
+                  prose-ul:my-4 prose-ul:pl-5 prose-ul:list-disc
+                  prose-ol:my-4 prose-ol:pl-5 prose-ol:list-decimal
+                  prose-li:my-1.5 prose-li:leading-7
+                  prose-headings:font-display prose-headings:text-foreground prose-headings:mt-6 prose-headings:mb-3
+                  prose-strong:text-foreground prose-strong:font-semibold
+                  prose-a:text-primary prose-a:underline-offset-4
+                  prose-br:block"
+                dangerouslySetInnerHTML={{ __html: product.descriptionHtml || `<p>${product.description}</p>` }}
+              />
 
               {/* Variant selection */}
               {product.options.map((option) => (
