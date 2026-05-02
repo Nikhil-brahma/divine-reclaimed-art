@@ -102,10 +102,10 @@ const Navbar = () => {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        background: scrolled ? "transparent" : "hsla(36, 33%, 97%, 0.6)",
-        backdropFilter: scrolled ? "none" : "blur(20px) saturate(1.5)",
-        WebkitBackdropFilter: scrolled ? "none" : "blur(20px) saturate(1.5)",
-        borderBottom: scrolled ? "1px solid transparent" : "1px solid hsla(42, 85%, 55%, 0.08)",
+        background: scrolled ? "transparent" : "#F7F1E6",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
+        borderBottom: "1px solid transparent",
       }}
     >
       <div className="container mx-auto px-6 py-2 flex items-center justify-between">
