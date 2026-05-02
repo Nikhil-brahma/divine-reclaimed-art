@@ -102,7 +102,7 @@ const Navbar = () => {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        background: scrolled ? "transparent" : "#F7F1E6",
+        background: scrolled ? "transparent" : "#E6D8CD",
         backdropFilter: "none",
         WebkitBackdropFilter: "none",
         borderBottom: "1px solid transparent",
