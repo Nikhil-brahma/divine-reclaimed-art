@@ -114,9 +114,10 @@ const Navbar = () => {
             alt="Punarvasu — Sacred Threads, Sustainable Art"
             className="h-20 md:h-28 w-auto object-contain"
             src="/lovable-uploads/punarvasu-logo-new.png"
-            style={{ background: "transparent", filter: scrolled ? "drop-shadow(0 2px 8px rgba(0,0,0,0.15))" : "none" }}
-            whileHover={{ scale: 1.05, filter: "brightness(1.1)" }}
-            transition={{ duration: 0.3 }}
+            animate={{ opacity: scrolled ? 0 : 1 }}
+            style={{ background: "transparent" }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           />
         </Link>
 
