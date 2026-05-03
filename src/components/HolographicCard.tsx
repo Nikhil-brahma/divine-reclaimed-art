@@ -32,7 +32,8 @@ const HolographicCard = ({ children, className = "", glowColor = "42, 85%, 55%" 
         transform: isHovered
           ? `perspective(800px) rotateX(${(mousePos.y - 0.5) * -8}deg) rotateY(${(mousePos.x - 0.5) * 8}deg)`
           : "perspective(800px) rotateX(0deg) rotateY(0deg)",
-        transition: "transform 0.2s ease-out",
+        transition: isHovered ? "transform 0.08s linear" : "transform 0.4s ease-out",
+        willChange: "transform",
       }}
     >
       {/* Holographic shimmer overlay */}
