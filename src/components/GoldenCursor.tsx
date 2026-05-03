@@ -13,18 +13,19 @@ const GoldenCursor = () => {
   const mouse = useRef({ x: -100, y: -100 });
   const raf = useRef<number>(0);
 
+  const lastSpawn = useRef(0);
   const handleMouseMove = useCallback((e: MouseEvent) => {
     mouse.current = { x: e.clientX, y: e.clientY };
-    // spawn 2 particles per move for a rich trail
-    for (let i = 0; i < 2; i++) {
-      trails.current.push({
-        x: e.clientX + (Math.random() - 0.5) * 8,
-        y: e.clientY + (Math.random() - 0.5) * 8,
-        life: 1,
-        size: Math.random() * 4 + 2,
-      });
-    }
-    if (trails.current.length > 80) trails.current = trails.current.slice(-80);
+    const now = performance.now();
+    if (now - lastSpawn.current < 24) return; // throttle spawns ~40fps
+    lastSpawn.current = now;
+    trails.current.push({
+      x: e.clientX + (Math.random() - 0.5) * 6,
+      y: e.clientY + (Math.random() - 0.5) * 6,
+      life: 1,
+      size: Math.random() * 3 + 2,
+    });
+    if (trails.current.length > 40) trails.current = trails.current.slice(-40);
   }, []);
 
   useEffect(() => {

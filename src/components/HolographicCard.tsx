@@ -12,12 +12,16 @@ const HolographicCard = ({ children, className = "", glowColor = "42, 85%, 55%" 
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
 
+  const rafRef = useRef<number | null>(null);
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height,
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      setMousePos({ x, y });
+      rafRef.current = null;
     });
   };
 
@@ -32,7 +36,8 @@ const HolographicCard = ({ children, className = "", glowColor = "42, 85%, 55%" 
         transform: isHovered
           ? `perspective(800px) rotateX(${(mousePos.y - 0.5) * -8}deg) rotateY(${(mousePos.x - 0.5) * 8}deg)`
           : "perspective(800px) rotateX(0deg) rotateY(0deg)",
-        transition: "transform 0.2s ease-out",
+        transition: isHovered ? "transform 0.08s linear" : "transform 0.4s ease-out",
+        willChange: "transform",
       }}
     >
       {/* Holographic shimmer overlay */}

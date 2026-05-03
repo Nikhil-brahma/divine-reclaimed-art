@@ -13,17 +13,23 @@ const navLinks = [
 
 const MagneticLink = ({ children, className, ...props }: any) => {
   const ref = useRef<HTMLAnchorElement>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
-    setOffset({ x, y });
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.25;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (ref.current) ref.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
   };
 
-  const handleMouseLeave = () => setOffset({ x: 0, y: 0 });
+  const handleMouseLeave = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (ref.current) ref.current.style.transform = "translate3d(0, 0, 0)";
+  };
 
   const El = props.to ? Link : "a";
 
@@ -35,9 +41,9 @@ const MagneticLink = ({ children, className, ...props }: any) => {
       onMouseLeave={handleMouseLeave}
       className={className}
       style={{
-        transform: `translate(${offset.x}px, ${offset.y}px)`,
-        transition: "transform 0.2s ease-out",
+        transition: "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1)",
         display: "inline-block",
+        willChange: "transform",
       }}
     >
       {children}
