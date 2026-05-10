@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           category: string
           content: string
+          cover_image_url: string | null
           created_at: string | null
           excerpt: string
           id: string
@@ -32,6 +33,7 @@ export type Database = {
         Insert: {
           category?: string
           content: string
+          cover_image_url?: string | null
           created_at?: string | null
           excerpt: string
           id?: string
@@ -46,6 +48,7 @@ export type Database = {
         Update: {
           category?: string
           content?: string
+          cover_image_url?: string | null
           created_at?: string | null
           excerpt?: string
           id?: string
