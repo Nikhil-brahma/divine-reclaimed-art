@@ -69,7 +69,9 @@ const App = () => {
         <Sonner />
         {!loaded && <LoadingScreen onComplete={handleLoadComplete} />}
         <BrowserRouter>
-          <AppContent />
+          <EditModeProvider>
+            <AppContent />
+          </EditModeProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
