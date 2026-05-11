@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import EditorsManager from "@/components/EditorsManager";
 
 type Action =
   | "generate_meta"
@@ -15,7 +16,7 @@ type Action =
   | "optimize_content"
   | "generate_indexing_ping";
 
-type Tab = "ai" | "write" | "manage";
+type Tab = "ai" | "write" | "manage" | "editors";
 
 interface BlogPost {
   id: string;
@@ -255,6 +256,7 @@ const SEODashboard = () => {
             { id: "ai", label: "AI Tools", icon: Sparkles },
             { id: "write", label: "Write & Publish", icon: PenSquare },
             { id: "manage", label: "Manage Posts", icon: ListChecks },
+            { id: "editors", label: "Editors", icon: PenSquare },
           ] as const).map((t) => (
             <button
               key={t.id}
@@ -541,6 +543,8 @@ const SEODashboard = () => {
             )}
           </motion.div>
         )}
+
+        {tab === "editors" && <EditorsManager />}
       </div>
     </div>
   );

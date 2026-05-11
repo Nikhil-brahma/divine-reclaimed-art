@@ -3,6 +3,7 @@ import { ArrowDown } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
 import TextReveal from "@/components/TextReveal";
+import EditableText from "@/components/EditableText";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -120,8 +121,11 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 1.8 }}
             className="font-body text-base md:text-lg text-ivory/70 max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            Upcycled from sacred temple offerings. Handcrafted by women artisans.
-            A bag that carries a soul.
+            <EditableText
+              contentKey="hero.subtitle"
+              defaultText="Upcycled from sacred temple offerings. Handcrafted by women artisans. A bag that carries a soul."
+              multiline
+            />
           </motion.p>
 
           {/* Tagline badge */}
@@ -132,7 +136,7 @@ const HeroSection = () => {
             className="inline-block mb-10"
           >
             <span className="font-body text-[10px] tracking-[0.3em] uppercase text-gold/60 px-4 py-2 border border-gold/20 rounded-sm">
-              Sustainability Meets Spirituality
+              <EditableText contentKey="hero.tagline" defaultText="Sustainability Meets Spirituality" />
             </span>
           </motion.div>
 
@@ -148,7 +152,9 @@ const HeroSection = () => {
               whileTap={{ scale: 0.98 }}
               className="bg-gradient-saffron text-primary-foreground px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase shadow-sacred relative overflow-hidden group"
             >
-              <span className="relative z-10">Explore the Sacred Collection</span>
+              <span className="relative z-10">
+                <EditableText contentKey="hero.cta_primary" defaultText="Explore the Sacred Collection" />
+              </span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-ivory/10 to-transparent"
                 animate={{ x: ["-100%", "200%"] }}
@@ -161,7 +167,7 @@ const HeroSection = () => {
               whileTap={{ scale: 0.98 }}
               className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              Want to Carry a Blessing?
+              <EditableText contentKey="hero.cta_secondary" defaultText="Want to Carry a Blessing?" />
             </motion.a>
           </motion.div>
         </motion.div>
