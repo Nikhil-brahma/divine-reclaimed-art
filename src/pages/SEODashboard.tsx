@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import EditorsManager from "@/components/EditorsManager";
 
 type Action =
   | "generate_meta"
