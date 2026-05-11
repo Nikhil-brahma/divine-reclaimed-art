@@ -16,9 +16,12 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import AdminMessages from "./pages/AdminMessages";
+import AuthPage from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
+import EditModeToolbar from "./components/EditModeToolbar";
+import { EditModeProvider } from "./contexts/EditModeContext";
 
 const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
 
@@ -43,12 +46,14 @@ const AppContent = () => {
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/seo-dashboard" element={<SEODashboard />} />
         <Route path="/admin/messages" element={<AdminMessages />} />
+        <Route path="/auth" element={<AuthPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Suspense fallback={null}>
         <SacredAIOrb />
       </Suspense>
+      <EditModeToolbar />
     </>
   );
 };
