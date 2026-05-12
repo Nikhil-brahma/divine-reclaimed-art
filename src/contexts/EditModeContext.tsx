@@ -33,10 +33,31 @@ const pagePath = () => {
   return p || "/";
 };
 
+const EDIT_MODE_KEY = "punarvsu_edit_mode";
+
 export const EditModeProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isEditor, setIsEditor] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  // No approval needed — anyone with the dashboard URL can toggle edit mode.
+  const isEditor = true;
+  const [editMode, setEditModeState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(EDIT_MODE_KEY) === "1";
+  });
+  const setEditMode = useCallback((v: boolean) => {
+    setEditModeState(v);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(EDIT_MODE_KEY, v ? "1" : "0");
+      window.dispatchEvent(new StorageEvent("storage", { key: EDIT_MODE_KEY, newValue: v ? "1" : "0" }));
+    }
+  }, []);
+  // Sync across tabs/windows
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === EDIT_MODE_KEY) setEditModeState(e.newValue === "1");
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
   const [overrides, setOverrides] = useState<Record<string, Override>>({});
   const [path, setPath] = useState(pagePath());
 
@@ -61,14 +82,6 @@ export const EditModeProvider = ({ children }: { children: ReactNode }) => {
     supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
     return () => sub.subscription.unsubscribe();
   }, []);
-
-  // editor role check
-  useEffect(() => {
-    if (!user) { setIsEditor(false); return; }
-    supabase.from("user_roles").select("role").eq("user_id", user.id).then(({ data }) => {
-      setIsEditor(!!data?.some(r => r.role === "admin" || r.role === "editor"));
-    });
-  }, [user]);
 
   // load overrides for current page
   const loadOverrides = useCallback(async () => {
@@ -109,6 +122,7 @@ export const EditModeProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => { await supabase.auth.signOut(); setEditMode(false); };
+  void user; void setUser;
 
   return (
     <EditModeContext.Provider value={{

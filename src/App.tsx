@@ -21,6 +21,7 @@ import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
 import { EditModeProvider } from "./contexts/EditModeContext";
+import EditModeBanner from "./components/EditModeBanner";
 
 const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
 
@@ -52,6 +53,7 @@ const AppContent = () => {
       <Suspense fallback={null}>
         <SacredAIOrb />
       </Suspense>
+      <EditModeBanner />
     </>
   );
 };
