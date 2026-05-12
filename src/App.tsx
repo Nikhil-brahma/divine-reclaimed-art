@@ -20,7 +20,6 @@ import AuthPage from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
-import EditModeToolbar from "./components/EditModeToolbar";
 import { EditModeProvider } from "./contexts/EditModeContext";
 
 const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
@@ -53,7 +52,6 @@ const AppContent = () => {
       <Suspense fallback={null}>
         <SacredAIOrb />
       </Suspense>
-      <EditModeToolbar />
     </>
   );
 };
