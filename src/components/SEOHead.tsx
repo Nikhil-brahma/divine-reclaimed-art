@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SEOProps {
   title?: string;
@@ -16,18 +17,49 @@ const DEFAULT_DESCRIPTION =
   "Shop handcrafted bags and accessories made from upcycled sacred temple textiles. Each Punarvsu piece carries real heritage, made by artisans in Delhi. Free shipping above ₹2,999.";
 const DEFAULT_IMAGE = "/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";
 
+type MetaOverride = {
+  title?: string;
+  description?: string;
+  image?: string;
+  keywords?: string;
+  og_title?: string;
+  og_description?: string;
+};
+
 const SEOHead = ({ title, description, canonical, type = "website", image, noindex }: SEOProps) => {
   const location = useLocation();
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
-  const desc = description || DEFAULT_DESCRIPTION;
-  const img = image || DEFAULT_IMAGE;
+  const [override, setOverride] = useState<MetaOverride>({});
+
+  // Fetch DB meta overrides for this page
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("content_overrides")
+        .select("key,text_value")
+        .eq("page_path", location.pathname)
+        .like("key", "meta:%");
+      if (cancelled || !data) return;
+      const next: MetaOverride = {};
+      data.forEach((row) => {
+        const k = row.key.replace(/^meta:/, "") as keyof MetaOverride;
+        if (row.text_value) (next as any)[k] = row.text_value;
+      });
+      setOverride(next);
+    })();
+    return () => { cancelled = true; };
+  }, [location.pathname]);
+
+  const finalTitle = override.title || (title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE);
+  const desc = override.description || description || DEFAULT_DESCRIPTION;
+  const img = override.image || image || DEFAULT_IMAGE;
+  const ogTitle = override.og_title || finalTitle;
+  const ogDesc = override.og_description || desc;
   const canonicalUrl = canonical || `https://punarvsu.com${location.pathname}`;
 
   useEffect(() => {
-    // Title
-    document.title = fullTitle;
+    document.title = finalTitle;
 
-    // Meta tags
     const setMeta = (name: string, content: string, isProperty = false) => {
       const attr = isProperty ? "property" : "name";
       let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
@@ -41,23 +73,21 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
 
     setMeta("description", desc);
     setMeta("robots", noindex ? "noindex, nofollow" : "index, follow");
+    if (override.keywords) setMeta("keywords", override.keywords);
 
-    // Open Graph
-    setMeta("og:title", fullTitle, true);
-    setMeta("og:description", desc, true);
+    setMeta("og:title", ogTitle, true);
+    setMeta("og:description", ogDesc, true);
     setMeta("og:type", type, true);
     setMeta("og:image", img, true);
     setMeta("og:url", canonicalUrl, true);
     setMeta("og:site_name", SITE_NAME, true);
     setMeta("og:locale", "en_IN", true);
 
-    // Twitter
     setMeta("twitter:card", "summary_large_image");
-    setMeta("twitter:title", fullTitle);
-    setMeta("twitter:description", desc);
+    setMeta("twitter:title", ogTitle);
+    setMeta("twitter:description", ogDesc);
     setMeta("twitter:image", img);
 
-    // Canonical
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
     if (!link) {
       link = document.createElement("link");
@@ -66,12 +96,11 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
     }
     link.href = canonicalUrl;
 
-    // Geo tags for local SEO
     setMeta("geo.region", "IN-DL");
     setMeta("geo.placename", "Rohini, Delhi");
     setMeta("geo.position", "28.7495;77.0565");
     setMeta("ICBM", "28.7495, 77.0565");
-  }, [fullTitle, desc, img, canonicalUrl, type, noindex]);
+  }, [finalTitle, desc, img, ogTitle, ogDesc, canonicalUrl, type, noindex, override.keywords]);
 
   return null;
 };
