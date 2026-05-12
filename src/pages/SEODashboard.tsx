@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
 import MetaTagsEditor from "@/components/MetaTagsEditor";
 import { Tag } from "lucide-react";
+import { useEditMode } from "@/contexts/EditModeContext";
 
 type Action =
   | "generate_meta"
@@ -63,6 +64,7 @@ const emptyDraft = {
 
 const SEODashboard = () => {
   const [tab, setTab] = useState<Tab>("ai");
+  const { editMode, setEditMode } = useEditMode();
 
   // AI tools state
   const [selectedAction, setSelectedAction] = useState<Action | null>(null);
@@ -247,9 +249,40 @@ const SEODashboard = () => {
           <h1 className="font-display text-3xl md:text-4xl text-foreground mb-2">
             SEO · AEO · GEO <span className="text-gradient-gold">Command Centre</span>
           </h1>
-          <p className="font-body text-muted-foreground text-sm mb-8">
+          <p className="font-body text-muted-foreground text-sm mb-4">
             AI tools, blog editor, and post manager — everything the SEO team needs in one place.
           </p>
+
+          {/* Live Edit Toggle — no approval, persists across the site */}
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl border border-primary/30 bg-primary/5">
+            <div className="flex-1">
+              <div className="font-display text-base text-foreground flex items-center gap-2">
+                <PenSquare size={16} className="text-primary" /> Live Site Editing
+              </div>
+              <p className="font-body text-xs text-muted-foreground mt-1">
+                When ON, every text and image on the site becomes click-to-edit. Open the home page in another tab and edit inline — changes save instantly, no approval needed.
+              </p>
+            </div>
+            <button
+              onClick={() => setEditMode(!editMode)}
+              className={`px-5 py-2.5 rounded-full font-body text-xs tracking-wider uppercase transition-colors whitespace-nowrap ${
+                editMode
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "border border-primary/40 text-primary hover:bg-primary/10"
+              }`}
+            >
+              {editMode ? "Edit Mode: ON — Click to Disable" : "Enable Edit Mode"}
+            </button>
+            {editMode && (
+              <Link
+                to="/"
+                target="_blank"
+                className="px-4 py-2.5 rounded-full border border-border/60 font-body text-xs tracking-wider uppercase hover:border-primary/40 whitespace-nowrap"
+              >
+                Open Home →
+              </Link>
+            )}
+          </div>
         </motion.div>
 
         {/* Tabs */}
