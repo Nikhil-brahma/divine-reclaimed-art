@@ -8,6 +8,8 @@ import {
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
+import MetaTagsEditor from "@/components/MetaTagsEditor";
+import { Tag } from "lucide-react";
 
 type Action =
   | "generate_meta"
@@ -16,7 +18,7 @@ type Action =
   | "optimize_content"
   | "generate_indexing_ping";
 
-type Tab = "ai" | "write" | "manage" | "editors";
+type Tab = "ai" | "write" | "manage" | "meta" | "editors";
 
 interface BlogPost {
   id: string;
@@ -256,6 +258,7 @@ const SEODashboard = () => {
             { id: "ai", label: "AI Tools", icon: Sparkles },
             { id: "write", label: "Write & Publish", icon: PenSquare },
             { id: "manage", label: "Manage Posts", icon: ListChecks },
+            { id: "meta", label: "Meta Tags", icon: Tag },
             { id: "editors", label: "Editors", icon: PenSquare },
           ] as const).map((t) => (
             <button
@@ -544,6 +547,7 @@ const SEODashboard = () => {
           </motion.div>
         )}
 
+        {tab === "meta" && <MetaTagsEditor />}
         {tab === "editors" && <EditorsManager />}
       </div>
     </div>
