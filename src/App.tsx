@@ -55,6 +55,7 @@ const AppContent = () => {
         <SacredAIOrb />
       </Suspense>
       <EditModeBanner />
+      <GlobalEditLayer />
     </>
   );
 };
