@@ -22,6 +22,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import ScrollToTop from "./components/ScrollToTop";
 import { EditModeProvider } from "./contexts/EditModeContext";
 import EditModeBanner from "./components/EditModeBanner";
+import GlobalEditLayer from "./components/GlobalEditLayer";
 
 const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
 
