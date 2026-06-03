@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, useLocation, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -9,9 +9,10 @@ import { supabase } from "@/integrations/supabase/client";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
 
 const BlogPost = () => {
-  const { slug, "*": aiSlug } = useParams();
-  const isAiPost = slug === "ai" && aiSlug;
-  const actualSlug = isAiPost ? aiSlug : slug;
+  const params = useParams();
+  const { pathname } = useLocation();
+  const isAiPost = pathname.startsWith("/blog/ai/");
+  const actualSlug = isAiPost ? (params["*"] || "") : params.slug;
 
   // For AI posts, fetch from database
   const { data: aiPost, isLoading } = useQuery({
