@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Clock, Calendar, Sparkles } from "lucide-react";
+import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -169,17 +169,18 @@ const Blog = () => {
     },
   });
 
-  // Merge AI posts (newest first) with static posts
-  const dynamicPosts: BlogPost[] = (aiPosts || []).map((p: any) => ({
+  // Rotate fallback images so posts without a cover still vary visually
+  const fallbackImages = [blogTempleTextiles, blogArtisanCraft, blogFestivalFashion, blogSustainability, blogStylingGuide, blogArtisanStories];
+  const dynamicPosts: BlogPost[] = (aiPosts || []).map((p: any, idx: number) => ({
     slug: `ai/${p.slug}`,
     title: p.title,
     excerpt: p.excerpt,
-    image: blogTempleTextiles, // default image for AI posts
+    image: p.cover_image_url || fallbackImages[idx % fallbackImages.length],
     date: new Date(p.created_at).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
-    readTime: `${Math.ceil(p.content.length / 1200)} min read`,
+    readTime: `${Math.max(3, Math.ceil(p.content.length / 1200))} min read`,
     category: p.category,
     content: p.content,
-    isAiGenerated: true,
+    isAiGenerated: false,
   }));
 
   const allPosts = [...dynamicPosts, ...staticBlogPosts];
@@ -234,11 +235,6 @@ const Blog = () => {
                       <span className="bg-primary/90 text-primary-foreground font-body text-[10px] tracking-wider uppercase px-3 py-1 rounded-full">
                         {post.category}
                       </span>
-                      {post.isAiGenerated && (
-                        <span className="bg-accent/90 text-accent-foreground font-body text-[10px] tracking-wider uppercase px-2 py-1 rounded-full flex items-center gap-1">
-                          <Sparkles size={10} /> AI
-                        </span>
-                      )}
                     </div>
                   </div>
                   <h3 className="font-display text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
