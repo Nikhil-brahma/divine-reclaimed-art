@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock, Calendar, Share2, Sparkles } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -39,9 +39,9 @@ const BlogPost = () => {
           content: aiPost.content,
           category: aiPost.category,
           date: new Date(aiPost.created_at).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
-          readTime: `${Math.ceil(aiPost.content.length / 1200)} min read`,
-          image: blogTempleTextiles,
-          isAiGenerated: true,
+          readTime: `${Math.max(3, Math.ceil(aiPost.content.length / 1200))} min read`,
+          image: aiPost.cover_image_url || blogTempleTextiles,
+          isAiGenerated: false,
         }
       : null
     : staticPost
@@ -80,11 +80,6 @@ const BlogPost = () => {
               <span className="bg-primary/10 text-primary font-body text-xs tracking-wider uppercase px-3 py-1 rounded-full">
                 {post.category}
               </span>
-              {post.isAiGenerated && (
-                <span className="bg-accent/10 text-accent-foreground font-body text-xs tracking-wider uppercase px-3 py-1 rounded-full flex items-center gap-1">
-                  <Sparkles size={12} /> AI Generated
-                </span>
-              )}
             </div>
 
             <h1 className="font-display text-3xl md:text-5xl text-foreground mb-4 leading-tight">
@@ -114,15 +109,32 @@ const BlogPost = () => {
               />
             </div>
 
-            <div className="font-body text-foreground/80 leading-relaxed text-base space-y-6">
-              {post.content.split("\n\n").map((para, i) => (
-                <p key={i} dangerouslySetInnerHTML={{
-                  __html: para
-                    .replace(/^## (.*)/gm, '<strong class="text-foreground font-display text-xl block mt-6 mb-2">$1</strong>')
-                    .replace(/^### (.*)/gm, '<strong class="text-foreground font-display text-lg block mt-4 mb-1">$1</strong>')
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground font-display">$1</strong>')
-                }} />
-              ))}
+            <div className="font-body text-foreground/80 leading-relaxed text-base space-y-5">
+              {post.content.split(/\n\n+/).map((para, i) => {
+                const trimmed = para.trim();
+                if (!trimmed) return null;
+                if (/^##\s+/.test(trimmed)) {
+                  return <h2 key={i} className="font-display text-2xl text-foreground mt-8 mb-2">{trimmed.replace(/^##\s+/, "")}</h2>;
+                }
+                if (/^###\s+/.test(trimmed)) {
+                  return <h3 key={i} className="font-display text-xl text-foreground mt-6 mb-2">{trimmed.replace(/^###\s+/, "")}</h3>;
+                }
+                if (/^\s*[-*]\s+/m.test(trimmed) && trimmed.split("\n").every(l => /^\s*[-*]\s+/.test(l) || !l.trim())) {
+                  const items = trimmed.split("\n").filter(l => l.trim()).map(l => l.replace(/^\s*[-*]\s+/, ""));
+                  return (
+                    <ul key={i} className="list-disc pl-6 space-y-2">
+                      {items.map((it, j) => (
+                        <li key={j} dangerouslySetInnerHTML={{ __html: it.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
+                      ))}
+                    </ul>
+                  );
+                }
+                return (
+                  <p key={i} dangerouslySetInnerHTML={{
+                    __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>'),
+                  }} />
+                );
+              })}
             </div>
 
             <div className="ornament-line w-48 mx-auto my-12" />
