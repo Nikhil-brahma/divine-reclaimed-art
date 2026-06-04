@@ -16,48 +16,108 @@ export type Database = {
     Tables: {
       auto_blog_posts: {
         Row: {
+          canonical_url: string | null
           category: string
           content: string
           cover_image_url: string | null
           created_at: string | null
+          custom_schema: Json | null
           excerpt: string
+          focus_keyword: string | null
           id: string
+          image_alt: string | null
+          image_caption: string | null
+          image_title: string | null
+          include_in_sitemap: boolean
           occasion: string | null
+          og_description: string | null
+          og_image: string | null
+          og_title: string | null
           published: boolean | null
+          robots_follow: boolean
+          robots_index: boolean
+          schema_type: string | null
+          secondary_keywords: string | null
+          seo_description: string | null
           seo_score: number | null
+          seo_title: string | null
           slug: string
           target_keyword: string | null
           title: string
+          twitter_card: string | null
+          twitter_description: string | null
+          twitter_image: string | null
+          twitter_title: string | null
           updated_at: string | null
         }
         Insert: {
+          canonical_url?: string | null
           category?: string
           content: string
           cover_image_url?: string | null
           created_at?: string | null
+          custom_schema?: Json | null
           excerpt: string
+          focus_keyword?: string | null
           id?: string
+          image_alt?: string | null
+          image_caption?: string | null
+          image_title?: string | null
+          include_in_sitemap?: boolean
           occasion?: string | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
           published?: boolean | null
+          robots_follow?: boolean
+          robots_index?: boolean
+          schema_type?: string | null
+          secondary_keywords?: string | null
+          seo_description?: string | null
           seo_score?: number | null
+          seo_title?: string | null
           slug: string
           target_keyword?: string | null
           title: string
+          twitter_card?: string | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
           updated_at?: string | null
         }
         Update: {
+          canonical_url?: string | null
           category?: string
           content?: string
           cover_image_url?: string | null
           created_at?: string | null
+          custom_schema?: Json | null
           excerpt?: string
+          focus_keyword?: string | null
           id?: string
+          image_alt?: string | null
+          image_caption?: string | null
+          image_title?: string | null
+          include_in_sitemap?: boolean
           occasion?: string | null
+          og_description?: string | null
+          og_image?: string | null
+          og_title?: string | null
           published?: boolean | null
+          robots_follow?: boolean
+          robots_index?: boolean
+          schema_type?: string | null
+          secondary_keywords?: string | null
+          seo_description?: string | null
           seo_score?: number | null
+          seo_title?: string | null
           slug?: string
           target_keyword?: string | null
           title?: string
+          twitter_card?: string | null
+          twitter_description?: string | null
+          twitter_image?: string | null
+          twitter_title?: string | null
           updated_at?: string | null
         }
         Relationships: []

@@ -1,0 +1,22 @@
+
+ALTER TABLE public.auto_blog_posts
+  ADD COLUMN IF NOT EXISTS seo_title TEXT,
+  ADD COLUMN IF NOT EXISTS seo_description TEXT,
+  ADD COLUMN IF NOT EXISTS canonical_url TEXT,
+  ADD COLUMN IF NOT EXISTS focus_keyword TEXT,
+  ADD COLUMN IF NOT EXISTS secondary_keywords TEXT,
+  ADD COLUMN IF NOT EXISTS og_title TEXT,
+  ADD COLUMN IF NOT EXISTS og_description TEXT,
+  ADD COLUMN IF NOT EXISTS og_image TEXT,
+  ADD COLUMN IF NOT EXISTS twitter_title TEXT,
+  ADD COLUMN IF NOT EXISTS twitter_description TEXT,
+  ADD COLUMN IF NOT EXISTS twitter_image TEXT,
+  ADD COLUMN IF NOT EXISTS twitter_card TEXT DEFAULT 'summary_large_image',
+  ADD COLUMN IF NOT EXISTS robots_index BOOLEAN NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS robots_follow BOOLEAN NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS include_in_sitemap BOOLEAN NOT NULL DEFAULT true,
+  ADD COLUMN IF NOT EXISTS image_alt TEXT,
+  ADD COLUMN IF NOT EXISTS image_title TEXT,
+  ADD COLUMN IF NOT EXISTS image_caption TEXT,
+  ADD COLUMN IF NOT EXISTS schema_type TEXT DEFAULT 'BlogPosting',
+  ADD COLUMN IF NOT EXISTS custom_schema JSONB;
