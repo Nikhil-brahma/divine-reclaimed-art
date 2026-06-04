@@ -129,14 +129,14 @@ const BlogPost = () => {
                   return (
                     <ul key={i} className="list-disc pl-6 space-y-2">
                       {items.map((it, j) => (
-                        <li key={j} dangerouslySetInnerHTML={{ __html: it.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
+                        <li key={j} dangerouslySetInnerHTML={{ __html: sanitize(it.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')) }} />
                       ))}
                     </ul>
                   );
                 }
                 return (
                   <p key={i} dangerouslySetInnerHTML={{
-                    __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>'),
+                    __html: sanitize(trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')),
                   }} />
                 );
               })}
