@@ -47,10 +47,11 @@ const BlogPost = () => {
           readTime: `${Math.max(3, Math.ceil(aiPost.content.length / 1200))} min read`,
           image: aiPost.cover_image_url || blogTempleTextiles,
           isAiGenerated: false,
+          seo: aiPost as any,
         }
       : null
     : staticPost
-      ? { ...staticPost, isAiGenerated: false }
+      ? { ...staticPost, isAiGenerated: false, seo: null as any }
       : null;
 
   if (!isAiPost && !staticPost) return <Navigate to="/blog" replace />;
