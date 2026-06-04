@@ -184,6 +184,7 @@ const SEODashboard = () => {
           generate_image: draft.generate_image,
           image_prompt: draft.image_prompt || draft.title,
           existing_image_url: draft.existing_image_url,
+          seo: draft.seo,
         },
       });
       if (error) throw error;
