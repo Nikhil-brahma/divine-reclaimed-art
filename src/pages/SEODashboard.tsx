@@ -224,6 +224,7 @@ const SEODashboard = () => {
   };
 
   const editPost = (post: BlogPost) => {
+    const p = post as any;
     setDraft({
       id: post.id,
       title: post.title,
@@ -237,6 +238,29 @@ const SEODashboard = () => {
       generate_image: false,
       image_prompt: post.title,
       existing_image_url: post.cover_image_url,
+      seo: {
+        ...emptyBlogSEO,
+        seo_title: p.seo_title ?? "",
+        seo_description: p.seo_description ?? "",
+        canonical_url: p.canonical_url ?? "",
+        focus_keyword: p.focus_keyword ?? post.target_keyword ?? "",
+        secondary_keywords: p.secondary_keywords ?? "",
+        og_title: p.og_title ?? "",
+        og_description: p.og_description ?? "",
+        og_image: p.og_image ?? "",
+        twitter_title: p.twitter_title ?? "",
+        twitter_description: p.twitter_description ?? "",
+        twitter_image: p.twitter_image ?? "",
+        twitter_card: (p.twitter_card ?? "summary_large_image") as BlogSEO["twitter_card"],
+        robots_index: p.robots_index ?? true,
+        robots_follow: p.robots_follow ?? true,
+        include_in_sitemap: p.include_in_sitemap ?? true,
+        image_alt: p.image_alt ?? "",
+        image_title: p.image_title ?? "",
+        image_caption: p.image_caption ?? "",
+        schema_type: (p.schema_type ?? "BlogPosting") as BlogSEO["schema_type"],
+        custom_schema: p.custom_schema ? (typeof p.custom_schema === "string" ? p.custom_schema : JSON.stringify(p.custom_schema, null, 2)) : "",
+      },
     });
     setSlugTouched(true);
     setTab("write");
