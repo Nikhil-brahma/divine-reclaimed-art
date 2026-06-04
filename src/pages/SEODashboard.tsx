@@ -61,6 +61,7 @@ const emptyDraft = {
   generate_image: true,
   image_prompt: "",
   existing_image_url: "" as string | null,
+  seo: { ...emptyBlogSEO } as BlogSEO,
 };
 
 const SEODashboard = () => {
