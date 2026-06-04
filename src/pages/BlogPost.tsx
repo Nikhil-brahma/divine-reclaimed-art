@@ -43,12 +43,6 @@ const BlogPost = () => {
   const isAiPost = pathname.startsWith("/blog/ai/");
   const actualSlug = isAiPost ? (params["*"] || "") : params.slug;
 
-const BlogPost = () => {
-  const params = useParams();
-  const { pathname } = useLocation();
-  const isAiPost = pathname.startsWith("/blog/ai/");
-  const actualSlug = isAiPost ? (params["*"] || "") : params.slug;
-
   // For AI posts, fetch from database
   const { data: aiPost, isLoading } = useQuery({
     queryKey: ["auto-blog-post", actualSlug],
