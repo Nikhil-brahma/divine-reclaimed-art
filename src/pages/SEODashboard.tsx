@@ -64,7 +64,19 @@ const emptyDraft = {
 
 const SEODashboard = () => {
   const [tab, setTab] = useState<Tab>("ai");
-  const { editMode, setEditMode } = useEditMode();
+  const { editMode, setEditMode, isEditor, user } = useEditMode();
+
+  if (!user) return <Navigate to="/auth" replace />;
+  if (!isEditor) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 text-center">
+        <div>
+          <h1 className="font-display text-2xl mb-2">Access restricted</h1>
+          <p className="text-muted-foreground">Your account does not have editor access. Ask an admin to grant the editor or admin role.</p>
+        </div>
+      </div>
+    );
+  }
 
   // AI tools state
   const [selectedAction, setSelectedAction] = useState<Action | null>(null);
