@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 type Message = { role: "user" | "assistant"; content: string };
 
