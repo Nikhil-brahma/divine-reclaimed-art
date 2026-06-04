@@ -73,12 +73,26 @@ export const EditModeProvider = ({ children }: { children: ReactNode }) => {
     return () => window.removeEventListener("popstate", update);
   }, []);
 
-  // auth
+  // auth + role check
   useEffect(() => {
+    const loadRole = async (u: User | null) => {
+      if (!u) { setIsEditor(false); return; }
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", u.id);
+      setIsEditor((data ?? []).some((r: any) => r.role === "admin" || r.role === "editor"));
+    };
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      setUser(session?.user ?? null);
+      const u = session?.user ?? null;
+      setUser(u);
+      setTimeout(() => { loadRole(u); }, 0);
     });
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
+    supabase.auth.getSession().then(({ data }) => {
+      const u = data.session?.user ?? null;
+      setUser(u);
+      loadRole(u);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
 
