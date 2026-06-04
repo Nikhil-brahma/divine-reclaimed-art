@@ -172,13 +172,19 @@ const BlogPost = () => {
               </button>
             </div>
 
-            <div className="rounded-2xl overflow-hidden mb-10 aspect-[16/9]">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <figure className="mb-10">
+              <div className="rounded-2xl overflow-hidden aspect-[16/9]">
+                <img
+                  src={post.image}
+                  alt={(post as any).seo?.image_alt || post.title}
+                  title={(post as any).seo?.image_title || undefined}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {(post as any).seo?.image_caption && (
+                <figcaption className="text-xs text-muted-foreground text-center mt-2 italic">{(post as any).seo.image_caption}</figcaption>
+              )}
+            </figure>
 
             <div className="font-body text-foreground/80 leading-relaxed text-base space-y-5">
               {post.content.split(/\n\n+/).map((para, i) => {
