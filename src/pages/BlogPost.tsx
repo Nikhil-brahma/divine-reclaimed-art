@@ -2,11 +2,15 @@ import { useParams, useLocation, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { staticBlogPosts } from "@/pages/Blog";
 import { supabase } from "@/integrations/supabase/client";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
+
+const sanitize = (html: string) =>
+  DOMPurify.sanitize(html, { ALLOWED_TAGS: ["strong", "em", "b", "i", "br"], ALLOWED_ATTR: [] });
 
 const BlogPost = () => {
   const params = useParams();
