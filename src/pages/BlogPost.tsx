@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, useLocation, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
@@ -11,6 +12,36 @@ import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
 
 const sanitize = (html: string) =>
   DOMPurify.sanitize(html, { ALLOWED_TAGS: ["strong", "em", "b", "i", "br"], ALLOWED_ATTR: [] });
+
+const SITE_URL = "https://punarvsu.com";
+
+const setMeta = (selector: string, attr: string, value: string) => {
+  let el = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!el) {
+    el = document.createElement("meta");
+    const [, name, key] = /\[(name|property)="([^"]+)"\]/.exec(selector) || [];
+    if (name && key) el.setAttribute(name, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute(attr, value);
+};
+
+const upsertJsonLd = (id: string, data: unknown) => {
+  let el = document.getElementById(id) as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement("script");
+    el.id = id;
+    el.type = "application/ld+json";
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+};
+
+const BlogPost = () => {
+  const params = useParams();
+  const { pathname } = useLocation();
+  const isAiPost = pathname.startsWith("/blog/ai/");
+  const actualSlug = isAiPost ? (params["*"] || "") : params.slug;
 
 const BlogPost = () => {
   const params = useParams();
