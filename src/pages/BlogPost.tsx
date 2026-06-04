@@ -79,6 +79,46 @@ const BlogPost = () => {
       ? { ...staticPost, isAiGenerated: false, seo: null as any }
       : null;
 
+  // Inject per-post SEO meta tags + JSON-LD
+  useEffect(() => {
+    if (!post) return;
+    const seo: any = (post as any).seo ?? {};
+    const url = seo.canonical_url || `${SITE_URL}${pathname}`;
+    const title = seo.seo_title || post.title;
+    const description = seo.seo_description || (post as any).excerpt || post.title;
+    const image = seo.og_image || post.image;
+    document.title = title;
+    setMeta('meta[name="description"]', "content", description);
+    setMeta('meta[name="robots"]', "content",
+      `${seo.robots_index === false ? "noindex" : "index"}, ${seo.robots_follow === false ? "nofollow" : "follow"}`);
+    setMeta('meta[property="og:title"]', "content", seo.og_title || title);
+    setMeta('meta[property="og:description"]', "content", seo.og_description || description);
+    setMeta('meta[property="og:image"]', "content", image);
+    setMeta('meta[property="og:url"]', "content", url);
+    setMeta('meta[property="og:type"]', "content", "article");
+    setMeta('meta[name="twitter:card"]', "content", seo.twitter_card || "summary_large_image");
+    setMeta('meta[name="twitter:title"]', "content", seo.twitter_title || seo.og_title || title);
+    setMeta('meta[name="twitter:description"]', "content", seo.twitter_description || seo.og_description || description);
+    setMeta('meta[name="twitter:image"]', "content", seo.twitter_image || image);
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
+    canonical.href = url;
+
+    const auto = {
+      "@context": "https://schema.org",
+      "@type": seo.schema_type || "BlogPosting",
+      headline: title,
+      description,
+      image: image || undefined,
+      mainEntityOfPage: url,
+      datePublished: (post as any).date,
+      author: { "@type": "Organization", name: "Punarvsu" },
+      publisher: { "@type": "Organization", name: "Punarvsu" },
+      keywords: [seo.focus_keyword, seo.secondary_keywords].filter(Boolean).join(", ") || undefined,
+    };
+    upsertJsonLd("ld-blog-auto", seo.schema_type === "Custom" && seo.custom_schema ? seo.custom_schema : auto);
+  }, [post, pathname]);
+
   if (!isAiPost && !staticPost) return <Navigate to="/blog" replace />;
   if (isAiPost && !isLoading && !aiPost) return <Navigate to="/blog" replace />;
   if (isLoading) {
