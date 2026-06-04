@@ -543,6 +543,19 @@ const SEODashboard = () => {
               </div>
             </div>
 
+            <BlogSEOPanel
+              value={draft.seo}
+              onChange={(next) => setDraft({ ...draft, seo: next })}
+              draft={{
+                title: draft.title,
+                slug: draft.slug,
+                excerpt: draft.excerpt,
+                content: draft.content,
+                existing_image_url: draft.existing_image_url,
+              }}
+              allSlugs={posts.map((p) => p.slug)}
+            />
+
             <div className="flex gap-3 flex-wrap pt-2">
               <button
                 onClick={() => handlePublish(false)}
