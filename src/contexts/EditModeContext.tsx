@@ -37,8 +37,7 @@ const EDIT_MODE_KEY = "punarvsu_edit_mode";
 
 export const EditModeProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  // No approval needed — anyone with the dashboard URL can toggle edit mode.
-  const isEditor = true;
+  const [isEditor, setIsEditor] = useState(false);
   const [editMode, setEditModeState] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(EDIT_MODE_KEY) === "1";
