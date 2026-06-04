@@ -139,12 +139,15 @@ const SacredAIOrb = () => {
   };
 
   const renderContent = (content: string) => {
-    let formatted = content.replace(
+    const escaped = content
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    let formatted = escaped.replace(
       /\/product\/([\w-]+)/g,
       '<a href="/product/$1" class="text-accent underline underline-offset-2 font-medium hover:text-primary transition-colors">View Product →</a>'
     );
     formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    return formatted;
+    return DOMPurify.sanitize(formatted, { ALLOWED_TAGS: ["a", "strong", "em", "br"], ALLOWED_ATTR: ["href", "class"] });
   };
 
   const handleContentClick = (e: React.MouseEvent) => {
