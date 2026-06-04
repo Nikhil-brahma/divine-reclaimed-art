@@ -2,11 +2,15 @@ import { useParams, useLocation, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { staticBlogPosts } from "@/pages/Blog";
 import { supabase } from "@/integrations/supabase/client";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
+
+const sanitize = (html: string) =>
+  DOMPurify.sanitize(html, { ALLOWED_TAGS: ["strong", "em", "b", "i", "br"], ALLOWED_ATTR: [] });
 
 const BlogPost = () => {
   const params = useParams();
@@ -125,14 +129,14 @@ const BlogPost = () => {
                   return (
                     <ul key={i} className="list-disc pl-6 space-y-2">
                       {items.map((it, j) => (
-                        <li key={j} dangerouslySetInnerHTML={{ __html: it.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>') }} />
+                        <li key={j} dangerouslySetInnerHTML={{ __html: sanitize(it.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')) }} />
                       ))}
                     </ul>
                   );
                 }
                 return (
                   <p key={i} dangerouslySetInnerHTML={{
-                    __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-foreground">$1</strong>'),
+                    __html: sanitize(trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')),
                   }} />
                 );
               })}

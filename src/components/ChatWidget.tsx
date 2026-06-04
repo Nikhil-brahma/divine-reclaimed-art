@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Sparkles, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -151,18 +152,17 @@ const ChatWidget = () => {
     await streamChat(newMessages);
   };
 
-  // Detect product links in messages and make them clickable
+  // Detect product links in messages and make them clickable (sanitized)
   const renderContent = (content: string) => {
-    const productLinks = content.replace(
+    const escaped = content
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    const withLinks = escaped.replace(
       /\/product\/([\w-]+)/g,
       '<a href="/product/$1" class="text-primary underline underline-offset-2 font-medium">View Product →</a>'
     );
-    // Bold text
-    const formatted = productLinks.replace(
-      /\*\*(.*?)\*\*/g,
-      '<strong>$1</strong>'
-    );
-    return formatted;
+    const formatted = withLinks.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    return DOMPurify.sanitize(formatted, { ALLOWED_TAGS: ["a", "strong", "em", "br"], ALLOWED_ATTR: ["href", "class"] });
   };
 
   const handleContentClick = (e: React.MouseEvent) => {

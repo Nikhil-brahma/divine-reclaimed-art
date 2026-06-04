@@ -133,12 +133,35 @@ WHEN RELIGIOUS/SPIRITUAL TOPICS COME UP:
 - Mention specific temples (Khatushyam Delhi Dham) for authenticity`;
 }
 
+// Simple in-memory IP rate limiter (best-effort within one isolate)
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 20; // 20 requests per minute per IP
+const rateBuckets = new Map<string, { count: number; reset: number }>();
+function rateLimit(ip: string): boolean {
+  const now = Date.now();
+  const b = rateBuckets.get(ip);
+  if (!b || now > b.reset) {
+    rateBuckets.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+    return true;
+  }
+  b.count += 1;
+  return b.count <= RATE_MAX;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const ip = (req.headers.get("x-forwarded-for") ?? "unknown").split(",")[0].trim();
+    if (!rateLimit(ip)) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again in a minute." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const { messages } = await req.json();
 
@@ -147,6 +170,18 @@ serve(async (req) => {
         JSON.stringify({ error: "Messages array is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Input size guards
+    if (messages.length > 30) {
+      return new Response(JSON.stringify({ error: "Conversation too long." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    }
+    for (const m of messages) {
+      if (typeof m?.content !== "string" || m.content.length > 2000) {
+        return new Response(JSON.stringify({ error: "Message too long (max 2000 chars)." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
     }
 
     // Fetch live products from Shopify
