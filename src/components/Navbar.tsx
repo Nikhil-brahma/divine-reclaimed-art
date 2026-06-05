@@ -57,6 +57,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isEditor } = useEditMode();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
