@@ -183,6 +183,16 @@ const Navbar = () => {
                   </a>
                 );
               })}
+              {isEditor && (
+                <Link
+                  to="/seo-dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className="font-body text-base tracking-wider uppercase text-primary hover:text-primary/80 transition-colors flex items-center gap-2"
+                >
+                  <Settings className="w-4 h-4" />
+                  SEO Dashboard
+                </Link>
+              )}
               <div className="mt-2"><CartDrawer /></div>
             </div>
           </motion.div>
