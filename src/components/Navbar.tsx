@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Settings } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useEditMode } from "@/contexts/EditModeContext";
 
 const navLinks = [
   { label: "Shop", href: "#collections" },
@@ -56,6 +57,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isEditor } = useEditMode();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -130,6 +132,17 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map(renderLink)}
+          {isEditor && (
+            <MagneticLink
+              to="/seo-dashboard"
+              onClick={() => setIsOpen(false)}
+              className="font-body text-sm tracking-wider uppercase text-primary hover:text-primary/80 transition-colors duration-300 relative group flex items-center gap-1"
+            >
+              <Settings className="w-3.5 h-3.5" />
+              SEO
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-500" />
+            </MagneticLink>
+          )}
           <CartDrawer />
         </div>
 
@@ -170,6 +183,16 @@ const Navbar = () => {
                   </a>
                 );
               })}
+              {isEditor && (
+                <Link
+                  to="/seo-dashboard"
+                  onClick={() => setIsOpen(false)}
+                  className="font-body text-base tracking-wider uppercase text-primary hover:text-primary/80 transition-colors flex items-center gap-2"
+                >
+                  <Settings className="w-4 h-4" />
+                  SEO Dashboard
+                </Link>
+              )}
               <div className="mt-2"><CartDrawer /></div>
             </div>
           </motion.div>
