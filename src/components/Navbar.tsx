@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Settings } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useEditMode } from "@/contexts/EditModeContext";
 
 const navLinks = [
   { label: "Shop", href: "#collections" },
