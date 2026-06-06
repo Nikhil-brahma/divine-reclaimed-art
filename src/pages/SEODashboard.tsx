@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
 import MetaTagsEditor from "@/components/MetaTagsEditor";
 import BlogSEOPanel, { emptyBlogSEO, type BlogSEO } from "@/components/seo/BlogSEOPanel";
+import AutoScheduleTab from "@/components/seo/AutoScheduleTab";
+
 import { Tag } from "lucide-react";
 import { useEditMode } from "@/contexts/EditModeContext";
 
