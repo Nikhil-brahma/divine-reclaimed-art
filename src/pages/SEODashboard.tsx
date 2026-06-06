@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowLeft, Sparkles, FileText, Search, BarChart3, Globe, Loader2,
-  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus,
+  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus, CalendarClock, Zap,
 } from "lucide-react";
+
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
 import MetaTagsEditor from "@/components/MetaTagsEditor";
 import BlogSEOPanel, { emptyBlogSEO, type BlogSEO } from "@/components/seo/BlogSEOPanel";
+import AutoScheduleTab from "@/components/seo/AutoScheduleTab";
+
 import { Tag } from "lucide-react";
 import { useEditMode } from "@/contexts/EditModeContext";
 
@@ -20,7 +23,7 @@ type Action =
   | "optimize_content"
   | "generate_indexing_ping";
 
-type Tab = "ai" | "write" | "manage" | "meta" | "editors";
+type Tab = "ai" | "write" | "manage" | "schedule" | "meta" | "editors";
 
 interface BlogPost {
   id: string;
@@ -330,9 +333,11 @@ const SEODashboard = () => {
             { id: "ai", label: "AI Tools", icon: Sparkles },
             { id: "write", label: "Write & Publish", icon: PenSquare },
             { id: "manage", label: "Manage Posts", icon: ListChecks },
+            { id: "schedule", label: "Auto-Schedule", icon: CalendarClock },
             { id: "meta", label: "Meta Tags", icon: Tag },
             { id: "editors", label: "Editors", icon: PenSquare },
           ] as const).map((t) => (
+
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -632,8 +637,10 @@ const SEODashboard = () => {
           </motion.div>
         )}
 
+        {tab === "schedule" && <AutoScheduleTab />}
         {tab === "meta" && <MetaTagsEditor />}
         {tab === "editors" && <EditorsManager />}
+
       </div>
     </div>
   );
