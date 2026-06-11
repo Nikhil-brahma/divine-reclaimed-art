@@ -185,6 +185,56 @@ export type Database = {
         }
         Relationships: []
       }
+      scheduled_blog_posts: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          error: string | null
+          id: string
+          post_id: string | null
+          processed_at: string | null
+          scheduled_at: string
+          status: string
+          target_keyword: string | null
+          topic_hint: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          error?: string | null
+          id?: string
+          post_id?: string | null
+          processed_at?: string | null
+          scheduled_at: string
+          status?: string
+          target_keyword?: string | null
+          topic_hint: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          error?: string | null
+          id?: string
+          post_id?: string | null
+          processed_at?: string | null
+          scheduled_at?: string
+          status?: string
+          target_keyword?: string | null
+          topic_hint?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scheduled_blog_posts_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "auto_blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
