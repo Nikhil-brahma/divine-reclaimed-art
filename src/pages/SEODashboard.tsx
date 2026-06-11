@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowLeft, Sparkles, FileText, Search, BarChart3, Globe, Loader2,
-  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus,
+  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus, CalendarClock,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
 import MetaTagsEditor from "@/components/MetaTagsEditor";
+import ScheduleManager from "@/components/ScheduleManager";
 import { Tag } from "lucide-react";
 import { useEditMode } from "@/contexts/EditModeContext";
 
@@ -19,7 +20,7 @@ type Action =
   | "optimize_content"
   | "generate_indexing_ping";
 
-type Tab = "ai" | "write" | "manage" | "meta" | "editors";
+type Tab = "ai" | "write" | "schedule" | "manage" | "meta" | "editors";
 
 interface BlogPost {
   id: string;
@@ -302,6 +303,7 @@ const SEODashboard = () => {
           {([
             { id: "ai", label: "AI Tools", icon: Sparkles },
             { id: "write", label: "Write & Publish", icon: PenSquare },
+            { id: "schedule", label: "Schedule", icon: CalendarClock },
             { id: "manage", label: "Manage Posts", icon: ListChecks },
             { id: "meta", label: "Meta Tags", icon: Tag },
             { id: "editors", label: "Editors", icon: PenSquare },
@@ -592,6 +594,7 @@ const SEODashboard = () => {
           </motion.div>
         )}
 
+        {tab === "schedule" && <ScheduleManager />}
         {tab === "meta" && <MetaTagsEditor />}
         {tab === "editors" && <EditorsManager />}
       </div>
