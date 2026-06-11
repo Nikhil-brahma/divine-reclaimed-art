@@ -156,7 +156,6 @@ serve(async (req) => {
         generate_image,
         image_prompt,
         existing_image_url,
-        seo,
       } = body;
 
       if (!title || !content || !excerpt) {
@@ -182,21 +181,7 @@ serve(async (req) => {
         }
       }
 
-      // Validate custom JSON-LD if provided
-      let custom_schema: unknown = null;
-      if (seo?.schema_type === "Custom" && seo?.custom_schema && seo.custom_schema.trim()) {
-        try { custom_schema = JSON.parse(seo.custom_schema); }
-        catch {
-          return new Response(JSON.stringify({ error: "Custom JSON-LD is not valid JSON" }), {
-            status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
-        }
-      }
-
-      const trim = (s: unknown, max = 2000) =>
-        typeof s === "string" ? s.trim().slice(0, max) || null : null;
-
-      const payload: Record<string, unknown> = {
+      const payload = {
         title,
         slug,
         excerpt,
@@ -208,32 +193,6 @@ serve(async (req) => {
         cover_image_url,
         updated_at: new Date().toISOString(),
       };
-
-      if (seo) {
-        Object.assign(payload, {
-          seo_title: trim(seo.seo_title, 160),
-          seo_description: trim(seo.seo_description, 320),
-          canonical_url: trim(seo.canonical_url, 500),
-          focus_keyword: trim(seo.focus_keyword, 120),
-          secondary_keywords: trim(seo.secondary_keywords, 500),
-          og_title: trim(seo.og_title, 160),
-          og_description: trim(seo.og_description, 320),
-          og_image: trim(seo.og_image, 500),
-          twitter_title: trim(seo.twitter_title, 160),
-          twitter_description: trim(seo.twitter_description, 320),
-          twitter_image: trim(seo.twitter_image, 500),
-          twitter_card: seo.twitter_card === "summary" ? "summary" : "summary_large_image",
-          robots_index: seo.robots_index !== false,
-          robots_follow: seo.robots_follow !== false,
-          include_in_sitemap: seo.include_in_sitemap !== false,
-          image_alt: trim(seo.image_alt, 300),
-          image_title: trim(seo.image_title, 200),
-          image_caption: trim(seo.image_caption, 400),
-          schema_type: ["BlogPosting", "Article", "NewsArticle", "FAQPage", "Custom"].includes(seo.schema_type) ? seo.schema_type : "BlogPosting",
-          custom_schema,
-        });
-      }
-
 
       if (op === "update" && id) {
         const { error } = await supabase

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams, useLocation, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
@@ -12,30 +11,6 @@ import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
 
 const sanitize = (html: string) =>
   DOMPurify.sanitize(html, { ALLOWED_TAGS: ["strong", "em", "b", "i", "br"], ALLOWED_ATTR: [] });
-
-const SITE_URL = "https://punarvsu.com";
-
-const setMeta = (selector: string, attr: string, value: string) => {
-  let el = document.head.querySelector<HTMLMetaElement>(selector);
-  if (!el) {
-    el = document.createElement("meta");
-    const [, name, key] = /\[(name|property)="([^"]+)"\]/.exec(selector) || [];
-    if (name && key) el.setAttribute(name, key);
-    document.head.appendChild(el);
-  }
-  el.setAttribute(attr, value);
-};
-
-const upsertJsonLd = (id: string, data: unknown) => {
-  let el = document.getElementById(id) as HTMLScriptElement | null;
-  if (!el) {
-    el = document.createElement("script");
-    el.id = id;
-    el.type = "application/ld+json";
-    document.head.appendChild(el);
-  }
-  el.textContent = JSON.stringify(data);
-};
 
 const BlogPost = () => {
   const params = useParams();
@@ -72,52 +47,11 @@ const BlogPost = () => {
           readTime: `${Math.max(3, Math.ceil(aiPost.content.length / 1200))} min read`,
           image: aiPost.cover_image_url || blogTempleTextiles,
           isAiGenerated: false,
-          seo: aiPost as any,
         }
       : null
     : staticPost
-      ? { ...staticPost, isAiGenerated: false, seo: null as any }
+      ? { ...staticPost, isAiGenerated: false }
       : null;
-
-  // Inject per-post SEO meta tags + JSON-LD
-  useEffect(() => {
-    if (!post) return;
-    const seo: any = (post as any).seo ?? {};
-    const url = seo.canonical_url || `${SITE_URL}${pathname}`;
-    const title = seo.seo_title || post.title;
-    const description = seo.seo_description || (post as any).excerpt || post.title;
-    const image = seo.og_image || post.image;
-    document.title = title;
-    setMeta('meta[name="description"]', "content", description);
-    setMeta('meta[name="robots"]', "content",
-      `${seo.robots_index === false ? "noindex" : "index"}, ${seo.robots_follow === false ? "nofollow" : "follow"}`);
-    setMeta('meta[property="og:title"]', "content", seo.og_title || title);
-    setMeta('meta[property="og:description"]', "content", seo.og_description || description);
-    setMeta('meta[property="og:image"]', "content", image);
-    setMeta('meta[property="og:url"]', "content", url);
-    setMeta('meta[property="og:type"]', "content", "article");
-    setMeta('meta[name="twitter:card"]', "content", seo.twitter_card || "summary_large_image");
-    setMeta('meta[name="twitter:title"]', "content", seo.twitter_title || seo.og_title || title);
-    setMeta('meta[name="twitter:description"]', "content", seo.twitter_description || seo.og_description || description);
-    setMeta('meta[name="twitter:image"]', "content", seo.twitter_image || image);
-    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
-    canonical.href = url;
-
-    const auto = {
-      "@context": "https://schema.org",
-      "@type": seo.schema_type || "BlogPosting",
-      headline: title,
-      description,
-      image: image || undefined,
-      mainEntityOfPage: url,
-      datePublished: (post as any).date,
-      author: { "@type": "Organization", name: "Punarvsu" },
-      publisher: { "@type": "Organization", name: "Punarvsu" },
-      keywords: [seo.focus_keyword, seo.secondary_keywords].filter(Boolean).join(", ") || undefined,
-    };
-    upsertJsonLd("ld-blog-auto", seo.schema_type === "Custom" && seo.custom_schema ? seo.custom_schema : auto);
-  }, [post, pathname]);
 
   if (!isAiPost && !staticPost) return <Navigate to="/blog" replace />;
   if (isAiPost && !isLoading && !aiPost) return <Navigate to="/blog" replace />;
@@ -172,19 +106,13 @@ const BlogPost = () => {
               </button>
             </div>
 
-            <figure className="mb-10">
-              <div className="rounded-2xl overflow-hidden aspect-[16/9]">
-                <img
-                  src={post.image}
-                  alt={(post as any).seo?.image_alt || post.title}
-                  title={(post as any).seo?.image_title || undefined}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {(post as any).seo?.image_caption && (
-                <figcaption className="text-xs text-muted-foreground text-center mt-2 italic">{(post as any).seo.image_caption}</figcaption>
-              )}
-            </figure>
+            <div className="rounded-2xl overflow-hidden mb-10 aspect-[16/9]">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
 
             <div className="font-body text-foreground/80 leading-relaxed text-base space-y-5">
               {post.content.split(/\n\n+/).map((para, i) => {

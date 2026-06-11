@@ -3,16 +3,12 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowLeft, Sparkles, FileText, Search, BarChart3, Globe, Loader2,
-  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus, CalendarClock, Zap,
+  PenSquare, ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus,
 } from "lucide-react";
-
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import EditorsManager from "@/components/EditorsManager";
 import MetaTagsEditor from "@/components/MetaTagsEditor";
-import BlogSEOPanel, { emptyBlogSEO, type BlogSEO } from "@/components/seo/BlogSEOPanel";
-import AutoScheduleTab from "@/components/seo/AutoScheduleTab";
-
 import { Tag } from "lucide-react";
 import { useEditMode } from "@/contexts/EditModeContext";
 
@@ -23,7 +19,7 @@ type Action =
   | "optimize_content"
   | "generate_indexing_ping";
 
-type Tab = "ai" | "write" | "manage" | "schedule" | "meta" | "editors";
+type Tab = "ai" | "write" | "manage" | "meta" | "editors";
 
 interface BlogPost {
   id: string;
@@ -64,7 +60,6 @@ const emptyDraft = {
   generate_image: true,
   image_prompt: "",
   existing_image_url: "" as string | null,
-  seo: { ...emptyBlogSEO } as BlogSEO,
 };
 
 const SEODashboard = () => {
@@ -187,7 +182,6 @@ const SEODashboard = () => {
           generate_image: draft.generate_image,
           image_prompt: draft.image_prompt || draft.title,
           existing_image_url: draft.existing_image_url,
-          seo: draft.seo,
         },
       });
       if (error) throw error;
@@ -228,7 +222,6 @@ const SEODashboard = () => {
   };
 
   const editPost = (post: BlogPost) => {
-    const p = post as any;
     setDraft({
       id: post.id,
       title: post.title,
@@ -242,29 +235,6 @@ const SEODashboard = () => {
       generate_image: false,
       image_prompt: post.title,
       existing_image_url: post.cover_image_url,
-      seo: {
-        ...emptyBlogSEO,
-        seo_title: p.seo_title ?? "",
-        seo_description: p.seo_description ?? "",
-        canonical_url: p.canonical_url ?? "",
-        focus_keyword: p.focus_keyword ?? post.target_keyword ?? "",
-        secondary_keywords: p.secondary_keywords ?? "",
-        og_title: p.og_title ?? "",
-        og_description: p.og_description ?? "",
-        og_image: p.og_image ?? "",
-        twitter_title: p.twitter_title ?? "",
-        twitter_description: p.twitter_description ?? "",
-        twitter_image: p.twitter_image ?? "",
-        twitter_card: (p.twitter_card ?? "summary_large_image") as BlogSEO["twitter_card"],
-        robots_index: p.robots_index ?? true,
-        robots_follow: p.robots_follow ?? true,
-        include_in_sitemap: p.include_in_sitemap ?? true,
-        image_alt: p.image_alt ?? "",
-        image_title: p.image_title ?? "",
-        image_caption: p.image_caption ?? "",
-        schema_type: (p.schema_type ?? "BlogPosting") as BlogSEO["schema_type"],
-        custom_schema: p.custom_schema ? (typeof p.custom_schema === "string" ? p.custom_schema : JSON.stringify(p.custom_schema, null, 2)) : "",
-      },
     });
     setSlugTouched(true);
     setTab("write");
@@ -333,11 +303,9 @@ const SEODashboard = () => {
             { id: "ai", label: "AI Tools", icon: Sparkles },
             { id: "write", label: "Write & Publish", icon: PenSquare },
             { id: "manage", label: "Manage Posts", icon: ListChecks },
-            { id: "schedule", label: "Auto-Schedule", icon: CalendarClock },
             { id: "meta", label: "Meta Tags", icon: Tag },
             { id: "editors", label: "Editors", icon: PenSquare },
           ] as const).map((t) => (
-
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
@@ -548,19 +516,6 @@ const SEODashboard = () => {
               </div>
             </div>
 
-            <BlogSEOPanel
-              value={draft.seo}
-              onChange={(next) => setDraft({ ...draft, seo: next })}
-              draft={{
-                title: draft.title,
-                slug: draft.slug,
-                excerpt: draft.excerpt,
-                content: draft.content,
-                existing_image_url: draft.existing_image_url,
-              }}
-              allSlugs={posts.map((p) => p.slug)}
-            />
-
             <div className="flex gap-3 flex-wrap pt-2">
               <button
                 onClick={() => handlePublish(false)}
@@ -637,10 +592,8 @@ const SEODashboard = () => {
           </motion.div>
         )}
 
-        {tab === "schedule" && <AutoScheduleTab />}
         {tab === "meta" && <MetaTagsEditor />}
         {tab === "editors" && <EditorsManager />}
-
       </div>
     </div>
   );
