@@ -46,8 +46,10 @@ const AppContent = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/shipping" element={<Shipping />} />
-        <Route path="/seo-dashboard" element={<SEODashboard />} />
-        <Route path="/admin/messages" element={<AdminMessages />} />
+        <Route path="/seo-dashboard" element={<Navigate to="/admin" replace />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/messages" element={<Navigate to="/admin#messages" replace />} />
+        <Route path="/admin/legacy-seo" element={<SEODashboard />} />
         <Route path="/auth" element={<AuthPage />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
