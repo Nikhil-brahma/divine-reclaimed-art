@@ -6,7 +6,7 @@ export default function EditModeBanner() {
   const { editMode, setEditMode } = useEditMode();
   const { pathname } = useLocation();
   // Don't show on the dashboard itself (already controlled there)
-  if (!editMode || pathname.startsWith("/seo-dashboard")) return null;
+  if (!editMode || pathname.startsWith("/admin") || pathname.startsWith("/seo-dashboard")) return null;
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-3 px-4 py-2 rounded-full bg-yellow-400 text-black shadow-2xl border border-yellow-600 animate-in fade-in slide-in-from-bottom-4">
