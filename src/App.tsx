@@ -16,7 +16,7 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
-import AdminMessages from "./pages/AdminMessages";
+
 import AuthPage from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
