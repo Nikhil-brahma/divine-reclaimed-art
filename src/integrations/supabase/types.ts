@@ -185,6 +185,72 @@ export type Database = {
         }
         Relationships: []
       }
+      products: {
+        Row: {
+          category: string | null
+          compare_at_price: number | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          handle: string
+          id: string
+          images: string[] | null
+          price: number
+          seo_description: string | null
+          seo_title: string | null
+          sku: string | null
+          status: string
+          stock: number
+          tags: string[] | null
+          title: string
+          updated_at: string
+          weight_grams: number | null
+        }
+        Insert: {
+          category?: string | null
+          compare_at_price?: number | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          handle: string
+          id?: string
+          images?: string[] | null
+          price?: number
+          seo_description?: string | null
+          seo_title?: string | null
+          sku?: string | null
+          status?: string
+          stock?: number
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          weight_grams?: number | null
+        }
+        Update: {
+          category?: string | null
+          compare_at_price?: number | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          handle?: string
+          id?: string
+          images?: string[] | null
+          price?: number
+          seo_description?: string | null
+          seo_title?: string | null
+          sku?: string | null
+          status?: string
+          stock?: number
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          weight_grams?: number | null
+        }
+        Relationships: []
+      }
       scheduled_blog_posts: {
         Row: {
           category: string | null
