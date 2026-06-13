@@ -74,10 +74,27 @@ const ProductDetail = () => {
     toast.success(`${product.title} added to cart`);
   };
 
+  const productUrl = `https://punarvsu.com/products/${product.handle}`;
+  const productImg = images[0]?.startsWith("http") ? images[0] : `https://punarvsu.com${images[0]}`;
+  const seoTitle = product.seo_title || `${product.title} · Punarvsu`;
+  const seoDesc = (product.seo_description || product.description || `${product.title} — handcrafted from sacred temple textiles by Punarvsu artisans in Delhi.`).slice(0, 160);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={seoTitle} description={seoDesc} canonical={productUrl} type="product" image={productImg} />
+      <StructuredData productData={{
+        name: product.title,
+        description: seoDesc,
+        image: productImg,
+        price: String(product.price),
+        currency: product.currency || "INR",
+        sku: product.sku || product.handle,
+        available: !soldOut,
+        url: productUrl,
+      }} />
       <Navbar />
       <main className="pt-28 pb-20">
+
         <div className="container mx-auto px-6">
           <Link to="/#collections" className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
             <ArrowLeft size={16} /> Back to Collection
