@@ -38,15 +38,9 @@ const ProductDetail = () => {
     })();
   }, [handle]);
 
-  // SEO meta
-  useEffect(() => {
-    if (!product) return;
-    document.title = product.seo_title || `${product.title} · Punarvsu`;
-    const desc = product.seo_description || product.description || "";
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) { meta = document.createElement("meta"); meta.setAttribute("name", "description"); document.head.appendChild(meta); }
-    meta.setAttribute("content", desc.slice(0, 160));
-  }, [product]);
+  // SEO handled via <SEOHead /> + <StructuredData /> in render
+
+
 
   if (loading) {
     return (
