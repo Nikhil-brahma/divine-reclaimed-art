@@ -6,9 +6,10 @@ import { CartDrawer } from "@/components/CartDrawer";
 
 const navLinks = [
   { label: "Shop", href: "#collections" },
-  { label: "About Us", href: "/about" },
+  { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact & Bulk Orders", href: "/contact" },
+  { label: "Contact", href: "/contact" },
+  { label: "Account", href: "/account" },
 ];
 
 const MagneticLink = ({ children, className, ...props }: any) => {

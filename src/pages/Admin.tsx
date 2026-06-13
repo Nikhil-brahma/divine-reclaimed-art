@@ -13,10 +13,11 @@ import MetaTagsEditor from "@/components/MetaTagsEditor";
 import ScheduleManager from "@/components/ScheduleManager";
 import ProductsManager from "@/components/admin/ProductsManager";
 import MessagesPanel from "@/components/admin/MessagesPanel";
+import OrdersPanel from "@/components/admin/OrdersPanel";
 import { useEditMode } from "@/contexts/EditModeContext";
 
 type Action = "generate_meta" | "generate_blog_ideas" | "generate_blog_post" | "optimize_content" | "generate_indexing_ping";
-type Section = "overview" | "ai" | "write" | "schedule" | "blogs" | "meta" | "editors" | "products" | "messages" | "live-edit";
+type Section = "overview" | "ai" | "write" | "schedule" | "blogs" | "meta" | "editors" | "products" | "messages" | "orders" | "live-edit";
 
 interface BlogPost {
   id: string; slug: string; title: string; excerpt: string; content: string;
@@ -50,6 +51,7 @@ const navGroups: { label: string; items: { id: Section; label: string; icon: typ
     label: "Store",
     items: [
       { id: "products", label: "Products", icon: Package },
+      { id: "orders", label: "Orders", icon: ListChecks },
       { id: "messages", label: "Messages", icon: Mail },
     ],
   },
@@ -313,6 +315,7 @@ const Admin = () => {
           )}
 
           {section === "products" && <ProductsManager />}
+          {section === "orders" && <OrdersPanel />}
           {section === "messages" && <MessagesPanel />}
           {section === "schedule" && <ScheduleManager />}
           {section === "meta" && <MetaTagsEditor />}
