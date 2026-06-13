@@ -4,7 +4,10 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 import { supabase } from "@/integrations/supabase/client";
+
 
 import blogArtisanCraft from "@/assets/blog-artisan-craft.jpg";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
