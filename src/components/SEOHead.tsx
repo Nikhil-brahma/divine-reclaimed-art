@@ -12,10 +12,11 @@ interface SEOProps {
 }
 
 const SITE_NAME = "Punarvsu";
-const DEFAULT_TITLE = "Punarvsu — Handcrafted Bags from Sacred Temple Textiles | Delhi";
+const DEFAULT_TITLE = "Punarvsu — Sacred Temple Textile Bags, Handcrafted in Delhi";
 const DEFAULT_DESCRIPTION =
-  "Shop handcrafted bags and accessories made from upcycled sacred temple textiles. Each Punarvsu piece carries real heritage, made by artisans in Delhi. Free shipping above ₹2,999.";
-const DEFAULT_IMAGE = "/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";
+  "Handcrafted bags from upcycled sacred temple textiles, made by Delhi artisans. Carry blessings, wear heritage. Free shipping above ₹2,999.";
+const DEFAULT_IMAGE = "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";
+
 
 type MetaOverride = {
   title?: string;
