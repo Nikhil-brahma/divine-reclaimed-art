@@ -143,10 +143,12 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             }).eq("id", order.id);
+            supabase.functions.invoke("send-order-confirmation", { body: { order_id: order.id } }).catch(() => {});
             toast.success("Payment received — blessings on their way 🪷");
             clear();
             onClose();
             navigate(`/account?order=${order.order_number}`);
+
           } else {
             toast.error("Payment verification failed. Contact support with your order number.");
           }
