@@ -1,4 +1,6 @@
 import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
