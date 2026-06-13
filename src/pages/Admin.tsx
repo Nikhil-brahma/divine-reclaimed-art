@@ -83,6 +83,14 @@ const Admin = () => {
   });
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Admin panel must only run on the lovable.app subdomain — redirect away from custom domains
+  useEffect(() => {
+    const host = window.location.hostname;
+    if (host === "punarvsu.com" || host === "www.punarvsu.com") {
+      window.location.replace(`https://divine-reclaimed-art.lovable.app${window.location.pathname}${window.location.hash}`);
+    }
+  }, []);
+
   useEffect(() => { window.location.hash = section; }, [section]);
 
   // AI tools state
