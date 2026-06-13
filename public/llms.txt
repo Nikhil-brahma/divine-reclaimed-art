@@ -1,0 +1,30 @@
+# Punarvsu
+
+> Punarvsu is India's first luxury brand transforming retired sacred temple textiles (Bhagwan ki Poshak) into handcrafted bags and accessories. Each piece is sanctified, upcycled, and handmade by artisans in Rohini, Delhi.
+
+Punarvsu collects retired deity garments from partner temples such as Khatushyam Delhi Dham, sanitises them through a 3-phase UV / wash / steam process, and reworks them into premium potli bags, totes, and clutches at a workshop managed by Sampurna NGO. Every piece carries a Certificate of Sanctity and provenance details. Free shipping within India on orders above ₹2,999.
+
+## Pages
+
+- [Home](/): Brand story, collections, sacred journey, and impact.
+- [About](/about): Founder story, mission, and the Sampurna NGO partnership.
+- [Journal](/blog): Stories on temple textile heritage, artisan craft, and sustainable luxury.
+- [Shipping Policy](/shipping): Domestic and international shipping, timelines, and FAQs.
+- [Contact](/contact): Reach out for orders, custom bags, or wholesale.
+
+## Products
+
+- [Sacred Heritage Potli](/products/sacred-heritage-potli-handcrafted-from-bhagwan-vastra-temple-idol-poshak): Hand-stitched from authentic temple idol poshak.
+- [Recycled Cotton Tote](/products/recycled-cotton-tote-bags-sacred-potli): Everyday tote upcycled from temple cotton.
+- [Pooja / Mandir Bag](/products/pooja-bags-temple-bags-mandir-bags): Dedicated bag for daily worship essentials.
+- [Artisan Heritage Potli](/products/artisan-sacred-heritage-potli-from-temple-idol-poshak-bhagwan-vastra): Artisan-grade potli with rich textile work.
+- [Grand Heritage Potli](/products/grand-heritage-potli-hand-painted-base-art-bhagwan-vastra-punarvsus-finest): Hand-painted base, Punarvsu's finest piece.
+- [Sita Potli](/products/sita-potli-sacred-offering-bag-for-maa-sita): Sacred offering bag dedicated to Maa Sita.
+- [Crimson Velvet Bridal Potli](/products/crimson-velvet-potli-zari-pearl-embroidered-bridal-bag): Zari and pearl-embroidered bridal bag.
+- [Saffron Teal Festive Potli](/products/saffron-teal-potli-zari-embroidered-festive-bag): Zari-embroidered festive potli.
+- [Mustard Silk Floral Potli](/products/mustard-silk-potli-floral-embroidered-festive-bag): Floral-embroidered silk potli.
+
+## Optional
+
+- [Privacy Policy](/privacy)
+- [Terms of Service](/terms)
