@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import CollectionsSection from "@/components/CollectionsSection";
+import CollectionsSection from "@/components/NativeCollections";
 import SacredProvenanceSection from "@/components/SacredProvenanceSection";
 import SocialProofSection from "@/components/SocialProofSection";
 import UrgencySection from "@/components/UrgencySection";
