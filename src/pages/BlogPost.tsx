@@ -5,6 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
+
 import { staticBlogPosts } from "@/pages/Blog";
 import { supabase } from "@/integrations/supabase/client";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
@@ -64,10 +67,28 @@ const BlogPost = () => {
   }
   if (!post) return <Navigate to="/blog" replace />;
 
+  const postUrl = `https://punarvsu.com${pathname}`;
+  const postImg = typeof post.image === "string" && post.image.startsWith("http")
+    ? post.image
+    : `https://punarvsu.com${post.image}`;
+  const excerpt = (("excerpt" in post && (post as any).excerpt)
+    || (post.content || "").replace(/[#*`>_-]/g, "").slice(0, 160)).slice(0, 160);
+  const publishedISO = isAiPost && aiPost ? new Date(aiPost.created_at).toISOString() : undefined;
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={post.title} description={excerpt} canonical={postUrl} type="article" image={postImg} />
+      <StructuredData articleData={{
+        headline: post.title,
+        description: excerpt,
+        image: postImg,
+        datePublished: publishedISO,
+        author: "Punarvsu",
+        url: postUrl,
+      }} />
       <Navbar />
       <main className="pt-24 pb-20">
+
         <article className="container mx-auto px-6 max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

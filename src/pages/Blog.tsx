@@ -4,7 +4,10 @@ import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 import { supabase } from "@/integrations/supabase/client";
+
 
 import blogArtisanCraft from "@/assets/blog-artisan-craft.jpg";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
@@ -187,8 +190,19 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Journal"
+        description="Stories from Punarvsu — temple textile heritage, artisan craft, sustainable luxury, and the sacred journey of upcycled bags."
+        canonical="https://punarvsu.com/blog"
+      />
+      <StructuredData collectionData={{
+        name: "Punarvsu Journal",
+        description: "Stories on sacred textile heritage, artisan craft, and conscious fashion.",
+        url: "https://punarvsu.com/blog",
+      }} />
       <Navbar />
       <main className="pt-24 pb-20">
+
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

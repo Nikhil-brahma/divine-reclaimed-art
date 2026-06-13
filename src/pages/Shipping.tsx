@@ -1,4 +1,6 @@
 import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
@@ -25,7 +27,9 @@ const Shipping = () => {
         title="Shipping Policy"
         description="Learn about Punarvsu's shipping options for India and international orders. Free shipping on orders above ₹2,999 within India."
       />
+      <StructuredData />
       <Navbar />
+
 
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6 max-w-3xl">

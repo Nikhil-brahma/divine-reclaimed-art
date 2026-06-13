@@ -204,18 +204,63 @@ interface StructuredDataProps {
     currency?: string;
     sku?: string;
     available?: boolean;
+    url?: string;
+  };
+  articleData?: {
+    headline: string;
+    description?: string;
+    image?: string;
+    datePublished?: string;
+    dateModified?: string;
+    author?: string;
+    url?: string;
+  };
+  collectionData?: {
+    name: string;
+    description?: string;
+    url?: string;
   };
 }
 
-const StructuredData = ({ productData }: StructuredDataProps) => {
+const StructuredData = ({ productData, articleData, collectionData }: StructuredDataProps) => {
   const location = useLocation();
 
   const schemas: object[] = [organizationSchema, localBusinessSchema, websiteSchema, brandKnowledgeSchema, speakableSchema, buildBreadcrumbs(location.pathname)];
 
-  // Add FAQ on homepage
-  if (location.pathname === "/") {
+  // Add FAQ on homepage and shipping page
+  if (location.pathname === "/" || location.pathname === "/shipping") {
     schemas.push(faqSchema);
   }
+
+  if (articleData) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: articleData.headline,
+      description: articleData.description,
+      image: articleData.image,
+      datePublished: articleData.datePublished,
+      dateModified: articleData.dateModified || articleData.datePublished,
+      author: { "@type": "Organization", name: articleData.author || "Punarvsu" },
+      publisher: {
+        "@type": "Organization",
+        name: "Punarvsu",
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png` },
+      },
+      mainEntityOfPage: { "@type": "WebPage", "@id": articleData.url || `${SITE_URL}${location.pathname}` },
+    });
+  }
+
+  if (collectionData) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: collectionData.name,
+      description: collectionData.description,
+      url: collectionData.url || `${SITE_URL}${location.pathname}`,
+    });
+  }
+
 
   // Add product schema if on product page
   if (productData) {
