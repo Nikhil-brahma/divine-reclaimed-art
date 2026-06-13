@@ -7,6 +7,9 @@ import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
+
 
 interface Product {
   id: string; handle: string; title: string; description: string | null;
