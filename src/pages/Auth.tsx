@@ -15,7 +15,14 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => { if (data.session) nav("/admin"); });
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) nav("/admin", { replace: true });
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) nav("/admin", { replace: true });
+    });
+    return () => { active = false; sub.subscription.unsubscribe(); };
   }, [nav]);
 
   const submit = async (e: React.FormEvent) => {
@@ -35,15 +42,16 @@ export default function Auth() {
         if (error) throw error;
         toast.success("Account created. You can sign in now.");
         setMode("signin");
+        setLoading(false);
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email: normalized, password });
-        if (error) throw error;
+        if (error) { setLoading(false); throw error; }
         toast.success("Signed in");
-        nav("/admin");
+        // navigation handled by onAuthStateChange for instant redirect
       }
-    } catch (e: any) { toast.error(e.message); }
-    finally { setLoading(false); }
+    } catch (e: any) { toast.error(e.message); setLoading(false); }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
