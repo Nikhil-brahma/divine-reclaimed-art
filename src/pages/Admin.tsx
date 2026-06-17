@@ -15,6 +15,7 @@ import ProductsManager from "@/components/admin/ProductsManager";
 import MessagesPanel from "@/components/admin/MessagesPanel";
 import OrdersPanel from "@/components/admin/OrdersPanel";
 import { useEditMode } from "@/contexts/EditModeContext";
+import SEOHead from "@/components/SEOHead";
 
 type Action = "generate_meta" | "generate_blog_ideas" | "generate_blog_post" | "optimize_content" | "generate_indexing_ping";
 type Section = "overview" | "ai" | "write" | "schedule" | "blogs" | "meta" | "editors" | "products" | "messages" | "orders" | "live-edit";
@@ -247,6 +248,7 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-background flex">
+      <SEOHead title="Admin Panel" description="Punarvsu admin dashboard — content, orders, products, and messages." noindex />
       {/* Sidebar */}
       <aside className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen w-64 bg-card border-r border-border/50 z-40 transition-transform overflow-y-auto`}>
         <div className="p-5 border-b border-border/50">

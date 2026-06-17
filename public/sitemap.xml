@@ -8,7 +8,7 @@
   <url><loc>https://punarvsu.com/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://punarvsu.com/shipping</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
 
-  <!-- Product pages -->
+  <!-- Product pages (canonical /products/:handle, also reachable via /product/:handle) -->
   <url><loc>https://punarvsu.com/products/sacred-heritage-potli-handcrafted-from-bhagwan-vastra-temple-idol-poshak</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://punarvsu.com/products/recycled-cotton-tote-bags-sacred-potli</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://punarvsu.com/products/pooja-bags-temple-bags-mandir-bags</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -22,12 +22,4 @@
   <!-- Editorial blog posts -->
   <url><loc>https://punarvsu.com/blog/the-sacred-journey-of-temple-textiles</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://punarvsu.com/blog/craft-of-sacred-stitching</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-
-  <!-- AI-generated blog posts -->
-  <url><loc>https://punarvsu.com/blog/ai/fathers-day-gifts-sustainable-upcycled-temple-textile-bags</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://punarvsu.com/blog/ai/what-is-bhagwan-vastra-sacred-fabric-punarvsu-potli-bags</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://punarvsu.com/blog/ai/akshaya-tritiya-sustainable-gifting-temple-textile-bags</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://punarvsu.com/blog/ai/mothers-day-gifting-ideas-upcycled-temple-textile-bags</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://punarvsu.com/blog/ai/navratri-ram-navami-sustainable-temple-textile-bags</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://punarvsu.com/blog/ai/holi-fashion-sustainable-upcycled-bags-gifting</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

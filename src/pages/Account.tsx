@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Package, LogOut, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 import { toast } from "sonner";
 
 interface Order {
@@ -53,6 +54,7 @@ const Account = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Your Account" description="View your Punarvsu orders, tracking, and account details." noindex />
       <Navbar />
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 max-w-4xl">
