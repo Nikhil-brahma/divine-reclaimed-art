@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -6,33 +7,28 @@ const corsHeaders = {
 };
 
 const ALLOWED_CURRENCIES = new Set(["INR"]);
-const MAX_AMOUNT = 1_000_000; // ₹10,00,000 cap
+const MAX_AMOUNT = 1_000_000;
 
-// Simple per-IP in-memory rate limiter (best-effort within an instance)
-const RATE_LIMIT = 20; // requests
-const RATE_WINDOW_MS = 60_000; // per minute
-const hits = new Map<string, { count: number; reset: number }>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const e = hits.get(ip);
-  if (!e || e.reset < now) {
-    hits.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
-    return false;
-  }
-  e.count++;
-  return e.count > RATE_LIMIT;
-}
+const SB_URL = Deno.env.get("SUPABASE_URL")!;
+const SB_ANON = Deno.env.get("SUPABASE_ANON_KEY")!;
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unknown";
-    if (rateLimited(ip)) {
-      return new Response(JSON.stringify({ error: "Too many requests" }), {
-        status: 429,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+    // Require authenticated caller
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace(/^Bearer\s+/i, "");
+    if (!token) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const sb = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
+    const { data: userData, error: userErr } = await sb.auth.getUser(token);
+    if (userErr || !userData?.user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -56,8 +52,7 @@ serve(async (req) => {
       });
     }
 
-    // Server-controlled notes only — never trust client input here
-    const notes: Record<string, string> = { source: "punarvsu-web", receipt };
+    const notes: Record<string, string> = { source: "punarvsu-web", receipt, user_id: userData.user.id };
 
     const auth = "Basic " + btoa(`${KEY_ID}:${KEY_SECRET}`);
     const res = await fetch("https://api.razorpay.com/v1/orders", {

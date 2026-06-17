@@ -136,19 +136,15 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
         prefill: { name: form.full_name, email: form.email, contact: form.phone },
         theme: { color: "#c9a84c" },
         handler: async (response: any) => {
-          const { data: vData } = await supabase.functions.invoke("razorpay-verify-payment", { body: response });
+          // Server-side: verifies HMAC, ownership, marks order paid, and sends confirmation
+          const { data: vData } = await supabase.functions.invoke("razorpay-verify-payment", {
+            body: { ...response, order_id: order.id },
+          });
           if (vData?.verified) {
-            await supabase.from("orders").update({
-              status: "paid", paid_at: new Date().toISOString(),
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }).eq("id", order.id);
-            supabase.functions.invoke("send-order-confirmation", { body: { order_id: order.id } }).catch(() => {});
             toast.success("Payment received — blessings on their way 🪷");
             clear();
             onClose();
             navigate(`/account?order=${order.order_number}`);
-
           } else {
             toast.error("Payment verification failed. Contact support with your order number.");
           }
