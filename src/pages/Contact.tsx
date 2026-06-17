@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -41,6 +42,7 @@ const Contact = () => {
         title="Contact Punarvsu — Get in Touch"
         description="Reach out to Punarvsu for queries about our handcrafted bags from sacred temple textiles. Located in Rohini, Delhi."
       />
+      <StructuredData />
       <Navbar />
 
       <main>

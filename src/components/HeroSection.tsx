@@ -98,7 +98,7 @@ const HeroSection = () => {
             className="ornament-line mx-auto mb-8 overflow-hidden"
           />
 
-          <div className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
+          <h1 className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
             <TextReveal
               text="Because Devotion"
               as="span"
@@ -113,7 +113,7 @@ const HeroSection = () => {
               delay={0.9}
               stagger={0.05}
             />
-          </div>
+          </h1>
 
           <motion.p
             initial={{ opacity: 0 }}

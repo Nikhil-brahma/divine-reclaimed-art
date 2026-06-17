@@ -3,6 +3,7 @@ import { Heart, Leaf, Users, Sparkles, Shield, Globe } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import StructuredData from "@/components/StructuredData";
 import artisanImg from "@/assets/artisan-crafting.jpg";
 import nikhilImg from "@/assets/nikhil-ceo.jpg";
 import SectionDivider from "@/components/SectionDivider";
@@ -23,6 +24,7 @@ const About = () => {
         title="About Punarvsu — Our Sacred Mission"
         description="Discover how Punarvsu transforms retired temple textiles into handcrafted luxury bags. Our story of devotion, sustainability, and artisan craft."
       />
+      <StructuredData />
       <Navbar />
 
       <main>

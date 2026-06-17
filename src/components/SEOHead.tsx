@@ -51,7 +51,15 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
     return () => { cancelled = true; };
   }, [location.pathname]);
 
-  const finalTitle = override.title || (title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE);
+  const buildTitle = (t?: string) => {
+    if (!t) return DEFAULT_TITLE;
+    const suffix = ` | ${SITE_NAME}`;
+    const max = 60;
+    if (t.length + suffix.length <= max) return `${t}${suffix}`;
+    if (t.length <= max) return t;
+    return `${t.slice(0, max - 1).trimEnd()}…`;
+  };
+  const finalTitle = override.title ? (override.title.length > 60 ? override.title.slice(0, 59).trimEnd() + "…" : override.title) : buildTitle(title);
   const desc = override.description || description || DEFAULT_DESCRIPTION;
   const img = override.image || image || DEFAULT_IMAGE;
   const ogTitle = override.og_title || finalTitle;

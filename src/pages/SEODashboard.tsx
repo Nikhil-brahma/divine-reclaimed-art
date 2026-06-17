@@ -12,6 +12,7 @@ import MetaTagsEditor from "@/components/MetaTagsEditor";
 import ScheduleManager from "@/components/ScheduleManager";
 import { Tag } from "lucide-react";
 import { useEditMode } from "@/contexts/EditModeContext";
+import SEOHead from "@/components/SEOHead";
 
 type Action =
   | "generate_meta"
@@ -253,6 +254,7 @@ const SEODashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Legacy SEO Dashboard" description="Internal SEO tools and content automation for Punarvsu." noindex />
       <div className="container mx-auto px-6 py-12 max-w-5xl">
         <Link to="/" className="inline-flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
           <ArrowLeft size={16} /> Back to Site

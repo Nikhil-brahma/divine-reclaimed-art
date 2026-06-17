@@ -111,7 +111,7 @@ const ProductDetail = () => {
                   {images.map((img, i) => (
                     <button key={i} onClick={() => setSelectedImage(i)}
                             className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${i === selectedImage ? "border-primary" : "border-transparent hover:border-primary/40"}`}>
-                      <img src={img} alt="" className="w-full h-full object-cover" />
+                      <img src={img} alt={`${product.title} — view ${i + 1}`} className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>

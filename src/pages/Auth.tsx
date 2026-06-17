@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import SEOHead from "@/components/SEOHead";
 
 const ALLOWED_EMAIL = "nikhilrawat508@gmail.com";
 
@@ -55,6 +56,7 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <SEOHead title="Sign In" description="Owner sign-in for the Punarvsu admin panel." noindex />
       <form onSubmit={submit} className="w-full max-w-sm space-y-4 bg-card border rounded-lg p-6 shadow-lg">
         <h1 className="text-2xl font-serif">Admin Access</h1>
         <p className="text-sm text-muted-foreground">Restricted to the site owner.</p>
