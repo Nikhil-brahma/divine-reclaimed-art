@@ -93,14 +93,45 @@ async function appendToSheet(order: any, items: any[]) {
   return { ok: r.ok, status: r.status, body };
 }
 
+const SB_ANON = Deno.env.get("SUPABASE_ANON_KEY")!;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
+    // Require authenticated caller
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace(/^Bearer\s+/i, "");
+    if (!token) {
+      return new Response(JSON.stringify({ ok: false, error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const sbUser = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
+    const { data: userData, error: userErr } = await sbUser.auth.getUser(token);
+    if (userErr || !userData?.user) {
+      return new Response(JSON.stringify({ ok: false, error: "Unauthorized" }), {
+        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const callerId = userData.user.id;
+
     const { order_id } = await req.json();
     if (!order_id) throw new Error("order_id required");
+
     const sb = createClient(SB_URL, SB_SVC);
     const { data: order, error } = await sb.from("orders").select("*").eq("id", order_id).single();
     if (error || !order) throw new Error("order not found");
+
+    // Caller must own the order OR be an editor/admin
+    if (order.user_id !== callerId) {
+      const { data: isEditor } = await sb.rpc("is_editor", { _user_id: callerId });
+      if (!isEditor) {
+        return new Response(JSON.stringify({ ok: false, error: "Forbidden" }), {
+          status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
     const { data: items } = await sb.from("order_items").select("*").eq("order_id", order_id);
 
     const [email, sheet] = await Promise.all([
