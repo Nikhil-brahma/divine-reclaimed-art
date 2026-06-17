@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload } from "lucide-react";
+import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload, Sparkles } from "lucide-react";
+import SmartPhotoStudio from "@/components/admin/SmartPhotoStudio";
 
 interface Product {
   id: string;
@@ -54,6 +55,7 @@ const ProductsManager = () => {
   const [uploading, setUploading] = useState(false);
   const [handleTouched, setHandleTouched] = useState(false);
   const [tagInput, setTagInput] = useState("");
+  const [studioOpen, setStudioOpen] = useState(false);
 
   const fetchList = async () => {
     setLoading(true);
@@ -254,8 +256,27 @@ const ProductsManager = () => {
                 <span>{uploading ? "Uploading" : "Upload"}</span>
                 <input type="file" accept="image/*" multiple onChange={handleUpload} className="hidden" />
               </label>
+              <button
+                type="button"
+                onClick={() => setStudioOpen(true)}
+                className="w-24 h-24 rounded-lg border-2 border-primary/40 bg-primary/5 hover:bg-primary/10 flex flex-col items-center justify-center gap-1 text-primary text-[10px]"
+              >
+                <Sparkles size={20} />
+                <span>Smart Studio</span>
+              </button>
             </div>
+            <p className="text-[10px] text-muted-foreground mt-2">
+              <Sparkles size={10} className="inline" /> Smart Studio turns one raw photo into a regal hero shot, 4 angles, and a 360° spin powered by Sacred AI.
+            </p>
           </div>
+
+          <SmartPhotoStudio
+            open={studioOpen}
+            productId={form.id}
+            productHandle={form.handle}
+            onClose={() => setStudioOpen(false)}
+            onApply={(urls) => setForm((f) => ({ ...f, images: [...f.images, ...urls.filter((u) => !f.images.includes(u))] }))}
+          />
 
           <div className="sm:col-span-2">
             <label className="font-body text-xs uppercase tracking-wider text-muted-foreground">SEO Title</label>

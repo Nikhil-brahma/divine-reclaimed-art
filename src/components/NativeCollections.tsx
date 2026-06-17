@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Loader2, ShoppingBag, Sparkles } from "lucide-react";
+import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useStoreCart } from "@/stores/storeCart";
-import { toast } from "sonner";
+import GlassProductCard from "@/components/GlassProductCard";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -25,109 +24,8 @@ interface Product {
 
 const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
-const GlassProductCard = ({ product, index }: { product: Product; index: number }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const addItem = useStoreCart((s) => s.addItem);
+// Card moved to src/components/GlassProductCard.tsx (shared site-wide).
 
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const r = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    setTilt({ x: -y * 8, y: x * 12 });
-  };
-
-  const img = product.images?.[0] || "/placeholder.svg";
-  const soldOut = product.stock <= 0;
-
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault(); e.stopPropagation();
-    if (soldOut) { toast.error("Sold out"); return; }
-    addItem({ productId: product.id, handle: product.handle, title: product.title, image: img, price: product.price, stock: product.stock });
-    toast.success(`${product.title} added to cart`);
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="group perspective-1000"
-    >
-      <div
-        ref={cardRef}
-        onMouseMove={handleMove}
-        onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-        style={{
-          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: "transform 0.2s ease-out",
-          transformStyle: "preserve-3d",
-        }}
-        className="relative rounded-2xl overflow-hidden glass-card shadow-sm hover:shadow-sacred transition-shadow duration-500"
-      >
-        {/* Gold sheen sweep */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20"
-             style={{ background: "linear-gradient(135deg, hsl(42 85% 55% / 0.18), transparent 35%, transparent 65%, hsl(30 80% 48% / 0.18))" }} />
-
-        <Link to={`/product/${product.handle}`} className="block">
-          <div className="aspect-[3/4] overflow-hidden bg-muted relative">
-            <motion.img
-              src={img}
-              alt={product.title}
-              className="w-full h-full object-cover object-center"
-              loading="lazy"
-              whileHover={{ scale: 1.06 }}
-              transition={{ duration: 0.6 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-            <div className="absolute top-3 right-3 inline-flex items-center gap-1 backdrop-blur-md bg-white/30 border border-white/40 text-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full" style={{ transform: "translateZ(25px)" }}>
-              <Sparkles size={10} className="text-primary" /> Sacred
-            </div>
-            {soldOut && (
-              <div className="absolute top-3 left-3 bg-destructive/90 backdrop-blur text-destructive-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
-                Sold out
-              </div>
-            )}
-            {product.compare_at_price && product.compare_at_price > product.price && !soldOut && (
-              <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur text-primary-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
-                Save ₹{(product.compare_at_price - product.price).toLocaleString("en-IN")}
-              </div>
-            )}
-          </div>
-
-          <div className="p-5 relative backdrop-blur-md bg-white/40 border-t border-white/40" style={{ transform: "translateZ(10px)" }}>
-            {product.category && (
-              <p className="font-body text-[9px] tracking-[0.3em] uppercase text-primary/80 mb-1">{product.category}</p>
-            )}
-            <h3 className="font-display text-xl text-foreground mb-1 group-hover:text-primary transition-colors line-clamp-1">
-              {product.title}
-            </h3>
-            <p className="font-body text-xs text-muted-foreground mb-3 line-clamp-2 min-h-[2.5rem]">
-              {product.description || "A blessing in physical form."}
-            </p>
-            <div className="flex items-end justify-between gap-2">
-              <div>
-                <span className="font-display text-lg text-foreground">{formatINR(product.price)}</span>
-                {product.compare_at_price && product.compare_at_price > product.price && (
-                  <span className="ml-2 font-body text-xs text-muted-foreground line-through">{formatINR(product.compare_at_price)}</span>
-                )}
-              </div>
-              <button
-                onClick={handleAdd}
-                disabled={soldOut}
-                className="font-body text-[10px] tracking-[0.2em] uppercase text-primary hover:text-accent transition-all disabled:opacity-40 group-hover:translate-x-1 duration-300"
-              >
-                Add to Cart →
-              </button>
-            </div>
-          </div>
-        </Link>
-      </div>
-    </motion.div>
-  );
-};
 
 const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);

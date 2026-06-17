@@ -401,6 +401,50 @@ export type Database = {
         }
         Relationships: []
       }
+      product_media: {
+        Row: {
+          angle_urls: string[]
+          created_at: string
+          hero_url: string | null
+          id: string
+          product_id: string
+          source_image_url: string | null
+          spin_urls: string[]
+          style_preset: string
+          updated_at: string
+        }
+        Insert: {
+          angle_urls?: string[]
+          created_at?: string
+          hero_url?: string | null
+          id?: string
+          product_id: string
+          source_image_url?: string | null
+          spin_urls?: string[]
+          style_preset?: string
+          updated_at?: string
+        }
+        Update: {
+          angle_urls?: string[]
+          created_at?: string
+          hero_url?: string | null
+          id?: string
+          product_id?: string
+          source_image_url?: string | null
+          spin_urls?: string[]
+          style_preset?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_media_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category: string | null
