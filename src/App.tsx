@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
+import Studio from "./pages/Studio";
 
 import AuthPage from "./pages/Auth";
 import Account from "./pages/Account";
@@ -47,6 +48,7 @@ const AppContent = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/shipping" element={<Shipping />} />
+        <Route path="/studio" element={<Studio />} />
         <Route path="/seo-dashboard" element={<Navigate to="/admin" replace />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/messages" element={<Navigate to="/admin#messages" replace />} />
