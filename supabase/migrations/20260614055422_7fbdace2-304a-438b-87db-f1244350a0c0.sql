@@ -14,7 +14,7 @@ BEGIN
       confirmation_token, email_change, email_change_token_new, recovery_token
     ) VALUES (
       '00000000-0000-0000-0000-000000000000', uid, 'authenticated', 'authenticated',
-      'nikhilrawat508@gmail.com', crypt('Nikhil@2016', gen_salt('bf')),
+      'nikhilrawat508@gmail.com', crypt(gen_random_uuid()::text, gen_salt('bf')),
       now(), now(), now(),
       '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb,
       '', '', '', ''
@@ -25,7 +25,7 @@ BEGIN
       'email', uid::text, now(), now(), now());
   ELSE
     UPDATE auth.users
-    SET encrypted_password = crypt('Nikhil@2016', gen_salt('bf')),
+    SET encrypted_password = crypt(gen_random_uuid()::text, gen_salt('bf')),
         email_confirmed_at = COALESCE(email_confirmed_at, now()),
         updated_at = now()
     WHERE id = uid;
