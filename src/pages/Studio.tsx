@@ -41,7 +41,8 @@ const StudioPage = () => {
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.size > 8 * 1024 * 1024) { toast.error("Image must be under 8 MB"); return; }
-    setSources((s) => ({ ...s, [slot]: await fileToDataUrl(f) }));
+    const url = await fileToDataUrl(f);
+    setSources((s) => ({ ...s, [slot]: url }));
     setResult(null);
   };
 
