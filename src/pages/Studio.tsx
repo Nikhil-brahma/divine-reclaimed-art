@@ -98,9 +98,34 @@ const StudioPage = () => {
           {/* Glass control panel */}
           <div className="rounded-2xl border border-white/60 bg-white/40 backdrop-blur-xl p-5 space-y-5 shadow-sm h-fit sticky top-24">
             <div>
-              <label className="font-body text-[10px] uppercase tracking-widest text-muted-foreground">1. Your product photo</label>
-              <label className="mt-2 block aspect-square rounded-xl border-2 border-dashed border-border/60 hover:border-primary cursor-pointer overflow-hidden bg-muted/20 relative">
-                {source ? (
+              <label className="font-body text-[10px] uppercase tracking-widest text-muted-foreground">1. Your product photos (up to 5 sides)</label>
+              <p className="text-[10px] text-muted-foreground mt-1 mb-2 leading-relaxed">
+                More angles = better 3D understanding. Even one photo works.
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {SLOTS.map((slot) => (
+                  <label
+                    key={slot.id}
+                    className="aspect-square rounded-lg border-2 border-dashed border-border/60 hover:border-primary cursor-pointer overflow-hidden bg-muted/20 relative flex flex-col items-center justify-center gap-1 text-[9px] text-muted-foreground text-center"
+                  >
+                    {sources[slot.id] ? (
+                      <>
+                        <img src={sources[slot.id]} alt={slot.label} className="absolute inset-0 w-full h-full object-cover" />
+                        <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[9px] py-0.5">{slot.label}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={14} />
+                        <span>{slot.label}</span>
+                      </>
+                    )}
+                    <input type="file" accept="image/*" onChange={(e) => handleFile(slot.id, e)} className="hidden" />
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "none" }}>
+              {/* placeholder to keep diff small */}
                   <img src={source} alt="source" className="w-full h-full object-cover" />
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground">
