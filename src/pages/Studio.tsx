@@ -124,19 +124,6 @@ const StudioPage = () => {
                 ))}
               </div>
             </div>
-            <div style={{ display: "none" }}>
-              {/* placeholder to keep diff small */}
-                  <img src={source} alt="source" className="w-full h-full object-cover" />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                    <Upload size={28} />
-                    <span className="text-xs font-body">Drop or tap to upload</span>
-                    <span className="text-[10px]">Max 8 MB</span>
-                  </div>
-                )}
-                <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
-              </label>
-            </div>
 
             <div>
               <label className="font-body text-[10px] uppercase tracking-widest text-muted-foreground">2. Choose a style</label>
@@ -167,7 +154,7 @@ const StudioPage = () => {
 
             <button
               onClick={run}
-              disabled={busy || !source}
+              disabled={busy || orderedSources().length === 0}
               className="w-full bg-gradient-saffron text-primary-foreground rounded-full py-3 font-body text-xs tracking-[0.2em] uppercase inline-flex items-center justify-center gap-2 disabled:opacity-40 shadow-sacred"
             >
               {busy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
