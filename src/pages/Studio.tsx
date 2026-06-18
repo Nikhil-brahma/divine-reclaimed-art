@@ -18,30 +18,41 @@ const STYLES: { id: Style; label: string; swatch: string }[] = [
 const fileToDataUrl = (f: File): Promise<string> =>
   new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result as string); r.onerror = rej; r.readAsDataURL(f); });
 
+const SLOTS = [
+  { id: "primary", label: "Front" },
+  { id: "back", label: "Back" },
+  { id: "left", label: "Left" },
+  { id: "right", label: "Right" },
+  { id: "top", label: "Top" },
+];
+
 const StudioPage = () => {
-  const [source, setSource] = useState<string | null>(null);
+  const [sources, setSources] = useState<Record<string, string>>({});
   const [style, setStyle] = useState<Style>("regal-ivory");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ hero?: string; angles?: string[]; spin?: string[] } | null>(null);
-  // Honeypot (bots auto-fill; humans don't)
   const [hp, setHp] = useState("");
   const [spinFrame, setSpinFrame] = useState(0);
 
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const orderedSources = (): string[] =>
+    SLOTS.map((s) => sources[s.id]).filter(Boolean) as string[];
+
+  const handleFile = async (slot: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.size > 8 * 1024 * 1024) { toast.error("Image must be under 8 MB"); return; }
-    setSource(await fileToDataUrl(f));
+    setSources((s) => ({ ...s, [slot]: await fileToDataUrl(f) }));
     setResult(null);
   };
 
   const run = async () => {
-    if (!source) { toast.error("Upload a product photo first"); return; }
-    if (hp) return; // bot caught
+    const imgs = orderedSources();
+    if (imgs.length === 0) { toast.error("Upload at least one product photo"); return; }
+    if (hp) return;
     setBusy(true);
     try {
       const { data, error } = await supabase.functions.invoke("enhance-product-image", {
-        body: { mode: "demo", source_image: source, style, include_spin: true, include_angles: true },
+        body: { mode: "demo", source_images: imgs, style, include_spin: true, include_angles: true },
       });
       if (error) throw error;
       if ((data as any)?.error) throw new Error((data as any).error);
