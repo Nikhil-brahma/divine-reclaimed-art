@@ -55,19 +55,17 @@ function demoRateLimited(ip: string): boolean {
   return e.count > DEMO_LIMIT;
 }
 
-async function callGemini(sourceImageDataUrl: string, prompt: string): Promise<string> {
+async function callGemini(sourceImages: string[], prompt: string): Promise<string> {
+  const imgs = (sourceImages || []).filter((u) => typeof u === "string" && u.startsWith("data:"));
+  const refNote = imgs.length > 1
+    ? ` You are given ${imgs.length} reference photos of the SAME physical product taken from different sides — use ALL of them to understand the product's true 3D shape, fabric, embroidery, and proportions. Preserve those exactly. The first image is the primary reference.`
+    : "";
+  const content: any[] = [{ type: "text", text: prompt + refNote }];
+  for (const u of imgs) content.push({ type: "image_url", image_url: { url: u } });
   const body = {
     model: PRIMARY_MODEL,
     modalities: ["image", "text"],
-    messages: [
-      {
-        role: "user",
-        content: [
-          { type: "text", text: prompt },
-          { type: "image_url", image_url: { url: sourceImageDataUrl } },
-        ],
-      },
-    ],
+    messages: [{ role: "user", content }],
   };
   let res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
@@ -75,7 +73,6 @@ async function callGemini(sourceImageDataUrl: string, prompt: string): Promise<s
     body: JSON.stringify(body),
   });
   if (!res.ok && res.status >= 500) {
-    // fallback to pro on transient errors
     res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${LOVABLE_API_KEY}` },
@@ -87,16 +84,14 @@ async function callGemini(sourceImageDataUrl: string, prompt: string): Promise<s
     throw new Error(`AI gateway ${res.status}: ${t.slice(0, 300)}`);
   }
   const data = await res.json();
-  // Gemini chat-completions image response: choices[0].message.images[0].image_url.url is a data URL
   const url =
     data?.choices?.[0]?.message?.images?.[0]?.image_url?.url ||
     data?.choices?.[0]?.message?.content?.find?.((c: any) => c?.type === "image_url")?.image_url?.url;
   if (!url || typeof url !== "string") {
     throw new Error("No image returned from AI gateway");
   }
-  // Normalize to pure base64
   if (url.startsWith("data:")) return url.split(",", 2)[1];
-  return url; // assume already base64
+  return url;
 }
 
 function b64ToBytes(b64: string): Uint8Array {
@@ -122,15 +117,19 @@ serve(async (req) => {
   try {
     const body = await req.json();
     const mode = body?.mode === "save" ? "save" : "demo";
-    const sourceImage: string = body?.source_image || "";
+    // Accept either a single `source_image` or an array `source_images` (up to 5 reference shots).
+    const rawSources: string[] = Array.isArray(body?.source_images)
+      ? body.source_images.filter(Boolean)
+      : (body?.source_image ? [body.source_image] : []);
+    const sourceImages = rawSources.slice(0, 5).filter((u) => typeof u === "string" && u.startsWith("data:image/"));
     const style: string = STYLE_PRESETS[body?.style] ? body.style : "regal-ivory";
-    const includeSpin: boolean = body?.include_spin !== false; // default true
-    const includeAngles: boolean = body?.include_angles !== false; // default true
+    const includeSpin: boolean = body?.include_spin !== false;
+    const includeAngles: boolean = body?.include_angles !== false;
     const productId: string | undefined = body?.product_id;
     const productHandle: string = (body?.product_handle || "untitled").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
 
-    if (!sourceImage || !sourceImage.startsWith("data:image/")) {
-      return new Response(JSON.stringify({ error: "source_image (data URL) required" }), {
+    if (sourceImages.length === 0) {
+      return new Response(JSON.stringify({ error: "At least one source_image (data URL) is required" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
@@ -178,13 +177,13 @@ serve(async (req) => {
 
     const heroPrompt = `${stylePrompt} HERO product shot, straight front-facing, the product fills 70% of the frame, centered.`;
     const tasks: Array<{ key: string; promise: Promise<string> }> = [
-      { key: "hero", promise: callGemini(sourceImage, heroPrompt) },
+      { key: "hero", promise: callGemini(sourceImages, heroPrompt) },
     ];
     if (includeAngles) {
       for (const a of ANGLES) {
         tasks.push({
           key: `angle:${a.id}`,
-          promise: callGemini(sourceImage, `${stylePrompt} ${a.prompt}. The product fills 65% of the frame.`),
+          promise: callGemini(sourceImages, `${stylePrompt} ${a.prompt}. The product fills 65% of the frame.`),
         });
       }
     }
@@ -192,7 +191,7 @@ serve(async (req) => {
       for (const s of SPIN_FRAMES) {
         tasks.push({
           key: `spin:${s.index}`,
-          promise: callGemini(sourceImage, `${stylePrompt} ${s.prompt}.`),
+          promise: callGemini(sourceImages, `${stylePrompt} ${s.prompt}.`),
         });
       }
     }
