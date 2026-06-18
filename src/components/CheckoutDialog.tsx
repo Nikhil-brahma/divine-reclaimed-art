@@ -78,7 +78,6 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
   };
 
   const handlePay = async () => {
-    if (!user) { toast.error("Please sign in to place an order"); navigate("/auth"); return; }
     if (!items.length) return;
     const err = validate();
     if (err) { toast.error(err); return; }
@@ -88,20 +87,22 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
       const ok = await loadRazorpay();
       if (!ok) throw new Error("Could not load payment script");
 
-      // Persist profile updates (best-effort)
-      await supabase.from("profiles").upsert({
-        id: user.id, full_name: form.full_name, phone: form.phone,
-        address_line1: form.address_line1, address_line2: form.address_line2,
-        city: form.city, state: form.state, postal_code: form.postal_code, country: form.country,
-      });
+      // Persist profile updates (best-effort, only if signed in)
+      if (user) {
+        await supabase.from("profiles").upsert({
+          id: user.id, full_name: form.full_name, phone: form.phone,
+          address_line1: form.address_line1, address_line2: form.address_line2,
+          city: form.city, state: form.state, postal_code: form.postal_code, country: form.country,
+        });
+      }
 
-      // Create local order in 'pending' state
+      // Create local order in 'pending' state (guest checkout allowed: user_id may be null)
       const shippingAddress = {
         line1: form.address_line1, line2: form.address_line2,
         city: form.city, state: form.state, postal_code: form.postal_code, country: form.country,
       };
       const { data: order, error: oErr } = await supabase.from("orders").insert({
-        user_id: user.id,
+        user_id: user?.id ?? null,
         status: "pending",
         subtotal, shipping, total, currency: "INR",
         customer_name: form.full_name, customer_email: form.email, customer_phone: form.phone,
@@ -144,7 +145,7 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
             toast.success("Payment received — blessings on their way 🪷");
             clear();
             onClose();
-            navigate(`/account?order=${order.order_number}`);
+            navigate(user ? `/account?order=${order.order_number}` : `/?order=${order.order_number}`);
           } else {
             toast.error("Payment verification failed. Contact support with your order number.");
           }
@@ -166,19 +167,11 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">Complete your order</DialogTitle>
           <DialogDescription className="font-body text-xs">
-            {user ? "Confirm your shipping details and pay securely via Razorpay." : "Please sign in to continue."}
+            Confirm your shipping details and pay securely via Razorpay. {!user && "Guest checkout supported — no sign-in required."}
           </DialogDescription>
         </DialogHeader>
 
-        {!user && !loadingProfile ? (
-          <div className="py-6 text-center space-y-3">
-            <p className="font-body text-sm text-muted-foreground">An account lets you track your sacred parcel.</p>
-            <button onClick={() => { onClose(); navigate("/auth"); }}
-                    className="bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-body text-xs tracking-wider uppercase">
-              Sign in / Create account
-            </button>
-          </div>
-        ) : (
+        {false ? null : (
           <div className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-3">
               <Input placeholder="Full name *" value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} />

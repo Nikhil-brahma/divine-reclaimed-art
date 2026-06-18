@@ -20,22 +20,15 @@ async function hmacSha256Hex(secret: string, message: string): Promise<string> {
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
-    // Require authenticated caller
+    // Optional auth: signed-in shopper or guest checkout
     const authHeader = req.headers.get("Authorization") || "";
     const token = authHeader.replace(/^Bearer\s+/i, "");
-    if (!token) {
-      return new Response(JSON.stringify({ verified: false, error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    let callerId: string | null = null;
+    if (token) {
+      const sbUser = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
+      const { data: userData } = await sbUser.auth.getUser(token);
+      callerId = userData?.user?.id || null;
     }
-    const sbUser = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
-    const { data: userData, error: userErr } = await sbUser.auth.getUser(token);
-    if (userErr || !userData?.user) {
-      return new Response(JSON.stringify({ verified: false, error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    const callerId = userData.user.id;
 
     const KEY_SECRET = Deno.env.get("RAZORPAY_KEY_SECRET");
     if (!KEY_SECRET) throw new Error("Razorpay secret not configured");
@@ -55,7 +48,7 @@ serve(async (req) => {
       });
     }
 
-    // Service-role update gated by ownership + razorpay_order_id match
+    // Service-role lookup; ownership rules differ for guest vs signed-in
     const svc = createClient(SB_URL, SB_SVC);
     const { data: order, error: oErr } = await svc.from("orders").select("id, user_id, razorpay_order_id, status").eq("id", order_id).maybeSingle();
     if (oErr || !order) {
@@ -63,7 +56,8 @@ serve(async (req) => {
         status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    if (order.user_id !== callerId) {
+    // Signed-in order: caller must match. Guest order (user_id null): HMAC + matching razorpay_order_id is sufficient.
+    if (order.user_id && order.user_id !== callerId) {
       return new Response(JSON.stringify({ verified: false, error: "Forbidden" }), {
         status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });

@@ -18,30 +18,42 @@ const STYLES: { id: Style; label: string; swatch: string }[] = [
 const fileToDataUrl = (f: File): Promise<string> =>
   new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result as string); r.onerror = rej; r.readAsDataURL(f); });
 
+const SLOTS = [
+  { id: "primary", label: "Front" },
+  { id: "back", label: "Back" },
+  { id: "left", label: "Left" },
+  { id: "right", label: "Right" },
+  { id: "top", label: "Top" },
+];
+
 const StudioPage = () => {
-  const [source, setSource] = useState<string | null>(null);
+  const [sources, setSources] = useState<Record<string, string>>({});
   const [style, setStyle] = useState<Style>("regal-ivory");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ hero?: string; angles?: string[]; spin?: string[] } | null>(null);
-  // Honeypot (bots auto-fill; humans don't)
   const [hp, setHp] = useState("");
   const [spinFrame, setSpinFrame] = useState(0);
 
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const orderedSources = (): string[] =>
+    SLOTS.map((s) => sources[s.id]).filter(Boolean) as string[];
+
+  const handleFile = async (slot: string, e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.size > 8 * 1024 * 1024) { toast.error("Image must be under 8 MB"); return; }
-    setSource(await fileToDataUrl(f));
+    const url = await fileToDataUrl(f);
+    setSources((s) => ({ ...s, [slot]: url }));
     setResult(null);
   };
 
   const run = async () => {
-    if (!source) { toast.error("Upload a product photo first"); return; }
-    if (hp) return; // bot caught
+    const imgs = orderedSources();
+    if (imgs.length === 0) { toast.error("Upload at least one product photo"); return; }
+    if (hp) return;
     setBusy(true);
     try {
       const { data, error } = await supabase.functions.invoke("enhance-product-image", {
-        body: { mode: "demo", source_image: source, style, include_spin: true, include_angles: true },
+        body: { mode: "demo", source_images: imgs, style, include_spin: true, include_angles: true },
       });
       if (error) throw error;
       if ((data as any)?.error) throw new Error((data as any).error);
@@ -87,19 +99,31 @@ const StudioPage = () => {
           {/* Glass control panel */}
           <div className="rounded-2xl border border-white/60 bg-white/40 backdrop-blur-xl p-5 space-y-5 shadow-sm h-fit sticky top-24">
             <div>
-              <label className="font-body text-[10px] uppercase tracking-widest text-muted-foreground">1. Your product photo</label>
-              <label className="mt-2 block aspect-square rounded-xl border-2 border-dashed border-border/60 hover:border-primary cursor-pointer overflow-hidden bg-muted/20 relative">
-                {source ? (
-                  <img src={source} alt="source" className="w-full h-full object-cover" />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground">
-                    <Upload size={28} />
-                    <span className="text-xs font-body">Drop or tap to upload</span>
-                    <span className="text-[10px]">Max 8 MB</span>
-                  </div>
-                )}
-                <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
-              </label>
+              <label className="font-body text-[10px] uppercase tracking-widest text-muted-foreground">1. Your product photos (up to 5 sides)</label>
+              <p className="text-[10px] text-muted-foreground mt-1 mb-2 leading-relaxed">
+                More angles = better 3D understanding. Even one photo works.
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {SLOTS.map((slot) => (
+                  <label
+                    key={slot.id}
+                    className="aspect-square rounded-lg border-2 border-dashed border-border/60 hover:border-primary cursor-pointer overflow-hidden bg-muted/20 relative flex flex-col items-center justify-center gap-1 text-[9px] text-muted-foreground text-center"
+                  >
+                    {sources[slot.id] ? (
+                      <>
+                        <img src={sources[slot.id]} alt={slot.label} className="absolute inset-0 w-full h-full object-cover" />
+                        <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[9px] py-0.5">{slot.label}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={14} />
+                        <span>{slot.label}</span>
+                      </>
+                    )}
+                    <input type="file" accept="image/*" onChange={(e) => handleFile(slot.id, e)} className="hidden" />
+                  </label>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -131,7 +155,7 @@ const StudioPage = () => {
 
             <button
               onClick={run}
-              disabled={busy || !source}
+              disabled={busy || orderedSources().length === 0}
               className="w-full bg-gradient-saffron text-primary-foreground rounded-full py-3 font-body text-xs tracking-[0.2em] uppercase inline-flex items-center justify-center gap-2 disabled:opacity-40 shadow-sacred"
             >
               {busy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}

@@ -100,6 +100,8 @@ export default function GlobalEditLayer() {
   // Wire up edit-mode click handlers
   useEffect(() => {
     if (!editMode || !isEditor) return;
+    // Never hijack clicks inside the admin panel — buttons there must work normally.
+    if (pathname.startsWith("/admin")) return;
 
     // Inject hover styles
     const style = document.createElement("style");
@@ -221,7 +223,7 @@ export default function GlobalEditLayer() {
       if (styleRef.current) styleRef.current.remove();
       document.querySelectorAll("[data-edit-hover]").forEach(el => el.removeAttribute("data-edit-hover"));
     };
-  }, [editMode, isEditor, saveOverride]);
+  }, [editMode, isEditor, saveOverride, pathname]);
 
   return null;
 }
