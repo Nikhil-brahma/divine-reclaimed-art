@@ -46,7 +46,7 @@ serve(async (req) => {
       });
     }
 
-    const notes: Record<string, string> = { source: "punarvsu-web", receipt, user_id: userData.user.id };
+    const notes: Record<string, string> = { source: "punarvsu-web", receipt, user_id: userId || "guest" };
 
     const auth = "Basic " + btoa(`${KEY_ID}:${KEY_SECRET}`);
     const res = await fetch("https://api.razorpay.com/v1/orders", {
