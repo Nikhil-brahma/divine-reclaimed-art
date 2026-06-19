@@ -16,20 +16,14 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    // Require authenticated caller
+    // Optional auth: signed-in shopper or guest checkout
     const authHeader = req.headers.get("Authorization") || "";
     const token = authHeader.replace(/^Bearer\s+/i, "");
-    if (!token) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    const sb = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
-    const { data: userData, error: userErr } = await sb.auth.getUser(token);
-    if (userErr || !userData?.user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    let userId: string | null = null;
+    if (token) {
+      const sb = createClient(SB_URL, SB_ANON, { global: { headers: { Authorization: authHeader } } });
+      const { data: userData } = await sb.auth.getUser(token);
+      userId = userData?.user?.id || null;
     }
 
     const KEY_ID = Deno.env.get("RAZORPAY_KEY_ID");
