@@ -33,6 +33,8 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   useCartSync();
+  const { pathname } = useLocation();
+  const isAdmin = pathname.startsWith("/admin");
   return (
     <>
       <ScrollToTop />
@@ -58,10 +60,12 @@ const AppContent = () => {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Suspense fallback={null}>
-        <SacredAIOrb />
-      </Suspense>
-      <EditModeBanner />
+      {!isAdmin && (
+        <Suspense fallback={null}>
+          <SacredAIOrb />
+        </Suspense>
+      )}
+      {!isAdmin && <EditModeBanner />}
       <GlobalEditLayer />
     </>
   );
