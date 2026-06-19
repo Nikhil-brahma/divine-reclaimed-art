@@ -152,8 +152,8 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+    if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is not configured");
 
     const ip = (req.headers.get("x-forwarded-for") ?? "unknown").split(",")[0].trim();
     if (!rateLimit(ip)) {
@@ -172,7 +172,6 @@ serve(async (req) => {
       );
     }
 
-    // Input size guards
     if (messages.length > 30) {
       return new Response(JSON.stringify({ error: "Conversation too long." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -184,25 +183,24 @@ serve(async (req) => {
       }
     }
 
-    // Fetch live products from Shopify
     const liveCatalog = await fetchLiveProducts();
     const systemPrompt = buildSystemPrompt(liveCatalog);
-
     const recentMessages = messages.slice(-20);
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Call Google AI Studio (Gemini) directly — free tier, no Lovable credits.
+    const geminiContents = recentMessages.map((m: any) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: String(m.content) }],
+    }));
+
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
+    const response = await fetch(geminiUrl, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-lite",
-        messages: [
-          { role: "system", content: systemPrompt },
-          ...recentMessages,
-        ],
-        stream: true,
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        contents: geminiContents,
+        generationConfig: { temperature: 0.8, maxOutputTokens: 800 },
       }),
     });
 
@@ -212,17 +210,49 @@ serve(async (req) => {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "Our chat service is temporarily unavailable. Please email us at punarvsu.com@gmail.com 🙏" }), {
-          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
       const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
-      throw new Error(`AI gateway error: ${response.status}`);
+      console.error("Gemini error:", response.status, t);
+      throw new Error(`Gemini error: ${response.status}`);
     }
 
-    return new Response(response.body, {
+    // Transform Gemini SSE → OpenAI-style SSE (what ChatWidget expects)
+    const reader = response.body!.getReader();
+    const decoder = new TextDecoder();
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        let buf = "";
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            const lines = buf.split("\n");
+            buf = lines.pop() || "";
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const data = line.slice(6).trim();
+              if (!data || data === "[DONE]") continue;
+              try {
+                const j = JSON.parse(data);
+                const text = j?.candidates?.[0]?.content?.parts?.map((p: any) => p.text || "").join("") || "";
+                if (text) {
+                  const chunk = `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`;
+                  controller.enqueue(encoder.encode(chunk));
+                }
+              } catch { /* skip */ }
+            }
+          }
+          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+        } catch (e) {
+          console.error("stream transform error:", e);
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
