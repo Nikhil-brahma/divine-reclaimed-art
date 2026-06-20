@@ -31,16 +31,46 @@ serve(async (req) => {
     const nowIso = new Date().toISOString();
     const { data: due } = await supabase
       .from("scheduled_blog_posts")
-      .select("id, topic_hint, target_keyword, category")
+      .select("id, kind, topic_hint, target_keyword, category, title, slug, excerpt, content, cover_image_url")
       .eq("status", "pending")
       .lte("scheduled_at", nowIso)
       .order("scheduled_at", { ascending: true })
       .limit(5);
 
+    const slugify = (s: string) =>
+      s.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").slice(0, 80);
+
     const results: any[] = [];
     for (const row of due ?? []) {
       await supabase.from("scheduled_blog_posts").update({ status: "processing" }).eq("id", row.id);
       try {
+        if (row.kind === "custom") {
+          // Publish the pre-written post directly
+          if (!row.title || !row.content || !row.excerpt) throw new Error("Custom post missing title/excerpt/content");
+          const slug = slugify(row.slug || row.title);
+          const { data: inserted, error: insErr } = await supabase
+            .from("auto_blog_posts")
+            .insert({
+              title: row.title,
+              slug,
+              excerpt: row.excerpt,
+              content: row.content,
+              category: row.category || "Trending",
+              target_keyword: row.target_keyword,
+              cover_image_url: row.cover_image_url,
+              published: true,
+            })
+            .select()
+            .single();
+          if (insErr) throw insErr;
+          await supabase.from("scheduled_blog_posts").update({
+            status: "published", post_id: inserted.id, processed_at: new Date().toISOString(),
+          }).eq("id", row.id);
+          results.push({ id: row.id, ok: true, slug: inserted.slug, kind: "custom" });
+          continue;
+        }
+
+        // AI-generated kind (default)
         const invokeRes = await fetch(`${SUPABASE_URL}/functions/v1/auto-seo-engine`, {
           method: "POST",
           headers: {
@@ -71,6 +101,7 @@ serve(async (req) => {
         results.push({ id: row.id, ok: false, error: e.message });
       }
     }
+
 
     return new Response(JSON.stringify({ success: true, processed: results.length, results }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
