@@ -122,6 +122,42 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_topic_queue: {
+        Row: {
+          category: string
+          created_at: string
+          enabled: boolean
+          id: string
+          last_used_at: string | null
+          position: number
+          target_keyword: string | null
+          topic_hint: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_used_at?: string | null
+          position?: number
+          target_keyword?: string | null
+          topic_hint: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          last_used_at?: string | null
+          position?: number
+          target_keyword?: string | null
+          topic_hint?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -556,42 +592,63 @@ export type Database = {
       scheduled_blog_posts: {
         Row: {
           category: string | null
+          content: string | null
+          cover_image_url: string | null
           created_at: string
           created_by: string | null
           error: string | null
+          excerpt: string | null
+          generate_image: boolean
           id: string
+          kind: string
           post_id: string | null
           processed_at: string | null
           scheduled_at: string
+          slug: string | null
           status: string
           target_keyword: string | null
-          topic_hint: string
+          title: string | null
+          topic_hint: string | null
         }
         Insert: {
           category?: string | null
+          content?: string | null
+          cover_image_url?: string | null
           created_at?: string
           created_by?: string | null
           error?: string | null
+          excerpt?: string | null
+          generate_image?: boolean
           id?: string
+          kind?: string
           post_id?: string | null
           processed_at?: string | null
           scheduled_at: string
+          slug?: string | null
           status?: string
           target_keyword?: string | null
-          topic_hint: string
+          title?: string | null
+          topic_hint?: string | null
         }
         Update: {
           category?: string | null
+          content?: string | null
+          cover_image_url?: string | null
           created_at?: string
           created_by?: string | null
           error?: string | null
+          excerpt?: string | null
+          generate_image?: boolean
           id?: string
+          kind?: string
           post_id?: string | null
           processed_at?: string | null
           scheduled_at?: string
+          slug?: string | null
           status?: string
           target_keyword?: string | null
-          topic_hint?: string
+          title?: string | null
+          topic_hint?: string | null
         }
         Relationships: [
           {
