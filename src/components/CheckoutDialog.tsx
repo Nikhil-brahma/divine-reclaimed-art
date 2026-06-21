@@ -96,35 +96,21 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
         });
       }
 
-      // Create local order in 'pending' state (guest checkout allowed: user_id may be null)
-      const shippingAddress = {
-        line1: form.address_line1, line2: form.address_line2,
-        city: form.city, state: form.state, postal_code: form.postal_code, country: form.country,
-      };
-      const { data: order, error: oErr } = await supabase.from("orders").insert({
-        user_id: user?.id ?? null,
-        status: "pending",
-        subtotal, shipping, total, currency: "INR",
-        customer_name: form.full_name, customer_email: form.email, customer_phone: form.phone,
-        shipping_address: shippingAddress, notes: form.notes || null,
-      }).select().single();
-      if (oErr) throw oErr;
-
-      const lineItems = items.map((i) => ({
-        order_id: order.id, product_id: i.productId, product_handle: i.handle,
-        product_title: i.title, product_image: i.image,
-        unit_price: i.price, quantity: i.quantity, line_total: i.price * i.quantity,
-      }));
-      await supabase.from("order_items").insert(lineItems);
-
-      // Create Razorpay order via edge fn
+      // Server creates the order, validates prices from DB, and creates the Razorpay order.
       const { data: rzpData, error: rzpErr } = await supabase.functions.invoke("razorpay-create-order", {
-        body: { amount: total, currency: "INR", notes: { order_number: order.order_number } },
+        body: {
+          currency: "INR",
+          items: items.map((i) => ({ product_id: i.productId, handle: i.handle, quantity: i.quantity })),
+          customer: {
+            full_name: form.full_name, email: form.email, phone: form.phone,
+            address_line1: form.address_line1, address_line2: form.address_line2,
+            city: form.city, state: form.state, postal_code: form.postal_code, country: form.country,
+            notes: form.notes || undefined,
+          },
+        },
       });
       if (rzpErr) throw rzpErr;
-      if (!rzpData?.order) throw new Error(rzpData?.error || "Razorpay order failed");
-
-      await supabase.from("orders").update({ razorpay_order_id: rzpData.order.id }).eq("id", order.id);
+      if (!rzpData?.order || !rzpData?.order_id) throw new Error(rzpData?.error || "Could not start payment");
 
       const rzp = new window.Razorpay({
         key: rzpData.key_id,
@@ -132,20 +118,19 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
         currency: rzpData.order.currency,
         order_id: rzpData.order.id,
         name: "Punarvsu",
-        description: `Order ${order.order_number}`,
+        description: `Order ${rzpData.order_number}`,
         image: "/lovable-uploads/punarvasu-logo-new.png",
         prefill: { name: form.full_name, email: form.email, contact: form.phone },
         theme: { color: "#c9a84c" },
         handler: async (response: any) => {
-          // Server-side: verifies HMAC, ownership, marks order paid, and sends confirmation
           const { data: vData } = await supabase.functions.invoke("razorpay-verify-payment", {
-            body: { ...response, order_id: order.id },
+            body: { ...response, order_id: rzpData.order_id },
           });
           if (vData?.verified) {
             toast.success("Payment received — blessings on their way 🪷");
             clear();
             onClose();
-            navigate(user ? `/account?order=${order.order_number}` : `/?order=${order.order_number}`);
+            navigate(user ? `/account?order=${rzpData.order_number}` : `/?order=${rzpData.order_number}`);
           } else {
             toast.error("Payment verification failed. Contact support with your order number.");
           }
@@ -160,6 +145,7 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
       setSubmitting(false);
     }
   };
+
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
