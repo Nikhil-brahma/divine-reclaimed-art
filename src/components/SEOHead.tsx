@@ -9,6 +9,12 @@ interface SEOProps {
   type?: string;
   image?: string;
   noindex?: boolean;
+  geo?: {
+    region?: string;   // e.g. "IN-MH"
+    placename?: string; // e.g. "Mumbai, Maharashtra"
+    position?: string;  // "lat;lon"
+    icbm?: string;      // "lat, lon"
+  };
 }
 
 const SITE_NAME = "Punarvsu";
@@ -27,7 +33,7 @@ type MetaOverride = {
   og_description?: string;
 };
 
-const SEOHead = ({ title, description, canonical, type = "website", image, noindex }: SEOProps) => {
+const SEOHead = ({ title, description, canonical, type = "website", image, noindex, geo }: SEOProps) => {
   const location = useLocation();
   const [override, setOverride] = useState<MetaOverride>({});
 
@@ -105,11 +111,11 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
     }
     link.href = canonicalUrl;
 
-    setMeta("geo.region", "IN-DL");
-    setMeta("geo.placename", "Rohini, Delhi");
-    setMeta("geo.position", "28.7495;77.0565");
-    setMeta("ICBM", "28.7495, 77.0565");
-  }, [finalTitle, desc, img, ogTitle, ogDesc, canonicalUrl, type, noindex, override.keywords]);
+    setMeta("geo.region", geo?.region || "IN-DL");
+    setMeta("geo.placename", geo?.placename || "Rohini, Delhi");
+    setMeta("geo.position", geo?.position || "28.7495;77.0565");
+    setMeta("ICBM", geo?.icbm || "28.7495, 77.0565");
+  }, [finalTitle, desc, img, ogTitle, ogDesc, canonicalUrl, type, noindex, override.keywords, geo?.region, geo?.placename, geo?.position, geo?.icbm]);
 
   return null;
 };
