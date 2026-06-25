@@ -220,9 +220,109 @@ interface StructuredDataProps {
     description?: string;
     url?: string;
   };
+  includeHowTo?: boolean;
+  faqs?: { question: string; answer: string }[];
 }
 
-const StructuredData = ({ productData, articleData, collectionData }: StructuredDataProps) => {
+// HowTo: Sampurna sacred upcycling journey
+const sampurnaHowToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "The Sampurna Sacred Upcycling Journey",
+  description:
+    "How Punarvsu, in partnership with Sampurna NGO, transforms retired temple textiles (Bhagwan ki Poshak) into handcrafted luxury bags in Rohini, Delhi.",
+  image: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png`,
+  totalTime: "P10D",
+  estimatedCost: { "@type": "MonetaryAmount", currency: "INR", value: "0" },
+  supply: [
+    { "@type": "HowToSupply", name: "Retired Bhagwan ki Poshak (sacred temple garments)" },
+    { "@type": "HowToSupply", name: "Plant-based cleaning solutions" },
+    { "@type": "HowToSupply", name: "Eco-friendly thread & lining" },
+  ],
+  tool: [
+    { "@type": "HowToTool", name: "UV sterilisation chamber" },
+    { "@type": "HowToTool", name: "Steam treatment unit" },
+    { "@type": "HowToTool", name: "Hand sewing kit" },
+  ],
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Reverent Collection",
+      text: "Sacred garments are collected from temple partners like Khatushyam Delhi Dham and individual devotees. No fabric touches the ground — each piece is handled with the same devotion as when it dressed the deity.",
+      url: `${SITE_URL}/about#collection`,
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Sanctified Cleansing",
+      text: "Each textile undergoes UV sterilisation, plant-based washing, and steam treatment. The process is hygienic and preserves the fabric's original colours, embroidery and character.",
+      url: `${SITE_URL}/about#cleansing`,
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Artisan Design",
+      text: "Kiran Mam, our head artisan, studies each fabric's pattern and story to design a piece that honours its origin — a Krishna Leela cloth may become a peacock-motif clutch.",
+      url: `${SITE_URL}/about#design`,
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Handcrafted Stitching",
+      text: "Women artisans at the Sampurna NGO workshop in Sector-9, Rohini hand-stitch each bag over 8–15 hours. No machines, no shortcuts.",
+      url: `${SITE_URL}/about#stitching`,
+    },
+    {
+      "@type": "HowToStep",
+      position: 5,
+      name: "Blessed Delivery",
+      text: "Each finished piece is packaged with a Certificate of Sanctity and shipped worldwide, carrying centuries of prayer to its new home.",
+      url: `${SITE_URL}/about#delivery`,
+    },
+  ],
+};
+
+const productFaqSchema = (name: string) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: `Is the ${name} really made from sacred temple textile?`,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: `Yes. Every ${name} is handcrafted from authentic Bhagwan ki Poshak — garments that once dressed deities in temples like Khatushyam Delhi Dham. Each piece ships with a Certificate of Sanctity.`,
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is the fabric hygienic?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Every textile is sanitised through UV sterilisation, plant-based washing and steam treatment before any artisan touches it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How long does shipping take?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Within India: 3–10 business days, free above ₹2,999. International: 10–21 business days with rates calculated at checkout.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can this product be returned?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Because each piece is sacredly upcycled and one-of-a-kind, we do not accept returns. Reach out at punarvsu.com@gmail.com if anything is wrong with your order and we'll make it right.",
+      },
+    },
+  ],
+});
+
+const StructuredData = ({ productData, articleData, collectionData, includeHowTo, faqs }: StructuredDataProps) => {
   const location = useLocation();
 
   const schemas: object[] = [organizationSchema, localBusinessSchema, websiteSchema, brandKnowledgeSchema, speakableSchema, buildBreadcrumbs(location.pathname)];
@@ -230,6 +330,24 @@ const StructuredData = ({ productData, articleData, collectionData }: Structured
   // Add FAQ on homepage and shipping page
   if (location.pathname === "/" || location.pathname === "/shipping") {
     schemas.push(faqSchema);
+  }
+
+  // HowTo: Sampurna sacred upcycling journey
+  if (includeHowTo) {
+    schemas.push(sampurnaHowToSchema);
+  }
+
+  // Custom per-page FAQ (product pages, collection pages, etc.)
+  if (faqs && faqs.length > 0) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    });
   }
 
   if (articleData) {
@@ -248,6 +366,21 @@ const StructuredData = ({ productData, articleData, collectionData }: Structured
         logo: { "@type": "ImageObject", url: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png` },
       },
       mainEntityOfPage: { "@type": "WebPage", "@id": articleData.url || `${SITE_URL}${location.pathname}` },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2", "h3", "article p"],
+      },
+    });
+    // Page-level speakable for AI voice assistants on this article
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: articleData.headline,
+      url: articleData.url || `${SITE_URL}${location.pathname}`,
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2", "h3", "article p"],
+      },
     });
   }
 
@@ -297,6 +430,10 @@ const StructuredData = ({ productData, articleData, collectionData }: Structured
         bestRating: "5",
       },
     });
+    // Auto-attach product-specific FAQ for AEO
+    if (!faqs || faqs.length === 0) {
+      schemas.push(productFaqSchema(productData.name));
+    }
   }
 
   return (
