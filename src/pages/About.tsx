@@ -24,7 +24,7 @@ const About = () => {
         title="About Punarvsu — Our Sacred Mission"
         description="Discover how Punarvsu transforms retired temple textiles into handcrafted luxury bags. Our story of devotion, sustainability, and artisan craft."
       />
-      <StructuredData />
+      <StructuredData includeHowTo />
       <Navbar />
 
       <main>
