@@ -322,7 +322,7 @@ const productFaqSchema = (name: string) => ({
   ],
 });
 
-const StructuredData = ({ productData, articleData, collectionData }: StructuredDataProps) => {
+const StructuredData = ({ productData, articleData, collectionData, includeHowTo, faqs }: StructuredDataProps) => {
   const location = useLocation();
 
   const schemas: object[] = [organizationSchema, localBusinessSchema, websiteSchema, brandKnowledgeSchema, speakableSchema, buildBreadcrumbs(location.pathname)];
@@ -330,6 +330,24 @@ const StructuredData = ({ productData, articleData, collectionData }: Structured
   // Add FAQ on homepage and shipping page
   if (location.pathname === "/" || location.pathname === "/shipping") {
     schemas.push(faqSchema);
+  }
+
+  // HowTo: Sampurna sacred upcycling journey
+  if (includeHowTo) {
+    schemas.push(sampurnaHowToSchema);
+  }
+
+  // Custom per-page FAQ (product pages, collection pages, etc.)
+  if (faqs && faqs.length > 0) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    });
   }
 
   if (articleData) {
@@ -348,6 +366,21 @@ const StructuredData = ({ productData, articleData, collectionData }: Structured
         logo: { "@type": "ImageObject", url: `${SITE_URL}/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png` },
       },
       mainEntityOfPage: { "@type": "WebPage", "@id": articleData.url || `${SITE_URL}${location.pathname}` },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2", "h3", "article p"],
+      },
+    });
+    // Page-level speakable for AI voice assistants on this article
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: articleData.headline,
+      url: articleData.url || `${SITE_URL}${location.pathname}`,
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2", "h3", "article p"],
+      },
     });
   }
 
