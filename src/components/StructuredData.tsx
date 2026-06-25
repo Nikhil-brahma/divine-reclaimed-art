@@ -430,6 +430,10 @@ const StructuredData = ({ productData, articleData, collectionData, includeHowTo
         bestRating: "5",
       },
     });
+    // Auto-attach product-specific FAQ for AEO
+    if (!faqs || faqs.length === 0) {
+      schemas.push(productFaqSchema(productData.name));
+    }
   }
 
   return (
