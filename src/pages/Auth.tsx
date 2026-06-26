@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import SEOHead from "@/components/SEOHead";
 
-const ALLOWED_EMAIL = "nikhilrawat508@gmail.com";
+
 
 export default function Auth() {
   const nav = useNavigate();
