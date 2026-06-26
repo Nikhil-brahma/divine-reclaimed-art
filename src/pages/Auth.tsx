@@ -29,10 +29,6 @@ export default function Auth() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = email.trim().toLowerCase();
-    if (normalized !== ALLOWED_EMAIL) {
-      toast.error("This email is not authorised.");
-      return;
-    }
     setLoading(true);
     try {
       if (mode === "signup") {
