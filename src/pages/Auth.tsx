@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import SEOHead from "@/components/SEOHead";
 
-const ALLOWED_EMAIL = "nikhilrawat508@gmail.com";
+
 
 export default function Auth() {
   const nav = useNavigate();
@@ -29,10 +29,6 @@ export default function Auth() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = email.trim().toLowerCase();
-    if (normalized !== ALLOWED_EMAIL) {
-      toast.error("This email is not authorised.");
-      return;
-    }
     setLoading(true);
     try {
       if (mode === "signup") {
