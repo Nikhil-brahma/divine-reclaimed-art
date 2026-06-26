@@ -62,7 +62,14 @@ serve(async (req) => {
         status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    if (order.razorpay_order_id && order.razorpay_order_id !== razorpay_order_id) {
+    // Only pending orders may be marked paid (blocks failed/paid/cancelled re-use)
+    if (order.status !== "pending") {
+      return new Response(JSON.stringify({ verified: false, error: "Order not payable" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    // Require a stored razorpay_order_id and exact match (no NULL short-circuit)
+    if (!order.razorpay_order_id || order.razorpay_order_id !== razorpay_order_id) {
       return new Response(JSON.stringify({ verified: false, error: "Order mismatch" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
