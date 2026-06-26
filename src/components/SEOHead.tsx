@@ -18,7 +18,7 @@ interface SEOProps {
 }
 
 const SITE_NAME = "Punarvsu";
-const DEFAULT_TITLE = "Punarvsu — Sacred Temple Textile Bags, Handcrafted in Delhi";
+const DEFAULT_TITLE = "Punarvsu — Sacred Temple Textile Bags from Delhi";
 const DEFAULT_DESCRIPTION =
   "Handcrafted bags from upcycled sacred temple textiles, made by Delhi artisans. Carry blessings, wear heritage. Free shipping above ₹2,999.";
 const DEFAULT_IMAGE = "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";

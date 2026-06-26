@@ -6,8 +6,8 @@ const Privacy = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Privacy Policy"
-        description="Read Punarvsu's Privacy Policy to understand how we collect, use, and protect your personal information."
+        title="Privacy Policy — How Punarvsu protects your data"
+        description="How Punarvsu collects, uses, stores, and safeguards the personal information you share when shopping our sacred temple-textile bags."
       />
       <Navbar />
 

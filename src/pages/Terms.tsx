@@ -7,8 +7,8 @@ const Terms = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Terms & Conditions"
-        description="Read Punarvsu's Terms & Conditions governing your use of our website and purchase of our handcrafted products."
+        title="Terms & Conditions — Punarvsu purchase agreement"
+        description="The terms that govern browsing punarvsu.com and ordering our handcrafted upcycled temple-textile potlis and accessories."
       />
       <Navbar />
 

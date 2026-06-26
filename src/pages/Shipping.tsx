@@ -24,8 +24,8 @@ const Shipping = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Shipping Policy"
-        description="Learn about Punarvsu's shipping options for India and international orders. Free shipping on orders above ₹2,999 within India."
+        title="Shipping Policy — India & worldwide delivery"
+        description="Punarvsu ships pan-India in 3–7 days (free above ₹2,999) and worldwide via tracked courier. Read delivery timelines, charges, and packaging notes."
       />
       <StructuredData />
       <Navbar />

@@ -73,8 +73,8 @@ const StudioPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Smart Photo Studio — Turn one product photo into a brand-grade gallery | Punarvsu"
-        description="Upload a single product photo and watch our Sacred AI render a regal hero shot, multiple angles, and a 360° spin preview — instantly."
+        title="Smart Photo Studio — AI product gallery in minutes"
+        description="Upload one product photo and our Sacred AI renders a hero shot, multi-angle gallery, and 360° spin preview — free, instant, brand-ready."
         canonical="https://punarvsu.com/studio"
       />
       <Navbar />
@@ -189,7 +189,7 @@ const StudioPage = () => {
               <div>
                 <p className="font-body text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Hero</p>
                 <div className="rounded-2xl overflow-hidden border border-white/60 bg-white/40 backdrop-blur-xl">
-                  <img src={result.hero} alt="hero" className="w-full aspect-[4/3] object-cover" />
+                  <img src={result.hero} alt="AI-generated hero shot of the uploaded product styled for a brand-grade gallery" className="w-full aspect-[4/3] object-cover" />
                 </div>
               </div>
             )}
@@ -199,7 +199,7 @@ const StudioPage = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {result.angles.map((u, i) => (
                     <div key={i} className="rounded-xl overflow-hidden border border-white/60 bg-white/40 backdrop-blur-xl">
-                      <img src={u} alt={`angle ${i}`} className="w-full aspect-square object-cover" />
+                      <img src={u} alt={`AI-generated product angle shot ${i + 1} of ${result.angles.length}`} className="w-full aspect-square object-cover" />
                     </div>
                   ))}
                 </div>
@@ -219,7 +219,7 @@ const StudioPage = () => {
                     setSpinFrame(Math.floor(x * spin.length) % spin.length);
                   }}
                 >
-                  <img src={currentSpinImg} alt="spin" className="w-full h-full object-cover" draggable={false} />
+                  <img src={currentSpinImg} alt={`Interactive 360 degree product preview, frame ${spinFrame + 1} of ${spin.length}`} className="w-full h-full object-cover" draggable={false} />
                 </div>
               </div>
             )}
