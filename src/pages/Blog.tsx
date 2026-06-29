@@ -251,9 +251,9 @@ const Blog = () => {
                       </span>
                     </div>
                   </div>
-                  <h3 className="font-display text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                  <h2 className="font-display text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
                     {post.title}
-                  </h3>
+                  </h2>
                   <p className="font-body text-sm text-muted-foreground line-clamp-2 mb-3">
                     {post.excerpt}
                   </p>

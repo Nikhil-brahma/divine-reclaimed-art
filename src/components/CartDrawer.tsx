@@ -60,14 +60,14 @@ export const CartDrawer = () => {
                         <h4 className="font-display text-sm truncate">{it.title}</h4>
                         <p className="font-display text-sm mt-1">₹{(it.price * it.quantity).toLocaleString("en-IN")}</p>
                         <div className="flex items-center gap-1 mt-2">
-                          <button onClick={() => updateQty(it.productId, it.quantity - 1)} className="w-6 h-6 rounded-md border border-border/60 inline-flex items-center justify-center hover:bg-muted">
+                          <button aria-label="Decrease quantity" onClick={() => updateQty(it.productId, it.quantity - 1)} className="w-6 h-6 rounded-md border border-border/60 inline-flex items-center justify-center hover:bg-muted">
                             <Minus size={10} />
                           </button>
                           <span className="w-8 text-center text-xs font-body">{it.quantity}</span>
-                          <button onClick={() => updateQty(it.productId, it.quantity + 1)} className="w-6 h-6 rounded-md border border-border/60 inline-flex items-center justify-center hover:bg-muted">
+                          <button aria-label="Increase quantity" onClick={() => updateQty(it.productId, it.quantity + 1)} className="w-6 h-6 rounded-md border border-border/60 inline-flex items-center justify-center hover:bg-muted">
                             <Plus size={10} />
                           </button>
-                          <button onClick={() => removeItem(it.productId)} className="ml-auto text-muted-foreground hover:text-destructive p-1">
+                          <button aria-label="Remove item" onClick={() => removeItem(it.productId)} className="ml-auto text-muted-foreground hover:text-destructive p-1">
                             <Trash2 size={12} />
                           </button>
                         </div>
