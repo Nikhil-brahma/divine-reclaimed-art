@@ -44,7 +44,7 @@ const products = await fetchTable("products?select=handle,updated_at&status=eq.a
 const aiPosts = await fetchTable("auto_blog_posts?select=slug,updated_at&published=eq.true");
 
 const productEntries = (Array.isArray(products) ? products : []).map((p) => ({
-  path: `/products/${p.handle}`,
+  path: `/product/${p.handle}`,
   lastmod: p.updated_at?.slice(0, 10),
   changefreq: "weekly",
   priority: "0.9",
