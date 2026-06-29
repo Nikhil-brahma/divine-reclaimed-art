@@ -63,7 +63,7 @@ const Terms = () => {
                 All prices are listed in Indian Rupees (₹) and are inclusive of applicable taxes unless stated otherwise. We reserve the right to modify prices without prior notice. Payment is processed securely through Shopify's payment gateway.
               </p>
               <p className="mt-4">
-                Orders above <strong className="text-foreground">₹2,999</strong> qualify for free shipping within India. For orders below this threshold, standard shipping charges will apply at checkout.
+                Orders above <strong className="text-foreground">₹999</strong> qualify for free shipping within India. For orders below this threshold, standard shipping charges will apply at checkout.
               </p>
             </section>
 
