@@ -137,7 +137,7 @@ const UrgencySection = () => {
               Get Yours Before They're Gone
             </a>
             <p className="font-body text-xs text-muted-foreground mt-4">
-              🔒 Secure checkout · Free shipping above ₹2,999
+              🔒 Secure checkout · Free shipping above ₹999
             </p>
           </motion.div>
         </div>

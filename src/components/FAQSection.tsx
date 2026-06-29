@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Do you deliver outside India?",
-    a: "Not yet, but we're working on it. Right now we ship across India with free delivery on orders above ₹2,999. Join our newsletter and we'll let you know the moment international shipping goes live. For urgent requests, drop us a line directly.",
+    a: "Not yet, but we're working on it. Right now we ship across India with free delivery on orders above ₹999. Join our newsletter and we'll let you know the moment international shipping goes live. For urgent requests, drop us a line directly.",
   },
   {
     q: "What if I'm not happy with my order?",

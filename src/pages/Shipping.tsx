@@ -25,7 +25,7 @@ const Shipping = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
         title="Shipping Policy — India & worldwide delivery"
-        description="Punarvsu ships pan-India in 3–7 days (free above ₹2,999) and worldwide via tracked courier. Read delivery timelines, charges, and packaging notes."
+        description="Punarvsu ships pan-India in 3–7 days (free above ₹999) and worldwide via tracked courier. Read delivery timelines, charges, and packaging notes."
       />
       <StructuredData />
       <Navbar />
@@ -44,8 +44,8 @@ const Shipping = () => {
             {/* Shipping cards */}
             <div className="grid gap-6 md:grid-cols-2">
               <ShippingCard icon={Package} title="Free Shipping (India)">
-                <p>Orders above <strong className="text-foreground">₹2,999</strong> qualify for <strong className="text-foreground">free standard shipping</strong> anywhere in India.</p>
-                <p>For orders below ₹2,999, a flat shipping fee of ₹99 applies.</p>
+                <p>Orders above <strong className="text-foreground">₹999</strong> qualify for <strong className="text-foreground">free standard shipping</strong> anywhere in India.</p>
+                <p>For orders below ₹999, a flat shipping fee of ₹99 applies.</p>
               </ShippingCard>
 
               <ShippingCard icon={Clock} title="Delivery Timeline (India)">
