@@ -37,6 +37,10 @@ export const EmailChangeEmail = ({
     <Preview>Confirm your email change for {siteName}</Preview>
     <Body style={main}>
       <Container style={container}>
+        <div style={{ textAlign: 'center', paddingBottom: '20px', borderBottom: '1px solid #e6d49a', marginBottom: '24px' }}>
+          <Heading style={{ fontSize: '24px', color: '#8b0000', margin: 0, letterSpacing: '3px' }}>PUNARVSU</Heading>
+          <Text style={{ color: '#c9a84c', fontSize: '11px', letterSpacing: '3px', margin: '6px 0 0' }}>BLESSINGS IN PHYSICAL FORM</Text>
+        </div>
         <Heading style={h1}>Confirm your email change</Heading>
         <Text style={text}>
           You requested to change your email address for {siteName} from{' '}
@@ -58,6 +62,9 @@ export const EmailChangeEmail = ({
         <Text style={footer}>
           If you didn't request this change, please secure your account
           immediately.
+        </Text>
+        <Text style={{ fontSize: '11px', color: '#8a7a5a', textAlign: 'center', marginTop: '32px', borderTop: '1px solid #e6d49a', paddingTop: '16px' }}>
+          Punarvsu · A sacred upcycling initiative · <Link href="https://punarvsu.com" style={{ color: '#8b0000' }}>punarvsu.com</Link>
         </Text>
       </Container>
     </Body>
