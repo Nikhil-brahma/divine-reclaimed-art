@@ -11,6 +11,20 @@ import StructuredData from "@/components/StructuredData";
 import { staticBlogPosts } from "@/pages/Blog";
 import { supabase } from "@/integrations/supabase/client";
 import blogTempleTextiles from "@/assets/blog-temple-textiles.jpg";
+import blogArtisanCraft from "@/assets/blog-artisan-craft.jpg";
+import blogFestivalFashion from "@/assets/blog-festival-fashion.jpg";
+import blogSustainability from "@/assets/blog-sustainability.jpg";
+import blogStylingGuide from "@/assets/blog-styling-guide.jpg";
+import blogArtisanStories from "@/assets/blog-artisan-stories.jpg";
+
+// Same deterministic slug -> fallback mapping as Blog.tsx so the card image
+// and the opened post image always match.
+const fallbackImages = [blogTempleTextiles, blogArtisanCraft, blogFestivalFashion, blogSustainability, blogStylingGuide, blogArtisanStories];
+const pickFallback = (slug: string) => {
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+  return fallbackImages[h % fallbackImages.length];
+};
 
 const sanitize = (html: string) =>
   DOMPurify.sanitize(html, { ALLOWED_TAGS: ["strong", "em", "b", "i", "br"], ALLOWED_ATTR: [] });
@@ -48,7 +62,7 @@ const BlogPost = () => {
           category: aiPost.category,
           date: new Date(aiPost.created_at).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
           readTime: `${Math.max(3, Math.ceil(aiPost.content.length / 1200))} min read`,
-          image: aiPost.cover_image_url || blogTempleTextiles,
+          image: aiPost.cover_image_url || pickFallback(aiPost.slug),
           isAiGenerated: false,
         }
       : null

@@ -172,13 +172,19 @@ const Blog = () => {
     },
   });
 
-  // Rotate fallback images so posts without a cover still vary visually
+  // Deterministic fallback: hash the slug so the same post always resolves to
+  // the same image everywhere (listing card AND opened post page).
   const fallbackImages = [blogTempleTextiles, blogArtisanCraft, blogFestivalFashion, blogSustainability, blogStylingGuide, blogArtisanStories];
-  const dynamicPosts: BlogPost[] = (aiPosts || []).map((p: any, idx: number) => ({
+  const pickFallback = (slug: string) => {
+    let h = 0;
+    for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+    return fallbackImages[h % fallbackImages.length];
+  };
+  const dynamicPosts: BlogPost[] = (aiPosts || []).map((p: any) => ({
     slug: `ai/${p.slug}`,
     title: p.title,
     excerpt: p.excerpt,
-    image: p.cover_image_url || fallbackImages[idx % fallbackImages.length],
+    image: p.cover_image_url || pickFallback(p.slug),
     date: new Date(p.created_at).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
     readTime: `${Math.max(3, Math.ceil(p.content.length / 1200))} min read`,
     category: p.category,
