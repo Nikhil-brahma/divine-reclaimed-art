@@ -91,22 +91,50 @@ const ProductsManager = () => {
     setHandleTouched(true); setEditing(true);
   };
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+  const uploadFiles = async (files: File[]) => {
+    const imgs = files.filter((f) => f.type.startsWith("image/"));
+    if (!imgs.length) { toast.error("Drop image files only"); return; }
     setUploading(true);
     const uploaded: string[] = [];
-    for (const f of files) {
-      const path = `products/${Date.now()}-${slugify(f.name.replace(/\.[^.]+$/, ""))}.${f.name.split(".").pop()}`;
-      const { error } = await supabase.storage.from("site-content").upload(path, f, { upsert: false });
+    for (const f of imgs) {
+      const ext = (f.name.split(".").pop() || "jpg").toLowerCase();
+      const path = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${slugify(f.name.replace(/\.[^.]+$/, "")) || "img"}.${ext}`;
+      const { error } = await supabase.storage.from("site-content").upload(path, f, { upsert: false, contentType: f.type });
       if (error) { toast.error(error.message); continue; }
       const { data } = supabase.storage.from("site-content").getPublicUrl(path);
       uploaded.push(data.publicUrl);
     }
     setForm((f) => ({ ...f, images: [...f.images, ...uploaded] }));
     setUploading(false);
+    if (uploaded.length) toast.success(`${uploaded.length} image${uploaded.length > 1 ? "s" : ""} uploaded`);
+    return uploaded;
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length) await uploadFiles(files);
     e.target.value = "";
   };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault(); setDragOver(false);
+    const files = Array.from(e.dataTransfer.files || []);
+    if (files.length) await uploadFiles(files);
+  };
+
+  const saveBlurred = async (originalUrl: string, blob: Blob) => {
+    const file = new File([blob], `blurred-${Date.now()}.jpg`, { type: "image/jpeg" });
+    const uploaded = await uploadFiles([file]);
+    if (uploaded && uploaded.length) {
+      // replace the original with the blurred version in-place
+      setForm((f) => ({
+        ...f,
+        images: f.images.filter((u) => u !== uploaded[0]).map((u) => (u === originalUrl ? uploaded[0] : u)),
+      }));
+      toast.success("Blurred version replaced original");
+    }
+  };
+
 
   const save = async () => {
     if (!form.title.trim()) { toast.error("Title required"); return; }
