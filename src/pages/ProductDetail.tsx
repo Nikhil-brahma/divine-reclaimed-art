@@ -170,6 +170,36 @@ const ProductDetail = () => {
                 </div>
               )}
 
+              {variants.length > 0 && (
+                <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-4">
+                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
+                    {product.parent_product_id ? "Other editions of this design" : "Also available"}
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {variants.map((v) => (
+                      <Link
+                        key={v.id}
+                        to={`/product/${v.handle}`}
+                        className="group flex items-center gap-3 bg-card/70 hover:bg-card border border-border/50 hover:border-primary/50 rounded-xl p-2 pr-4 transition-colors"
+                      >
+                        <img
+                          src={v.images?.[0] || "/placeholder.svg"}
+                          alt={v.title}
+                          className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                        />
+                        <div className="text-left">
+                          <p className="font-body text-xs text-foreground group-hover:text-primary transition-colors leading-tight">
+                            {v.variant_label || v.title}
+                          </p>
+                          <p className="font-body text-[10px] text-muted-foreground">₹{v.price.toLocaleString("en-IN")}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+
               {/* Quantity + CTA */}
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-2 border border-border/60 rounded-full px-2 py-1">
