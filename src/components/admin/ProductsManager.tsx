@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload, Sparkles } from "lucide-react";
+import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload, Sparkles, Paintbrush, Maximize2 } from "lucide-react";
 import SmartPhotoStudio from "@/components/admin/SmartPhotoStudio";
+import BlurEditor from "@/components/admin/BlurEditor";
 
 interface Product {
   id: string;
@@ -60,6 +61,9 @@ const ProductsManager = () => {
   const [handleTouched, setHandleTouched] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const [studioOpen, setStudioOpen] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [blurTarget, setBlurTarget] = useState<string | null>(null);
 
   const fetchList = async () => {
     setLoading(true);
@@ -87,22 +91,50 @@ const ProductsManager = () => {
     setHandleTouched(true); setEditing(true);
   };
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+  const uploadFiles = async (files: File[]) => {
+    const imgs = files.filter((f) => f.type.startsWith("image/"));
+    if (!imgs.length) { toast.error("Drop image files only"); return; }
     setUploading(true);
     const uploaded: string[] = [];
-    for (const f of files) {
-      const path = `products/${Date.now()}-${slugify(f.name.replace(/\.[^.]+$/, ""))}.${f.name.split(".").pop()}`;
-      const { error } = await supabase.storage.from("site-content").upload(path, f, { upsert: false });
+    for (const f of imgs) {
+      const ext = (f.name.split(".").pop() || "jpg").toLowerCase();
+      const path = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${slugify(f.name.replace(/\.[^.]+$/, "")) || "img"}.${ext}`;
+      const { error } = await supabase.storage.from("site-content").upload(path, f, { upsert: false, contentType: f.type });
       if (error) { toast.error(error.message); continue; }
       const { data } = supabase.storage.from("site-content").getPublicUrl(path);
       uploaded.push(data.publicUrl);
     }
     setForm((f) => ({ ...f, images: [...f.images, ...uploaded] }));
     setUploading(false);
+    if (uploaded.length) toast.success(`${uploaded.length} image${uploaded.length > 1 ? "s" : ""} uploaded`);
+    return uploaded;
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length) await uploadFiles(files);
     e.target.value = "";
   };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault(); setDragOver(false);
+    const files = Array.from(e.dataTransfer.files || []);
+    if (files.length) await uploadFiles(files);
+  };
+
+  const saveBlurred = async (originalUrl: string, blob: Blob) => {
+    const file = new File([blob], `blurred-${Date.now()}.jpg`, { type: "image/jpeg" });
+    const uploaded = await uploadFiles([file]);
+    if (uploaded && uploaded.length) {
+      // replace the original with the blurred version in-place
+      setForm((f) => ({
+        ...f,
+        images: f.images.filter((u) => u !== uploaded[0]).map((u) => (u === originalUrl ? uploaded[0] : u)),
+      }));
+      toast.success("Blurred version replaced original");
+    }
+  };
+
 
   const save = async () => {
     if (!form.title.trim()) { toast.error("Title required"); return; }
@@ -284,19 +316,39 @@ const ProductsManager = () => {
 
           <div className="sm:col-span-2">
             <label className="font-body text-xs uppercase tracking-wider text-muted-foreground">Images</label>
-            <div className="mt-1 flex flex-wrap gap-3">
+            <div
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={handleDrop}
+              className={`mt-1 flex flex-wrap gap-3 rounded-xl p-3 transition ${dragOver ? "border-2 border-dashed border-primary bg-primary/5" : "border-2 border-dashed border-transparent"}`}
+            >
               {form.images.map((url) => (
                 <div key={url} className="relative group">
                   <img src={url} alt="" className="w-24 h-24 object-cover rounded-lg border border-border/50" />
-                  <button onClick={() => setForm((f) => ({ ...f, images: f.images.filter((x) => x !== url) }))}
-                    className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full w-6 h-6 inline-flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <X size={12} />
-                  </button>
+                  <div className="absolute inset-0 rounded-lg bg-black/50 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center gap-1 transition">
+                    <button
+                      type="button"
+                      onClick={() => setPreviewUrl(url)}
+                      title="Preview"
+                      className="bg-white/90 text-black rounded-full w-7 h-7 inline-flex items-center justify-center"
+                    ><Maximize2 size={12} /></button>
+                    <button
+                      type="button"
+                      onClick={() => setBlurTarget(url)}
+                      title="Blur parts"
+                      className="bg-primary text-primary-foreground rounded-full w-7 h-7 inline-flex items-center justify-center"
+                    ><Paintbrush size={12} /></button>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, images: f.images.filter((x) => x !== url) }))}
+                    className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full w-6 h-6 inline-flex items-center justify-center"
+                  ><X size={12} /></button>
                 </div>
               ))}
-              <label className="w-24 h-24 rounded-lg border-2 border-dashed border-border/50 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-primary text-muted-foreground text-[10px]">
+              <label className="w-24 h-24 rounded-lg border-2 border-dashed border-border/50 flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-primary text-muted-foreground text-[10px] text-center px-1">
                 {uploading ? <Loader2 className="animate-spin" size={20} /> : <Upload size={20} />}
-                <span>{uploading ? "Uploading" : "Upload"}</span>
+                <span>{uploading ? "Uploading" : "Upload / drop"}</span>
                 <input type="file" accept="image/*" multiple onChange={handleUpload} className="hidden" />
               </label>
               <button
@@ -309,6 +361,8 @@ const ProductsManager = () => {
               </button>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
+              Drag &amp; drop images anywhere in the box above. Hover a thumbnail to <Maximize2 size={10} className="inline" /> preview full-size or <Paintbrush size={10} className="inline" /> blur any part of it.
+              <br />
               <Sparkles size={10} className="inline" /> Smart Studio turns one raw photo into a regal hero shot, 4 angles, and a 360° spin powered by Sacred AI.
             </p>
           </div>
@@ -320,6 +374,24 @@ const ProductsManager = () => {
             onClose={() => setStudioOpen(false)}
             onApply={(urls) => setForm((f) => ({ ...f, images: [...f.images, ...urls.filter((u) => !f.images.includes(u))] }))}
           />
+
+          <BlurEditor
+            open={!!blurTarget}
+            imageUrl={blurTarget || ""}
+            onClose={() => setBlurTarget(null)}
+            onSave={async (blob) => { if (blurTarget) await saveBlurred(blurTarget, blob); }}
+          />
+
+          {previewUrl && (
+            <div
+              className="fixed inset-0 z-[55] bg-black/85 backdrop-blur-sm flex items-center justify-center p-6"
+              onClick={() => setPreviewUrl(null)}
+            >
+              <button className="absolute top-4 right-4 text-white/80 hover:text-white" onClick={() => setPreviewUrl(null)}><X size={22} /></button>
+              <img src={previewUrl} alt="preview" className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
+            </div>
+          )}
+
 
           <div className="sm:col-span-2">
             <label className="font-body text-xs uppercase tracking-wider text-muted-foreground">SEO Title</label>
