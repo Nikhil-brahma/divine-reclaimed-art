@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload, Sparkles } from "lucide-react";
+import { Loader2, Plus, Trash2, Package, Image as ImageIcon, Eye, EyeOff, X, Upload, Sparkles, Paintbrush, Maximize2 } from "lucide-react";
 import SmartPhotoStudio from "@/components/admin/SmartPhotoStudio";
+import BlurEditor from "@/components/admin/BlurEditor";
 
 interface Product {
   id: string;
