@@ -61,6 +61,9 @@ const ProductsManager = () => {
   const [handleTouched, setHandleTouched] = useState(false);
   const [tagInput, setTagInput] = useState("");
   const [studioOpen, setStudioOpen] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [blurTarget, setBlurTarget] = useState<string | null>(null);
 
   const fetchList = async () => {
     setLoading(true);
