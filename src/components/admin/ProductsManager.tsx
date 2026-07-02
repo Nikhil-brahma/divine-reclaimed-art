@@ -21,6 +21,8 @@ interface Product {
   seo_title: string | null;
   seo_description: string | null;
   weight_grams: number | null;
+  parent_product_id: string | null;
+  variant_label: string | null;
   updated_at: string;
 }
 
@@ -44,6 +46,8 @@ const empty = {
   seo_title: "",
   seo_description: "",
   weight_grams: null as number | null,
+  parent_product_id: null as string | null,
+  variant_label: "",
 };
 
 const ProductsManager = () => {
@@ -77,6 +81,8 @@ const ProductsManager = () => {
       tags: p.tags || [], images: p.images || [], status: p.status,
       seo_title: p.seo_title || "", seo_description: p.seo_description || "",
       weight_grams: p.weight_grams,
+      parent_product_id: p.parent_product_id ?? null,
+      variant_label: p.variant_label ?? "",
     });
     setHandleTouched(true); setEditing(true);
   };
@@ -109,7 +115,9 @@ const ProductsManager = () => {
       category: form.category || null, tags: form.tags, images: form.images,
       status: form.status, seo_title: form.seo_title || null, seo_description: form.seo_description || null,
       weight_grams: form.weight_grams ? Number(form.weight_grams) : null,
-    };
+      parent_product_id: form.parent_product_id || null,
+      variant_label: form.variant_label?.trim() ? form.variant_label.trim() : null,
+    } as any;
     const q = form.id
       ? supabase.from("products").update(payload).eq("id", form.id)
       : supabase.from("products").insert(payload);
@@ -211,6 +219,41 @@ const ProductsManager = () => {
             <label className="font-body text-xs uppercase tracking-wider text-muted-foreground">Weight (grams)</label>
             <input type="number" min="0" value={form.weight_grams ?? ""} onChange={(e) => setForm({ ...form, weight_grams: e.target.value ? Number(e.target.value) : null })}
               className="mt-1 w-full rounded-xl border border-border/50 bg-card p-3 font-body text-sm focus:border-primary outline-none" />
+          </div>
+
+          <div className="sm:col-span-2 rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-3">
+            <div>
+              <p className="font-body text-xs uppercase tracking-wider text-primary">Similar Edition (variant)</p>
+              <p className="font-body text-[11px] text-muted-foreground mt-1">
+                Use this when a product is basically the <em>same design</em> as another product but with a small difference — a bulk / bigger size, slightly different cloth, or a subtle touch. On the site, this product will be hidden from the main collection grid and shown as a variant on the parent product's page (like colour swatches on other stores).
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div>
+                <label className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Variant of (parent product)</label>
+                <select
+                  value={form.parent_product_id ?? ""}
+                  onChange={(e) => setForm({ ...form, parent_product_id: e.target.value || null })}
+                  className="mt-1 w-full rounded-xl border border-border/50 bg-card p-3 font-body text-sm focus:border-primary outline-none"
+                >
+                  <option value="">— None (this is a standalone product) —</option>
+                  {list
+                    .filter((p) => p.id !== form.id && !p.parent_product_id)
+                    .map((p) => (
+                      <option key={p.id} value={p.id}>{p.title}</option>
+                    ))}
+                </select>
+              </div>
+              <div>
+                <label className="font-body text-[10px] uppercase tracking-wider text-muted-foreground">Variant label</label>
+                <input
+                  value={form.variant_label}
+                  onChange={(e) => setForm({ ...form, variant_label: e.target.value })}
+                  placeholder="e.g. Bulk size, Slightly larger, Alt cloth"
+                  className="mt-1 w-full rounded-xl border border-border/50 bg-card p-3 font-body text-sm focus:border-primary outline-none"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="sm:col-span-2">

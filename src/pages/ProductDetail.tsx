@@ -17,11 +17,18 @@ interface Product {
   stock: number; sku: string | null; category: string | null; tags: string[] | null;
   images: string[] | null; weight_grams: number | null;
   seo_title: string | null; seo_description: string | null;
+  parent_product_id: string | null; variant_label: string | null;
+}
+
+interface VariantSummary {
+  id: string; handle: string; title: string; images: string[] | null;
+  price: number; variant_label: string | null;
 }
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const [product, setProduct] = useState<Product | null>(null);
+  const [variants, setVariants] = useState<VariantSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [qty, setQty] = useState(1);
@@ -31,10 +38,25 @@ const ProductDetail = () => {
     (async () => {
       setLoading(true);
       const { data } = await supabase.from("products").select("*").eq("handle", handle).eq("status", "active").maybeSingle();
-      setProduct((data as Product) || null);
+      const p = (data as Product) || null;
+      setProduct(p);
       setLoading(false);
       setSelectedImage(0);
       setQty(1);
+
+      // Fetch sibling variants: the parent (if any) + all children of that parent,
+      // excluding the currently viewed product.
+      if (p) {
+        const rootId = p.parent_product_id || p.id;
+        const { data: sibs } = await supabase
+          .from("products")
+          .select("id, handle, title, images, price, variant_label, parent_product_id")
+          .eq("status", "active")
+          .or(`id.eq.${rootId},parent_product_id.eq.${rootId}`);
+        setVariants(((sibs as any[]) || []).filter((s) => s.id !== p.id));
+      } else {
+        setVariants([]);
+      }
     })();
   }, [handle]);
 
