@@ -38,8 +38,9 @@ const NativeCollections = () => {
     (async () => {
       const { data, error } = await supabase
         .from("products")
-        .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status")
+        .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status, parent_product_id")
         .eq("status", "active")
+        .is("parent_product_id", null)
         .order("updated_at", { ascending: false });
       if (error) console.error(error);
       setProducts((data || []) as Product[]);

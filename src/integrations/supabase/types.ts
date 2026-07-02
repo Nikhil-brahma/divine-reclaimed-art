@@ -492,6 +492,7 @@ export type Database = {
           handle: string
           id: string
           images: string[] | null
+          parent_product_id: string | null
           price: number
           seo_description: string | null
           seo_title: string | null
@@ -501,6 +502,7 @@ export type Database = {
           tags: string[] | null
           title: string
           updated_at: string
+          variant_label: string | null
           weight_grams: number | null
         }
         Insert: {
@@ -513,6 +515,7 @@ export type Database = {
           handle: string
           id?: string
           images?: string[] | null
+          parent_product_id?: string | null
           price?: number
           seo_description?: string | null
           seo_title?: string | null
@@ -522,6 +525,7 @@ export type Database = {
           tags?: string[] | null
           title: string
           updated_at?: string
+          variant_label?: string | null
           weight_grams?: number | null
         }
         Update: {
@@ -534,6 +538,7 @@ export type Database = {
           handle?: string
           id?: string
           images?: string[] | null
+          parent_product_id?: string | null
           price?: number
           seo_description?: string | null
           seo_title?: string | null
@@ -543,9 +548,18 @@ export type Database = {
           tags?: string[] | null
           title?: string
           updated_at?: string
+          variant_label?: string | null
           weight_grams?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_parent_product_id_fkey"
+            columns: ["parent_product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -714,6 +728,7 @@ export type Database = {
         Args: { message_id: number; queue_name: string }
         Returns: boolean
       }
+      email_queue_dispatch: { Args: never; Returns: undefined }
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
