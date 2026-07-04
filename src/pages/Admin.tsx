@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowLeft, Sparkles, FileText, Search, BarChart3, Globe, Loader2, PenSquare,
   ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus, CalendarClock, Tag,
-  Package, Mail, LayoutDashboard, Users, Menu, X,
+  Package, Mail, LayoutDashboard, Users, Menu, X, Upload,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -210,6 +210,52 @@ const Admin = () => {
       setPosts((prev) => prev.filter((p) => p.id !== post.id));
       toast.success("Deleted");
     } catch { toast.error("Delete failed"); }
+  };
+
+  // Upload a cover image to the blog-images bucket and return its public URL
+  const uploadBlogImage = async (file: File): Promise<string | null> => {
+    if (!file.type.startsWith("image/")) { toast.error("Please choose an image file"); return null; }
+    if (file.size > 10 * 1024 * 1024) { toast.error("Image must be under 10MB"); return null; }
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `manual-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await supabase.storage.from("blog-images").upload(path, file, { upsert: true, contentType: file.type });
+    if (error) { toast.error("Upload failed: " + error.message); return null; }
+    const { data } = supabase.storage.from("blog-images").getPublicUrl(path);
+    return data.publicUrl;
+  };
+
+  const [uploadingFor, setUploadingFor] = useState<string | null>(null);
+
+  const handleDraftImageUpload = async (file: File) => {
+    setUploadingFor("draft");
+    try {
+      const url = await uploadBlogImage(file);
+      if (url) {
+        setDraft((d) => ({ ...d, existing_image_url: url, generate_image: false }));
+        toast.success("Cover image uploaded");
+      }
+    } finally { setUploadingFor(null); }
+  };
+
+  const replacePostCover = async (post: BlogPost, file: File) => {
+    setUploadingFor(post.id);
+    try {
+      const url = await uploadBlogImage(file);
+      if (!url) return;
+      const { data, error } = await supabase.functions.invoke("publish-blog-post", {
+        body: {
+          op: "update", id: post.id,
+          title: post.title, slug: post.slug, excerpt: post.excerpt, content: post.content,
+          category: post.category, target_keyword: post.target_keyword, occasion: post.occasion,
+          published: post.published, generate_image: false, existing_image_url: url,
+        },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
+      toast.success("Cover image updated");
+    } catch (e: any) { toast.error(e.message || "Update failed"); }
+    finally { setUploadingFor(null); }
   };
 
   const editPost = (post: BlogPost) => {
@@ -463,6 +509,15 @@ const Admin = () => {
                       <span className="font-body text-xs text-muted-foreground">Current cover</span>
                     </div>
                   )}
+                  <div className="pt-1">
+                    <label className="inline-flex items-center gap-2 font-body text-xs uppercase tracking-wider px-3 py-2 rounded-full border border-border/70 hover:border-primary cursor-pointer">
+                      {uploadingFor === "draft" ? <Loader2 size={12} className="animate-spin" /> : <Upload size={12} />}
+                      {draft.existing_image_url ? "Replace cover image" : "Upload cover image"}
+                      <input type="file" accept="image/*" className="hidden"
+                        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleDraftImageUpload(f); e.currentTarget.value = ""; }} />
+                    </label>
+                    <p className="font-body text-[11px] text-muted-foreground mt-1">Uploading turns off AI auto-generation for this post.</p>
+                  </div>
                 </div>
               </div>
 
@@ -516,6 +571,12 @@ const Admin = () => {
                       </div>
                       <div className="flex flex-col gap-1.5 flex-shrink-0">
                         <button onClick={() => editPost(p)} className="font-body text-[11px] uppercase tracking-wider text-primary hover:underline px-2 py-1">Edit</button>
+                        <label className="font-body text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground inline-flex items-center gap-1 px-2 py-1 cursor-pointer">
+                          {uploadingFor === p.id ? <Loader2 size={11} className="animate-spin" /> : <Upload size={11} />}
+                          {p.cover_image_url ? "Replace image" : "Add image"}
+                          <input type="file" accept="image/*" className="hidden"
+                            onChange={(e) => { const f = e.target.files?.[0]; if (f) replacePostCover(p, f); e.currentTarget.value = ""; }} />
+                        </label>
                         <button onClick={() => togglePublish(p)} className="font-body text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground inline-flex items-center gap-1 px-2 py-1">
                           {p.published ? <><EyeOff size={11} /> Unpublish</> : <><Eye size={11} /> Publish</>}
                         </button>
