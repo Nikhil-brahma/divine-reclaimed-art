@@ -509,6 +509,15 @@ const Admin = () => {
                       <span className="font-body text-xs text-muted-foreground">Current cover</span>
                     </div>
                   )}
+                  <div className="pt-1">
+                    <label className="inline-flex items-center gap-2 font-body text-xs uppercase tracking-wider px-3 py-2 rounded-full border border-border/70 hover:border-primary cursor-pointer">
+                      {uploadingFor === "draft" ? <Loader2 size={12} className="animate-spin" /> : <Upload size={12} />}
+                      {draft.existing_image_url ? "Replace cover image" : "Upload cover image"}
+                      <input type="file" accept="image/*" className="hidden"
+                        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleDraftImageUpload(f); e.currentTarget.value = ""; }} />
+                    </label>
+                    <p className="font-body text-[11px] text-muted-foreground mt-1">Uploading turns off AI auto-generation for this post.</p>
+                  </div>
                 </div>
               </div>
 
