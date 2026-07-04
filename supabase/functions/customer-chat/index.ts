@@ -181,6 +181,15 @@ serve(async (req) => {
         return new Response(JSON.stringify({ error: "Message too long (max 2000 chars)." }),
           { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
+      if (m?.role !== "user" && m?.role !== "assistant") {
+        return new Response(JSON.stringify({ error: "Invalid message role." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+    }
+    // Ensure the last message is from the user (prevents spoofing conversation state).
+    if (messages[messages.length - 1]?.role !== "user") {
+      return new Response(JSON.stringify({ error: "Last message must be from user." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     const liveCatalog = await fetchLiveProducts();
