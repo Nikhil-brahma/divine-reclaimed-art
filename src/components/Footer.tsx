@@ -2,11 +2,12 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import FooterMandala from "@/components/FooterMandala";
 
-const SacredGeoIcon = ({ children, href }: { children: React.ReactNode; href: string }) => (
+const SacredGeoIcon = ({ children, href, label }: { children: React.ReactNode; href: string; label: string }) => (
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
+    aria-label={label}
     className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-ivory/50 hover:text-gold hover:border-gold/50 hover:shadow-[0_0_15px_hsla(42,85%,55%,0.2)] transition-all duration-300"
   >
     {children}
