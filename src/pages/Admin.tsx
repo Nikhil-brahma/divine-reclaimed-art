@@ -571,9 +571,9 @@ const Admin = () => {
                       </div>
                       <div className="flex flex-col gap-1.5 flex-shrink-0">
                         <button onClick={() => editPost(p)} className="font-body text-[11px] uppercase tracking-wider text-primary hover:underline px-2 py-1">Edit</button>
-                        <label className="font-body text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground inline-flex items-center gap-1 px-2 py-1 cursor-pointer">
-                          {uploadingFor === p.id ? <Loader2 size={11} className="animate-spin" /> : <Upload size={11} />}
-                          {p.cover_image_url ? "Replace image" : "Add image"}
+                        <label className="font-body text-[11px] uppercase tracking-wider text-primary hover:underline inline-flex items-center gap-1 px-2 py-1 cursor-pointer">
+                          {uploadingFor === p.id ? <Loader2 size={11} className="animate-spin" /> : <ImageIcon size={11} />}
+                          {p.cover_image_url ? "Change image" : "Add image"}
                           <input type="file" accept="image/*" className="hidden"
                             onChange={(e) => { const f = e.target.files?.[0]; if (f) replacePostCover(p, f); e.currentTarget.value = ""; }} />
                         </label>
