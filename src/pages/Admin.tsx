@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   ArrowLeft, Sparkles, FileText, Search, BarChart3, Globe, Loader2, PenSquare,
   ListChecks, Image as ImageIcon, Trash2, Eye, EyeOff, Plus, CalendarClock, Tag,
-  Package, Mail, LayoutDashboard, Users, Menu, X,
+  Package, Mail, LayoutDashboard, Users, Menu, X, Upload,
 } from "lucide-react";
 import { Link, Navigate } from "react-router-dom";
 import { toast } from "sonner";
