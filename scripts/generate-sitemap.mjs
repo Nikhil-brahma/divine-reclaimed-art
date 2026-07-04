@@ -43,12 +43,20 @@ async function fetchTable(path) {
 const products = await fetchTable("products?select=handle,updated_at&status=eq.active");
 const aiPosts = await fetchTable("auto_blog_posts?select=slug,updated_at&published=eq.true");
 
-const productEntries = (Array.isArray(products) ? products : []).map((p) => ({
-  path: `/product/${p.handle}`,
-  lastmod: p.updated_at?.slice(0, 10),
-  changefreq: "weekly",
-  priority: "0.9",
-}));
+const productEntries = (Array.isArray(products) ? products : []).flatMap((p) => [
+  {
+    path: `/product/${p.handle}`,
+    lastmod: p.updated_at?.slice(0, 10),
+    changefreq: "weekly",
+    priority: "0.9",
+  },
+  {
+    path: `/products/${p.handle}`,
+    lastmod: p.updated_at?.slice(0, 10),
+    changefreq: "weekly",
+    priority: "0.9",
+  },
+]);
 
 const staticBlogEntries = staticBlogSlugs.map((slug) => ({
   path: `/blog/${slug}`,

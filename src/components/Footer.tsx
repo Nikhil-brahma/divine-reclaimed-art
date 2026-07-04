@@ -2,11 +2,12 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import FooterMandala from "@/components/FooterMandala";
 
-const SacredGeoIcon = ({ children, href }: { children: React.ReactNode; href: string }) => (
+const SacredGeoIcon = ({ children, href, label }: { children: React.ReactNode; href: string; label: string }) => (
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
+    aria-label={label}
     className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-ivory/50 hover:text-gold hover:border-gold/50 hover:shadow-[0_0_15px_hsla(42,85%,55%,0.2)] transition-all duration-300"
   >
     {children}
@@ -30,19 +31,19 @@ const Footer = () => {
             </p>
             {/* Sacred geometry social icons */}
             <div className="flex gap-3">
-              <SacredGeoIcon href="https://www.instagram.com/punarvsu_?igsh=dXQ1emdsa2JoYTQx">
+              <SacredGeoIcon href="https://www.instagram.com/punarvsu_?igsh=dXQ1emdsa2JoYTQx" label="Instagram">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
                   <rect x="2" y="2" width="20" height="20" rx="5" />
                   <circle cx="12" cy="12" r="5" />
                   <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" />
                 </svg>
               </SacredGeoIcon>
-              <SacredGeoIcon href="https://facebook.com">
+              <SacredGeoIcon href="https://facebook.com" label="Facebook">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
                 </svg>
               </SacredGeoIcon>
-              <SacredGeoIcon href="https://twitter.com">
+              <SacredGeoIcon href="https://twitter.com" label="Twitter">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>

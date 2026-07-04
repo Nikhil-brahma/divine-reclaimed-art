@@ -331,7 +331,7 @@ const Admin = () => {
       {/* Main */}
       <main className="flex-1 min-w-0">
         <header className="sticky top-0 z-20 bg-background/95 backdrop-blur border-b border-border/50 px-5 lg:px-8 py-3 flex items-center gap-3">
-          <button className="lg:hidden" onClick={() => setSidebarOpen(true)}><Menu size={20} /></button>
+          <button className="lg:hidden" aria-label="Open menu" onClick={() => setSidebarOpen(true)}><Menu size={20} /></button>
           <h1 className="font-display text-lg flex-1">{currentTitle}</h1>
         </header>
 
