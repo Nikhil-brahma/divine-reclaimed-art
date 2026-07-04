@@ -212,6 +212,52 @@ const Admin = () => {
     } catch { toast.error("Delete failed"); }
   };
 
+  // Upload a cover image to the blog-images bucket and return its public URL
+  const uploadBlogImage = async (file: File): Promise<string | null> => {
+    if (!file.type.startsWith("image/")) { toast.error("Please choose an image file"); return null; }
+    if (file.size > 10 * 1024 * 1024) { toast.error("Image must be under 10MB"); return null; }
+    const ext = file.name.split(".").pop() || "jpg";
+    const path = `manual-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await supabase.storage.from("blog-images").upload(path, file, { upsert: true, contentType: file.type });
+    if (error) { toast.error("Upload failed: " + error.message); return null; }
+    const { data } = supabase.storage.from("blog-images").getPublicUrl(path);
+    return data.publicUrl;
+  };
+
+  const [uploadingFor, setUploadingFor] = useState<string | null>(null);
+
+  const handleDraftImageUpload = async (file: File) => {
+    setUploadingFor("draft");
+    try {
+      const url = await uploadBlogImage(file);
+      if (url) {
+        setDraft((d) => ({ ...d, existing_image_url: url, generate_image: false }));
+        toast.success("Cover image uploaded");
+      }
+    } finally { setUploadingFor(null); }
+  };
+
+  const replacePostCover = async (post: BlogPost, file: File) => {
+    setUploadingFor(post.id);
+    try {
+      const url = await uploadBlogImage(file);
+      if (!url) return;
+      const { data, error } = await supabase.functions.invoke("publish-blog-post", {
+        body: {
+          op: "update", id: post.id,
+          title: post.title, slug: post.slug, excerpt: post.excerpt, content: post.content,
+          category: post.category, target_keyword: post.target_keyword, occasion: post.occasion,
+          published: post.published, generate_image: false, existing_image_url: url,
+        },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
+      toast.success("Cover image updated");
+    } catch (e: any) { toast.error(e.message || "Update failed"); }
+    finally { setUploadingFor(null); }
+  };
+
   const editPost = (post: BlogPost) => {
     setDraft({
       id: post.id, title: post.title, slug: post.slug, excerpt: post.excerpt,
