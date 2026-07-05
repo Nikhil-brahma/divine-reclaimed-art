@@ -241,6 +241,19 @@ const About = () => {
         </section>
 
         <SectionDivider variant="sacred" />
+
+        {/* Deeper brand story — moved from Home so /about carries the full narrative */}
+        <WhyHowWhatSection />
+        <SectionDivider variant="gold" />
+        <SacredProvenanceSection />
+        <SectionDivider variant="subtle" />
+        <WhyYouDeserveSection />
+        <SectionDivider variant="sacred" />
+        <StorySection />
+        <SectionDivider variant="gold" />
+        <ImpactSection />
+
+        <SectionDivider variant="sacred" />
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-sacred" />
           <div className="container mx-auto px-6 relative z-10 text-center">
