@@ -129,7 +129,7 @@ const NativeCollections = () => {
               </motion.div>
             )}
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {products.slice(1).map((p, i) => (
                 <GlassProductCard key={p.id} product={p} index={i} />
               ))}
