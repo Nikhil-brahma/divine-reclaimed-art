@@ -7,6 +7,11 @@ import StructuredData from "@/components/StructuredData";
 import artisanImg from "@/assets/artisan-crafting.jpg";
 import nikhilImg from "@/assets/nikhil-ceo.jpg";
 import SectionDivider from "@/components/SectionDivider";
+import WhyHowWhatSection from "@/components/WhyHowWhatSection";
+import SacredProvenanceSection from "@/components/SacredProvenanceSection";
+import StorySection from "@/components/StorySection";
+import WhyYouDeserveSection from "@/components/WhyYouDeserveSection";
+import ImpactSection from "@/components/ImpactSection";
 
 const values = [
   { icon: Heart, title: "Rooted in Devotion", desc: "Every fabric we use was part of someone's prayer — dressed on temple deities during sacred rituals." },
@@ -234,6 +239,19 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        <SectionDivider variant="sacred" />
+
+        {/* Deeper brand story — moved from Home so /about carries the full narrative */}
+        <WhyHowWhatSection />
+        <SectionDivider variant="gold" />
+        <SacredProvenanceSection />
+        <SectionDivider variant="subtle" />
+        <WhyYouDeserveSection />
+        <SectionDivider variant="sacred" />
+        <StorySection />
+        <SectionDivider variant="gold" />
+        <ImpactSection />
 
         <SectionDivider variant="sacred" />
         <section className="py-24 relative overflow-hidden">
