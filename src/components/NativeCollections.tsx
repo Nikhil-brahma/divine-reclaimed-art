@@ -4,7 +4,7 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
-import { resolveSiteContentImageUrl } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync } from "@/lib/siteContentImages";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -30,8 +30,8 @@ const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [mediaMap, setMediaMap] = useState<Record<string, { hero_url: string | null; angle_urls: string[]; spin_urls: string[] } | null>>({});
   const [loading, setLoading] = useState(true);
-  const [featuredImage, setFeaturedImage] = useState("/placeholder.svg");
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -45,20 +45,27 @@ const NativeCollections = () => {
         .is("parent_product_id", null)
         .order("updated_at", { ascending: false });
       if (error) console.error(error);
-      setProducts((data || []) as Product[]);
+      const list = (data || []) as Product[];
+      setProducts(list);
       setLoading(false);
+
+      // Batch fetch all product media in one query so cards don't each query.
+      if (list.length) {
+        const { data: mediaRows } = await (supabase as any)
+          .from("product_media")
+          .select("product_id, hero_url, angle_urls, spin_urls")
+          .in("product_id", list.map((p) => p.id));
+        const map: Record<string, any> = {};
+        for (const p of list) map[p.id] = null;
+        for (const row of (mediaRows || [])) map[row.product_id] = row;
+        setMediaMap(map);
+      }
     })();
   }, []);
 
-  useEffect(() => {
-    if (!products[0]) return;
-    let cancelled = false;
-    setFeaturedImage(products[0].images?.[0] || "/placeholder.svg");
-    resolveSiteContentImageUrl(products[0].images?.[0]).then((url) => {
-      if (!cancelled) setFeaturedImage(url);
-    });
-    return () => { cancelled = true; };
-  }, [products]);
+  const featuredImage = resolveSiteContentImageUrlSync(products[0]?.images?.[0]);
+
+
 
   return (
     <section ref={sectionRef} id="collections" className="relative py-32 bg-background overflow-hidden">
@@ -153,7 +160,7 @@ const NativeCollections = () => {
 
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {products.slice(1).map((p, i) => (
-                <GlassProductCard key={p.id} product={p} index={i} />
+                <GlassProductCard key={p.id} product={p} index={i} media={mediaMap[p.id] ?? null} />
               ))}
             </div>
           </>

@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
-import { resolveSiteContentImageUrl, resolveSiteContentImageUrls } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync } from "@/lib/siteContentImages";
 
 
 interface Product {
@@ -32,8 +32,6 @@ const ProductDetail = () => {
   const [variants, setVariants] = useState<VariantSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [displayImages, setDisplayImages] = useState<string[]>(["/placeholder.svg"]);
-  const [displayVariants, setDisplayVariants] = useState<VariantSummary[]>([]);
   const [qty, setQty] = useState(1);
   const addItem = useStoreCart((s) => s.addItem);
 
@@ -65,28 +63,13 @@ const ProductDetail = () => {
 
   // SEO handled via <SEOHead /> + <StructuredData /> in render
 
-  useEffect(() => {
-    const sourceImages = product?.images?.length ? product.images : ["/placeholder.svg"];
-    let cancelled = false;
-    setDisplayImages(sourceImages);
-    resolveSiteContentImageUrls(sourceImages).then((urls) => {
-      if (!cancelled) setDisplayImages(urls);
-    });
-    return () => { cancelled = true; };
-  }, [product]);
+  const displayImages = resolveSiteContentImageUrlsSync(product?.images?.length ? product.images : ["/placeholder.svg"]);
+  const displayVariants = variants.map((v) => ({
+    ...v,
+    images: [resolveSiteContentImageUrlSync(v.images?.[0])],
+  }));
 
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(
-      variants.map(async (variant) => ({
-        ...variant,
-        images: [await resolveSiteContentImageUrl(variant.images?.[0])],
-      }))
-    ).then((resolved) => {
-      if (!cancelled) setDisplayVariants(resolved);
-    });
-    return () => { cancelled = true; };
-  }, [variants]);
+
 
 
 
