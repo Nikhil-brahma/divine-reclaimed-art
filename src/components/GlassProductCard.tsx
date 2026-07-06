@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { resolveSiteContentImageUrl, resolveSiteContentImageUrls } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync } from "@/lib/siteContentImages";
 
 export interface GlassProduct {
   id: string;
