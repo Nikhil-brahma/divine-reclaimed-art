@@ -48,11 +48,9 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   const [spinFrame, setSpinFrame] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const [displayHeroImg, setDisplayHeroImg] = useState(product.images?.[0] || "/placeholder.svg");
-  const [displaySpinFrames, setDisplaySpinFrames] = useState<string[]>([]);
   const addItem = useStoreCart((s) => s.addItem);
 
-  // Fetch enhanced media if not provided
+  // Fetch enhanced media only if not provided by parent (parent should batch).
   useEffect(() => {
     if (mediaProp !== undefined) return;
     let cancelled = false;
@@ -69,22 +67,14 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
   const heroImg = media?.hero_url || product.images?.[0] || "/placeholder.svg";
   const spinFrames = media?.spin_urls || [];
+  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg);
+  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames) : [];
   const currentImg = spinning && displaySpinFrames.length > 1 ? displaySpinFrames[spinFrame % displaySpinFrames.length] : displayHeroImg;
   const soldOut = product.stock <= 0;
   const aura = AURA_COLORS[product.category || "default"] || AURA_COLORS.default;
 
-  useEffect(() => {
-    let cancelled = false;
-    setImgLoaded(false);
-    setDisplayHeroImg(heroImg);
-    resolveSiteContentImageUrl(heroImg).then((url) => {
-      if (!cancelled) setDisplayHeroImg(url);
-    });
-    resolveSiteContentImageUrls(spinFrames).then((urls) => {
-      if (!cancelled) setDisplaySpinFrames(spinFrames.length ? urls : []);
-    });
-    return () => { cancelled = true; };
-  }, [heroImg, spinFrames.join("|")]);
+  useEffect(() => { setImgLoaded(false); }, [displayHeroImg]);
+
 
   const startSpin = () => {
     if (spinFrames.length < 2) return;
