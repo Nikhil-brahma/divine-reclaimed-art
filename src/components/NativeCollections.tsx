@@ -4,7 +4,7 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
-import { resolveSiteContentImageUrl } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync } from "@/lib/siteContentImages";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
