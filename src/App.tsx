@@ -19,6 +19,7 @@ import Shipping from "./pages/Shipping";
 import Studio from "./pages/Studio";
 
 import AuthPage from "./pages/Auth";
+import CustomerAuth from "./pages/CustomerAuth";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import LoadingScreen from "./components/LoadingScreen";
