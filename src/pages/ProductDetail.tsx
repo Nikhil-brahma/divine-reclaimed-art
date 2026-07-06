@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
+import { resolveSiteContentImageUrl, resolveSiteContentImageUrls } from "@/lib/siteContentImages";
 
 
 interface Product {
@@ -31,6 +32,8 @@ const ProductDetail = () => {
   const [variants, setVariants] = useState<VariantSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [displayImages, setDisplayImages] = useState<string[]>(["/placeholder.svg"]);
+  const [displayVariants, setDisplayVariants] = useState<VariantSummary[]>([]);
   const [qty, setQty] = useState(1);
   const addItem = useStoreCart((s) => s.addItem);
 
@@ -62,6 +65,28 @@ const ProductDetail = () => {
 
   // SEO handled via <SEOHead /> + <StructuredData /> in render
 
+  useEffect(() => {
+    const sourceImages = product?.images?.length ? product.images : ["/placeholder.svg"];
+    let cancelled = false;
+    resolveSiteContentImageUrls(sourceImages).then((urls) => {
+      if (!cancelled) setDisplayImages(urls);
+    });
+    return () => { cancelled = true; };
+  }, [product]);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all(
+      variants.map(async (variant) => ({
+        ...variant,
+        images: [await resolveSiteContentImageUrl(variant.images?.[0])],
+      }))
+    ).then((resolved) => {
+      if (!cancelled) setDisplayVariants(resolved);
+    });
+    return () => { cancelled = true; };
+  }, [variants]);
+
 
 
   if (loading) {
@@ -91,13 +116,13 @@ const ProductDetail = () => {
     if (soldOut) return;
     addItem({
       productId: product.id, handle: product.handle, title: product.title,
-      image: images[0], price: product.price, stock: product.stock,
+      image: displayImages[0], price: product.price, stock: product.stock,
     }, qty);
     toast.success(`${product.title} added to cart`);
   };
 
   const productUrl = `https://punarvsu.com/products/${product.handle}`;
-  const productImg = images[0]?.startsWith("http") ? images[0] : `https://punarvsu.com${images[0]}`;
+  const productImg = displayImages[0]?.startsWith("http") ? displayImages[0] : `https://punarvsu.com${displayImages[0]}`;
   const seoTitle = product.seo_title || `${product.title} · Punarvsu`;
   const seoDesc = (product.seo_description || product.description || `${product.title} — handcrafted from sacred temple textiles by Punarvsu artisans in Delhi.`).slice(0, 160);
 
@@ -126,14 +151,14 @@ const ProductDetail = () => {
             {/* Images */}
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
               <div className="aspect-square rounded-2xl overflow-hidden glass-card mb-4">
-                <img src={images[selectedImage]} alt={product.title} className="w-full h-full object-cover" />
+                <img src={displayImages[selectedImage] || displayImages[0]} alt={product.title} className="w-full h-full object-cover" />
               </div>
               {images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-1">
                   {images.map((img, i) => (
                     <button key={i} onClick={() => setSelectedImage(i)}
                             className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${i === selectedImage ? "border-primary" : "border-transparent hover:border-primary/40"}`}>
-                      <img src={img} alt={`${product.title} — view ${i + 1}`} className="w-full h-full object-cover" />
+                      <img src={displayImages[i] || img} alt={`${product.title} — view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                     </button>
                   ))}
                 </div>
@@ -176,7 +201,7 @@ const ProductDetail = () => {
                     {product.parent_product_id ? "Other editions of this design" : "Also available"}
                   </p>
                   <div className="flex flex-wrap gap-3">
-                    {variants.map((v) => (
+                    {displayVariants.map((v) => (
                       <Link
                         key={v.id}
                         to={`/product/${v.handle}`}
