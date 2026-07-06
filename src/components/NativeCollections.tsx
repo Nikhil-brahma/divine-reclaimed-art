@@ -31,7 +31,6 @@ const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [featuredImage, setFeaturedImage] = useState("/placeholder.svg");
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -50,15 +49,8 @@ const NativeCollections = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    if (!products[0]) return;
-    let cancelled = false;
-    setFeaturedImage(products[0].images?.[0] || "/placeholder.svg");
-    resolveSiteContentImageUrl(products[0].images?.[0]).then((url) => {
-      if (!cancelled) setFeaturedImage(url);
-    });
-    return () => { cancelled = true; };
-  }, [products]);
+  const featuredImage = resolveSiteContentImageUrlSync(products[0]?.images?.[0]);
+
 
   return (
     <section ref={sectionRef} id="collections" className="relative py-32 bg-background overflow-hidden">
