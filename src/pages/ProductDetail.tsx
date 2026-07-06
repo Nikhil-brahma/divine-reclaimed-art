@@ -214,9 +214,9 @@ const ProductDetail = () => {
               {/* Quantity + CTA */}
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-2 border border-border/60 rounded-full px-2 py-1">
-                  <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-7 h-7 rounded-full hover:bg-muted">−</button>
-                  <span className="w-8 text-center font-body text-sm">{qty}</span>
-                  <button onClick={() => setQty(Math.min(product.stock || 99, qty + 1))} className="w-7 h-7 rounded-full hover:bg-muted">+</button>
+                  <button onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity" className="w-7 h-7 rounded-full hover:bg-muted">−</button>
+                  <span className="w-8 text-center font-body text-sm" aria-live="polite" aria-label={`Quantity: ${qty}`}>{qty}</span>
+                  <button onClick={() => setQty(Math.min(product.stock || 99, qty + 1))} aria-label="Increase quantity" className="w-7 h-7 rounded-full hover:bg-muted">+</button>
                 </div>
                 <span className="font-body text-[11px] text-muted-foreground">
                   {soldOut ? "Sold out" : `${product.stock} in stock`}
