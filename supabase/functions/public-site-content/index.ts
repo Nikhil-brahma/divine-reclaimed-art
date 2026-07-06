@@ -36,6 +36,7 @@ serve(async (req) => {
   const { data, error } = await svc.storage.from(BUCKET).download(path);
 
   if (error || !data) {
+    console.error("public-site-content download failed", { path, message: error?.message, name: error?.name });
     return new Response("Not found", { status: 404, headers: corsHeaders });
   }
 
