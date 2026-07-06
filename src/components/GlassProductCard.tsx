@@ -46,6 +46,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   const [media, setMedia] = useState<ProductMedia | null>(mediaProp ?? null);
   const [spinFrame, setSpinFrame] = useState(0);
   const [spinning, setSpinning] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const addItem = useStoreCart((s) => s.addItem);
 
   // Fetch enhanced media if not provided
@@ -138,11 +139,17 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
         <Link to={`/product/${product.handle}`} className="block">
           <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative">
+            {!imgLoaded && (
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60" />
+            )}
             <img
               src={currentImg}
               alt={product.title}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              onLoad={() => setImgLoaded(true)}
+              onError={() => setImgLoaded(true)}
+              className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/30 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
 
