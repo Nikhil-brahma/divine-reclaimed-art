@@ -57,7 +57,9 @@ const AppContent = () => {
         <Route path="/admin/messages" element={<Navigate to="/admin#messages" replace />} />
         <Route path="/admin/legacy-seo" element={<SEODashboard />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/account/login" element={<CustomerAuth />} />
         <Route path="/account" element={<Account />} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
