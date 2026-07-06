@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
-import { resolveSiteContentImageUrl, resolveSiteContentImageUrls } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync } from "@/lib/siteContentImages";
 
 
 interface Product {
