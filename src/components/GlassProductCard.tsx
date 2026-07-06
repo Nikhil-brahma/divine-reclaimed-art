@@ -46,6 +46,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   const [media, setMedia] = useState<ProductMedia | null>(mediaProp ?? null);
   const [spinFrame, setSpinFrame] = useState(0);
   const [spinning, setSpinning] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const addItem = useStoreCart((s) => s.addItem);
 
   // Fetch enhanced media if not provided
