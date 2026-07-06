@@ -11,7 +11,10 @@ const corsHeaders = {
 };
 
 const safeImagePath = (url: URL) => {
-  const directPath = url.pathname.split("/functions/v1/public-site-content/")[1] || "";
+  const marker = "/public-site-content/";
+  const directPath = url.pathname.includes(marker)
+    ? url.pathname.split(marker)[1]
+    : url.pathname.replace(/^\/+/, "");
   const queryPath = url.searchParams.get("path") || "";
   const path = decodeURIComponent(directPath || queryPath).replace(/^\/+/, "");
 
