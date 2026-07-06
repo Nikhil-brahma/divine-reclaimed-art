@@ -74,8 +74,18 @@ const NativeCollections = () => {
         </motion.div>
 
         {loading ? (
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="rounded-2xl overflow-hidden border border-white/60 bg-white/40 backdrop-blur-xl">
+                <div className="aspect-[3/4] animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60" />
+                <div className="p-5 space-y-3">
+                  <div className="h-3 w-16 bg-muted/60 rounded animate-pulse" />
+                  <div className="h-5 w-3/4 bg-muted/60 rounded animate-pulse" />
+                  <div className="h-3 w-full bg-muted/40 rounded animate-pulse" />
+                  <div className="h-4 w-20 bg-muted/60 rounded animate-pulse mt-4" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-20 max-w-md mx-auto rounded-2xl glass-card p-12">
