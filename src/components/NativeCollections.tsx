@@ -53,6 +53,7 @@ const NativeCollections = () => {
   useEffect(() => {
     if (!products[0]) return;
     let cancelled = false;
+    setFeaturedImage(products[0].images?.[0] || "/placeholder.svg");
     resolveSiteContentImageUrl(products[0].images?.[0]).then((url) => {
       if (!cancelled) setFeaturedImage(url);
     });
