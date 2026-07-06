@@ -183,9 +183,9 @@ const ProductDetail = () => {
 
               {variants.length > 0 && (
                 <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-4">
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
+                  <h2 className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
                     {product.parent_product_id ? "Other editions of this design" : "Also available"}
-                  </p>
+                  </h2>
                   <div className="flex flex-wrap gap-3">
                     {displayVariants.map((v) => (
                       <Link
@@ -214,9 +214,9 @@ const ProductDetail = () => {
               {/* Quantity + CTA */}
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-2 border border-border/60 rounded-full px-2 py-1">
-                  <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-7 h-7 rounded-full hover:bg-muted">−</button>
-                  <span className="w-8 text-center font-body text-sm">{qty}</span>
-                  <button onClick={() => setQty(Math.min(product.stock || 99, qty + 1))} className="w-7 h-7 rounded-full hover:bg-muted">+</button>
+                  <button onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity" className="w-7 h-7 rounded-full hover:bg-muted">−</button>
+                  <span className="w-8 text-center font-body text-sm" aria-live="polite" aria-label={`Quantity: ${qty}`}>{qty}</span>
+                  <button onClick={() => setQty(Math.min(product.stock || 99, qty + 1))} aria-label="Increase quantity" className="w-7 h-7 rounded-full hover:bg-muted">+</button>
                 </div>
                 <span className="font-body text-[11px] text-muted-foreground">
                   {soldOut ? "Sold out" : `${product.stock} in stock`}
