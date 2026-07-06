@@ -158,6 +158,8 @@ const ProductDetail = () => {
                 <div className="flex gap-3 overflow-x-auto pb-1">
                   {images.map((img, i) => (
                     <button key={i} onClick={() => setSelectedImage(i)}
+                            aria-label={`View image ${i + 1} of ${product.title}`}
+                            aria-pressed={i === selectedImage}
                             className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${i === selectedImage ? "border-primary" : "border-transparent hover:border-primary/40"}`}>
                       <img src={displayImages[i] || img} alt={`${product.title} — view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                     </button>
