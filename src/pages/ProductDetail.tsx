@@ -68,6 +68,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const sourceImages = product?.images?.length ? product.images : ["/placeholder.svg"];
     let cancelled = false;
+    setDisplayImages(sourceImages);
     resolveSiteContentImageUrls(sourceImages).then((urls) => {
       if (!cancelled) setDisplayImages(urls);
     });

@@ -48,7 +48,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   const [spinFrame, setSpinFrame] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const [displayHeroImg, setDisplayHeroImg] = useState("/placeholder.svg");
+  const [displayHeroImg, setDisplayHeroImg] = useState(product.images?.[0] || "/placeholder.svg");
   const [displaySpinFrames, setDisplaySpinFrames] = useState<string[]>([]);
   const addItem = useStoreCart((s) => s.addItem);
 
@@ -76,6 +76,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   useEffect(() => {
     let cancelled = false;
     setImgLoaded(false);
+    setDisplayHeroImg(heroImg);
     resolveSiteContentImageUrl(heroImg).then((url) => {
       if (!cancelled) setDisplayHeroImg(url);
     });
