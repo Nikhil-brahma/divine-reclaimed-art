@@ -4,6 +4,7 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
+import { resolveSiteContentImageUrl } from "@/lib/siteContentImages";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -30,6 +31,7 @@ const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [featuredImage, setFeaturedImage] = useState("/placeholder.svg");
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -47,6 +49,15 @@ const NativeCollections = () => {
       setLoading(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (!products[0]) return;
+    let cancelled = false;
+    resolveSiteContentImageUrl(products[0].images?.[0]).then((url) => {
+      if (!cancelled) setFeaturedImage(url);
+    });
+    return () => { cancelled = true; };
+  }, [products]);
 
   return (
     <section ref={sectionRef} id="collections" className="relative py-32 bg-background overflow-hidden">
@@ -108,7 +119,7 @@ const NativeCollections = () => {
               >
                 <Link to={`/product/${products[0].handle}`} className="aspect-[4/5] md:aspect-auto overflow-hidden relative">
                   <motion.img
-                    src={products[0].images?.[0] || "/placeholder.svg"}
+                    src={featuredImage}
                     alt={products[0].title}
                     className="w-full h-full object-cover"
                     whileHover={{ scale: 1.08 }}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveSiteContentImageUrl, resolveSiteContentImageUrls } from "@/lib/siteContentImages";
 
 export interface GlassProduct {
   id: string;
@@ -47,6 +48,8 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
   const [spinFrame, setSpinFrame] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [displayHeroImg, setDisplayHeroImg] = useState("/placeholder.svg");
+  const [displaySpinFrames, setDisplaySpinFrames] = useState<string[]>([]);
   const addItem = useStoreCart((s) => s.addItem);
 
   // Fetch enhanced media if not provided
@@ -66,9 +69,21 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
   const heroImg = media?.hero_url || product.images?.[0] || "/placeholder.svg";
   const spinFrames = media?.spin_urls || [];
-  const currentImg = spinning && spinFrames.length > 1 ? spinFrames[spinFrame % spinFrames.length] : heroImg;
+  const currentImg = spinning && displaySpinFrames.length > 1 ? displaySpinFrames[spinFrame % displaySpinFrames.length] : displayHeroImg;
   const soldOut = product.stock <= 0;
   const aura = AURA_COLORS[product.category || "default"] || AURA_COLORS.default;
+
+  useEffect(() => {
+    let cancelled = false;
+    setImgLoaded(false);
+    resolveSiteContentImageUrl(heroImg).then((url) => {
+      if (!cancelled) setDisplayHeroImg(url);
+    });
+    resolveSiteContentImageUrls(spinFrames).then((urls) => {
+      if (!cancelled) setDisplaySpinFrames(spinFrames.length ? urls : []);
+    });
+    return () => { cancelled = true; };
+  }, [heroImg, spinFrames.join("|")]);
 
   const startSpin = () => {
     if (spinFrames.length < 2) return;
@@ -99,7 +114,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
     if (soldOut) { toast.error("Sold out"); return; }
     addItem({
       productId: product.id, handle: product.handle, title: product.title,
-      image: heroImg, price: product.price, stock: product.stock,
+      image: displayHeroImg, price: product.price, stock: product.stock,
     });
     toast.success(`${product.title} added to cart`);
   };
