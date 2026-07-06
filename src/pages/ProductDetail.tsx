@@ -183,9 +183,9 @@ const ProductDetail = () => {
 
               {variants.length > 0 && (
                 <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/5 p-4">
-                  <p className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
+                  <h2 className="font-body text-[10px] tracking-[0.3em] uppercase text-primary mb-3">
                     {product.parent_product_id ? "Other editions of this design" : "Also available"}
-                  </p>
+                  </h2>
                   <div className="flex flex-wrap gap-3">
                     {displayVariants.map((v) => (
                       <Link
