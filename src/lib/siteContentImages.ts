@@ -1,8 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
-
 const BUCKET = "site-content";
-const SIGNED_URL_TTL_SECONDS = 60 * 60 * 24 * 7;
-const signedUrlCache = new Map<string, Promise<string>>();
+const PUBLIC_OBJECT_BASE_URL = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/${BUCKET}`;
 
 const extractSiteContentPath = (src?: string | null) => {
   if (!src || src === "/placeholder.svg") return null;
@@ -37,21 +34,7 @@ const extractSiteContentPath = (src?: string | null) => {
 export const resolveSiteContentImageUrl = async (src?: string | null) => {
   const path = extractSiteContentPath(src);
   if (!path) return src || "/placeholder.svg";
-
-  if (!signedUrlCache.has(path)) {
-    signedUrlCache.set(
-      path,
-      supabase.storage
-        .from(BUCKET)
-        .createSignedUrl(path, SIGNED_URL_TTL_SECONDS)
-        .then(({ data, error }) => {
-          if (error || !data?.signedUrl) return src || "/placeholder.svg";
-          return data.signedUrl;
-        })
-    );
-  }
-
-  return signedUrlCache.get(path)!;
+  return `${PUBLIC_OBJECT_BASE_URL}/${path.split("/").map(encodeURIComponent).join("/")}`;
 };
 
 export const resolveSiteContentImageUrls = async (urls?: string[] | null) => {
