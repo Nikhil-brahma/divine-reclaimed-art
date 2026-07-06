@@ -93,7 +93,7 @@ const WhyYouDeserveSection = () => {
             for years — is waiting to become something you'll love carrying.
           </p>
           <a
-            href="#collections"
+            href="/#collections"
             className="inline-flex items-center gap-2 bg-gradient-saffron text-primary-foreground px-10 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase hover:opacity-90 transition-opacity shadow-sacred"
           >
             Browse the Collection <ArrowRight className="w-4 h-4" />
