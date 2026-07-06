@@ -50,7 +50,7 @@ const Account = () => {
   if (loading) {
     return <div className="min-h-screen bg-background"><Navbar /><div className="flex justify-center items-center h-[60vh]"><Loader2 className="animate-spin text-primary" /></div></div>;
   }
-  if (!user) return <Navigate to="/auth" replace />;
+  if (!user) return <Navigate to="/account/login" replace />;
 
   return (
     <div className="min-h-screen bg-background">
