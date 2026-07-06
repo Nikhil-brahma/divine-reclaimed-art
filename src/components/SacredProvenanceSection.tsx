@@ -99,7 +99,7 @@ const SacredProvenanceSection = () => {
                 — That's what our customers keep telling us
               </p>
               <a
-                href="#collections"
+                href="/#collections"
                 className="inline-flex items-center gap-2 bg-gradient-saffron text-primary-foreground px-8 py-3 rounded-sm font-body text-xs tracking-[0.2em] uppercase hover:opacity-90 transition-opacity"
               >
                 See for Yourself <ArrowRight className="w-4 h-4" />
