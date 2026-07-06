@@ -86,6 +86,7 @@ const StudioPage = () => {
             <span className="font-body text-[10px] uppercase tracking-[0.3em] text-primary">Sacred AI Studio · Free preview</span>
           </div>
           <h1 className="font-display text-4xl md:text-6xl text-foreground mb-4 leading-tight">
+            <span className="sr-only">AI Product Photo Studio — </span>
             One photo in.<br/>
             <span className="text-primary">A brand-grade gallery out.</span>
           </h1>
