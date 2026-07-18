@@ -33,6 +33,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [qty, setQty] = useState(1);
+  const [descExpanded, setDescExpanded] = useState(false);
   const addItem = useStoreCart((s) => s.addItem);
 
   useEffect(() => {
