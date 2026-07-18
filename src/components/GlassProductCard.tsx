@@ -159,7 +159,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
             />
             <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/30 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
 
-            <div className="absolute top-3 right-3 inline-flex items-center gap-1 backdrop-blur-md bg-white/40 border border-white/60 text-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
+            <div className="absolute top-3 right-3 inline-flex items-center gap-1 backdrop-blur-md bg-white/40 border border-white/60 text-foreground font-body text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase px-2 sm:px-3 py-1 rounded-full">
               <Sparkles size={10} className="text-primary" /> Sacred
             </div>
 
@@ -170,12 +170,12 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
             )}
 
             {soldOut && (
-              <div className="absolute top-3 left-3 bg-destructive/90 backdrop-blur text-destructive-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
+              <div className="absolute bottom-3 left-3 bg-destructive/90 backdrop-blur text-destructive-foreground font-body text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase px-2 sm:px-3 py-1 rounded-full">
                 Sold out
               </div>
             )}
             {product.compare_at_price && product.compare_at_price > product.price && !soldOut && (
-              <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur text-primary-foreground font-body text-[10px] tracking-[0.25em] uppercase px-3 py-1 rounded-full">
+              <div className="absolute bottom-3 left-3 bg-primary/90 backdrop-blur text-primary-foreground font-body text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase px-2 sm:px-3 py-1 rounded-full">
                 Save ₹{(product.compare_at_price - product.price).toLocaleString("en-IN")}
               </div>
             )}

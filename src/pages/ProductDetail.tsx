@@ -33,6 +33,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [qty, setQty] = useState(1);
+  const [descExpanded, setDescExpanded] = useState(false);
   const addItem = useStoreCart((s) => s.addItem);
 
   useEffect(() => {
@@ -169,9 +170,26 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              <p className="font-body text-muted-foreground leading-relaxed mb-6 whitespace-pre-line">
-                {product.description}
-              </p>
+              {(() => {
+                const desc = product.description || "";
+                const isLong = desc.length > 220;
+                const shown = !isLong || descExpanded ? desc : desc.slice(0, 220).trimEnd() + "…";
+                return (
+                  <div className="mb-6">
+                    <p className="font-body text-muted-foreground leading-relaxed whitespace-pre-line">
+                      {shown}
+                    </p>
+                    {isLong && (
+                      <button
+                        onClick={() => setDescExpanded((v) => !v)}
+                        className="mt-2 font-body text-xs tracking-[0.2em] uppercase text-primary hover:text-accent transition-colors"
+                      >
+                        {descExpanded ? "Read less ↑" : "Read more ↓"}
+                      </button>
+                    )}
+                  </div>
+                );
+              })()}
 
               {product.tags && product.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
