@@ -60,6 +60,7 @@ const Footer = () => {
                 { label: "Our Story", href: "/about" },
                 { label: "Process", href: "/#process" },
                 { label: "Blog", href: "/blog" },
+                { label: "Sacred Knowledge", href: "/sacred-knowledge" },
                 { label: "FAQ", href: "/#faq" },
               ].map(link => (
                 <Link key={link.label} to={link.href} className="font-body text-sm text-ivory/50 hover:text-gold transition-colors">
