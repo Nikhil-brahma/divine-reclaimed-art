@@ -63,7 +63,8 @@ const NativeCollections = () => {
     })();
   }, []);
 
-  const featuredImage = resolveSiteContentImageUrlSync(products[0]?.images?.[0]);
+  const featuredRaw = products[0]?.images?.[0];
+  const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
 
 
 
