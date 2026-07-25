@@ -144,19 +144,32 @@ const NativeCollections = () => {
                 transition={{ duration: 1 }}
                 className="grid md:grid-cols-2 gap-0 mb-14 rounded-3xl overflow-hidden glass-card shadow-sacred relative group"
               >
-                <Link to={`/product/${products[0].handle}`} className="aspect-[4/5] md:aspect-auto overflow-hidden relative">
-                  <motion.img
-                    src={featuredImage}
-                    alt={products[0].title}
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
+                <Link to={`/product/${products[0].handle}`} className="aspect-[4/5] md:aspect-[5/6] overflow-hidden relative bg-muted/40">
+                  {!featuredLoaded && (
+                    <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60 z-10" />
+                  )}
+                  <motion.div
+                    className="absolute inset-0"
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.8 }}
-                  />
+                  >
+                    <img
+                      src={featuredImage}
+                      srcSet={featuredSrcSet || undefined}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      alt={products[0].title}
+                      width={960}
+                      height={1152}
+                      onLoad={() => setFeaturedLoaded(true)}
+                      onError={() => setFeaturedLoaded(true)}
+                      className={`w-full h-full object-cover object-center ${featuredLoaded ? "opacity-100" : "opacity-0"}`}
+                      loading="eager"
+                      {...({ fetchpriority: "high" } as any)}
+                      decoding="async"
+                    />
+                  </motion.div>
 
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30 pointer-events-none" />
                 </Link>
                 <div className="flex flex-col justify-center p-8 md:p-16 relative backdrop-blur-md bg-white/30">
                   <span className="font-body text-[10px] tracking-[0.4em] uppercase text-primary mb-3 block">Featured Piece</span>
