@@ -156,7 +156,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
               alt={product.title}
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgLoaded(true)}
-              className={`w-full h-full object-contain object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+              className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
               loading={index < 4 ? "eager" : "lazy"}
               fetchPriority={index < 2 ? "high" : "auto"}
               decoding="async"
