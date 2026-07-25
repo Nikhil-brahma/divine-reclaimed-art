@@ -130,7 +130,7 @@ const NativeCollections = () => {
                   <motion.img
                     src={featuredImage}
                     alt={products[0].title}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
