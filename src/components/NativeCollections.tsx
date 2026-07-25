@@ -4,7 +4,7 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
-import { resolveSiteContentImageUrlSync } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
 
 const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
@@ -32,6 +32,7 @@ const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [mediaMap, setMediaMap] = useState<Record<string, { hero_url: string | null; angle_urls: string[]; spin_urls: string[] } | null>>({});
   const [loading, setLoading] = useState(true);
+  const [featuredLoaded, setFeaturedLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -65,6 +66,23 @@ const NativeCollections = () => {
 
   const featuredRaw = products[0]?.images?.[0];
   const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
+  const featuredSrcSet = featuredRaw ? buildSiteContentSrcSet(featuredRaw, [480, 720, 960, 1280]) : "";
+
+  // Preload the LCP featured image once known.
+  useEffect(() => {
+    if (!featuredRaw) return;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = featuredImage;
+    if (featuredSrcSet) {
+      link.setAttribute("imagesrcset", featuredSrcSet);
+      link.setAttribute("imagesizes", "(min-width: 768px) 50vw, 100vw");
+    }
+    link.setAttribute("fetchpriority", "high");
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, [featuredImage, featuredSrcSet, featuredRaw]);
 
 
 
@@ -126,19 +144,32 @@ const NativeCollections = () => {
                 transition={{ duration: 1 }}
                 className="grid md:grid-cols-2 gap-0 mb-14 rounded-3xl overflow-hidden glass-card shadow-sacred relative group"
               >
-                <Link to={`/product/${products[0].handle}`} className="aspect-[4/5] md:aspect-auto overflow-hidden relative">
-                  <motion.img
-                    src={featuredImage}
-                    alt={products[0].title}
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
+                <Link to={`/product/${products[0].handle}`} className="aspect-[4/5] md:aspect-[5/6] overflow-hidden relative bg-muted/40">
+                  {!featuredLoaded && (
+                    <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60 z-10" />
+                  )}
+                  <motion.div
+                    className="absolute inset-0"
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.8 }}
-                  />
+                  >
+                    <img
+                      src={featuredImage}
+                      srcSet={featuredSrcSet || undefined}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      alt={products[0].title}
+                      width={960}
+                      height={1152}
+                      onLoad={() => setFeaturedLoaded(true)}
+                      onError={() => setFeaturedLoaded(true)}
+                      className={`w-full h-full object-cover object-center ${featuredLoaded ? "opacity-100" : "opacity-0"}`}
+                      loading="eager"
+                      {...({ fetchpriority: "high" } as any)}
+                      decoding="async"
+                    />
+                  </motion.div>
 
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30 pointer-events-none" />
                 </Link>
                 <div className="flex flex-col justify-center p-8 md:p-16 relative backdrop-blur-md bg-white/30">
                   <span className="font-body text-[10px] tracking-[0.4em] uppercase text-primary mb-3 block">Featured Piece</span>
