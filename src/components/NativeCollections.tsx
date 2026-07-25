@@ -32,6 +32,7 @@ const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [mediaMap, setMediaMap] = useState<Record<string, { hero_url: string | null; angle_urls: string[]; spin_urls: string[] } | null>>({});
   const [loading, setLoading] = useState(true);
+  const [featuredLoaded, setFeaturedLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
@@ -65,6 +66,23 @@ const NativeCollections = () => {
 
   const featuredRaw = products[0]?.images?.[0];
   const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
+  const featuredSrcSet = featuredRaw ? buildSiteContentSrcSet(featuredRaw, [480, 720, 960, 1280]) : "";
+
+  // Preload the LCP featured image once known.
+  useEffect(() => {
+    if (!featuredRaw) return;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = featuredImage;
+    if (featuredSrcSet) {
+      link.setAttribute("imagesrcset", featuredSrcSet);
+      link.setAttribute("imagesizes", "(min-width: 768px) 50vw, 100vw");
+    }
+    link.setAttribute("fetchpriority", "high");
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, [featuredImage, featuredSrcSet, featuredRaw]);
 
 
 
