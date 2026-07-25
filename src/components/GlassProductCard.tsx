@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
 
 export interface GlassProduct {
   id: string;
@@ -67,8 +67,9 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
   const heroImg = media?.hero_url || product.images?.[0] || "/placeholder.svg";
   const spinFrames = media?.spin_urls || [];
-  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg);
-  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames) : [];
+  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg, { width: 720, quality: 70 });
+  const heroSrcSet = buildSiteContentSrcSet(heroImg);
+  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames, { width: 720, quality: 65 }) : [];
   const currentImg = spinning && displaySpinFrames.length > 1 ? displaySpinFrames[spinFrame % displaySpinFrames.length] : displayHeroImg;
   const soldOut = product.stock <= 0;
   const aura = AURA_COLORS[product.category || "default"] || AURA_COLORS.default;
@@ -150,13 +151,17 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
             )}
             <img
               src={currentImg}
+              srcSet={!spinning ? heroSrcSet : undefined}
+              sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, 48vw"
               alt={product.title}
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgLoaded(true)}
               className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-              loading="lazy"
+              loading={index < 4 ? "eager" : "lazy"}
+              fetchPriority={index < 2 ? "high" : "auto"}
               decoding="async"
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/30 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
 
             <div className="absolute top-3 right-3 inline-flex items-center gap-1 backdrop-blur-md bg-white/40 border border-white/60 text-foreground font-body text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase px-2 sm:px-3 py-1 rounded-full">

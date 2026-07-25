@@ -63,7 +63,8 @@ const NativeCollections = () => {
     })();
   }, []);
 
-  const featuredImage = resolveSiteContentImageUrlSync(products[0]?.images?.[0]);
+  const featuredRaw = products[0]?.images?.[0];
+  const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
 
 
 
@@ -130,9 +131,13 @@ const NativeCollections = () => {
                     src={featuredImage}
                     alt={products[0].title}
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.8 }}
                   />
+
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/30" />
                 </Link>
                 <div className="flex flex-col justify-center p-8 md:p-16 relative backdrop-blur-md bg-white/30">
