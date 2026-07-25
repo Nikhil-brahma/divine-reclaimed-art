@@ -145,7 +145,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
         />
 
         <Link to={`/product/${product.handle}`} className="block">
-          <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative flex items-center justify-center">
+          <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative">
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60" />
             )}
@@ -156,7 +156,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
               alt={product.title}
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgLoaded(true)}
-              className={`w-full h-full object-contain object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+              className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
               loading={index < 4 ? "eager" : "lazy"}
               fetchPriority={index < 2 ? "high" : "auto"}
               decoding="async"
