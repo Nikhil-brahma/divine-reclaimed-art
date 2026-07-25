@@ -17,6 +17,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Shipping from "./pages/Shipping";
 import Studio from "./pages/Studio";
+import SacredKnowledge from "./pages/SacredKnowledge";
 
 import AuthPage from "./pages/Auth";
 import CustomerAuth from "./pages/CustomerAuth";
@@ -51,6 +52,7 @@ const AppContent = () => {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/shipping" element={<Shipping />} />
+        <Route path="/sacred-knowledge" element={<SacredKnowledge />} />
         <Route path="/studio" element={<Studio />} />
         <Route path="/seo-dashboard" element={<Navigate to="/admin" replace />} />
         <Route path="/admin" element={<Admin />} />
