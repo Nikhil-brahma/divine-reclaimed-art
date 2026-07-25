@@ -145,7 +145,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
         />
 
         <Link to={`/product/${product.handle}`} className="block">
-          <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative flex items-center justify-center">
+          <div className="aspect-[3/4] overflow-hidden bg-muted/40 relative">
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60" />
             )}
