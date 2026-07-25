@@ -151,13 +151,17 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
             )}
             <img
               src={currentImg}
+              srcSet={!spinning ? heroSrcSet : undefined}
+              sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, 48vw"
               alt={product.title}
               onLoad={() => setImgLoaded(true)}
               onError={() => setImgLoaded(true)}
               className={`w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-              loading="lazy"
+              loading={index < 4 ? "eager" : "lazy"}
+              fetchPriority={index < 2 ? "high" : "auto"}
               decoding="async"
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-temple-dark/30 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
 
             <div className="absolute top-3 right-3 inline-flex items-center gap-1 backdrop-blur-md bg-white/40 border border-white/60 text-foreground font-body text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase px-2 sm:px-3 py-1 rounded-full">
