@@ -67,8 +67,9 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
   const heroImg = media?.hero_url || product.images?.[0] || "/placeholder.svg";
   const spinFrames = media?.spin_urls || [];
-  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg);
-  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames) : [];
+  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg, { width: 720, quality: 70 });
+  const heroSrcSet = buildSiteContentSrcSet(heroImg);
+  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames, { width: 720, quality: 65 }) : [];
   const currentImg = spinning && displaySpinFrames.length > 1 ? displaySpinFrames[spinFrame % displaySpinFrames.length] : displayHeroImg;
   const soldOut = product.stock <= 0;
   const aura = AURA_COLORS[product.category || "default"] || AURA_COLORS.default;
