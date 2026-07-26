@@ -99,7 +99,6 @@ const HeroSection = () => {
           />
 
           <h1 className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
-            <span className="sr-only">Punarvsu — Sacred Bags Upcycled from Temple Textiles. </span>
             <TextReveal
               text="Because Devotion"
               as="span"
@@ -114,7 +113,11 @@ const HeroSection = () => {
               delay={0.9}
               stagger={0.05}
             />
+            <span className="block font-body text-sm sm:text-base md:text-lg tracking-[0.2em] uppercase text-ivory/70 mt-6 not-italic font-normal">
+              Punarvsu — Sacred Bags Upcycled from Temple Textiles
+            </span>
           </h1>
+
 
           <motion.p
             initial={{ opacity: 0 }}
