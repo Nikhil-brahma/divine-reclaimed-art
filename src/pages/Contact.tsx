@@ -85,10 +85,12 @@ const Contact = () => {
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
+                    <label htmlFor="contact-name" className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
                       Your Name
                     </label>
                     <input
+                      id="contact-name"
+                      name="name"
                       type="text"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -97,10 +99,12 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <label className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
+                    <label htmlFor="contact-email" className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
                       Email Address
                     </label>
                     <input
+                      id="contact-email"
+                      name="email"
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -109,10 +113,12 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <label className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
+                    <label htmlFor="contact-message" className="font-body text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2 block">
                       Message
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       rows={5}
