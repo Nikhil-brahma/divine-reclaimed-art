@@ -18,9 +18,11 @@ interface SEOProps {
 }
 
 const SITE_NAME = "Punarvsu";
-const DEFAULT_TITLE = "Punarvsu — Sacred Temple Textile Bags from Delhi";
+const DEFAULT_TITLE = "Potli Bags Online | Shagun, Bridal & Wedding Gift Bags – Punarvsu";
 const DEFAULT_DESCRIPTION =
-  "Handcrafted bags from upcycled sacred temple textiles, made by Delhi artisans. Carry blessings, wear heritage. Free shipping above ₹999.";
+  "Shop handcrafted potli bags online for shagun, bridal ceremonies & wedding gifting. Made from sacred Bhagwan Vastra by women artisans in Delhi. Order now.";
+const DEFAULT_KEYWORDS =
+  "potli bags online, potli bags for women, designer potli bags, shagun potli bags, shagun gift bag, bridal potli bags, bridal clutch bag, wedding return gift bags, wedding favor bags, pooja bags, mandir bags, temple bags, recycled cotton tote bag, eco friendly tote bags, bhagwan vastra";
 const DEFAULT_IMAGE = "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";
 
 
@@ -65,7 +67,10 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
     if (t.length <= max) return t;
     return `${t.slice(0, max - 1).trimEnd()}…`;
   };
-  const finalTitle = override.title ? (override.title.length > 60 ? override.title.slice(0, 59).trimEnd() + "…" : override.title) : buildTitle(title);
+  const TITLE_MAX = 70;
+  const finalTitle = override.title
+    ? (override.title.length > TITLE_MAX ? override.title.slice(0, TITLE_MAX - 1).trimEnd() + "…" : override.title)
+    : buildTitle(title);
   const desc = override.description || description || DEFAULT_DESCRIPTION;
   const img = override.image || image || DEFAULT_IMAGE;
   const ogTitle = override.og_title || finalTitle;
@@ -88,7 +93,7 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
 
     setMeta("description", desc);
     setMeta("robots", noindex ? "noindex, nofollow" : "index, follow");
-    if (override.keywords) setMeta("keywords", override.keywords);
+    setMeta("keywords", override.keywords || DEFAULT_KEYWORDS);
 
     setMeta("og:title", ogTitle, true);
     setMeta("og:description", ogDesc, true);

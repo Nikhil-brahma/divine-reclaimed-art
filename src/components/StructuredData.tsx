@@ -108,8 +108,49 @@ const faqSchema = {
         text: "Every purchase keeps beautiful fabric out of landfills (3,200+ kg saved so far), supports artisan livelihoods through Sampurna NGO, and helps preserve a tradition that might otherwise be forgotten.",
       },
     },
+    {
+      "@type": "Question",
+      name: "Can I order potli bags in bulk for wedding return gifts?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Punarvsu offers bulk orders for wedding return gift bags, shagun potlis, and corporate gifting. Contact punarvsu.com@gmail.com or call 09220464425 for bulk pricing.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you offer customisation on potli bags?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes — custom colours, embroidery, and packaging for weddings, corporate gifting, and festive events. Minimum order is 25 bags. Contact punarvsu.com@gmail.com for details.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What occasions are potli bags suitable for?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Weddings, shagun ceremonies, Diwali, Navratri, Karva Chauth, haldi, mehndi, bridal gifting, pooja, and corporate gifting.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Are Punarvsu recycled cotton tote bags washable?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Spot cleaning is recommended. The sacred silk, velvet, or brocade fabric is best preserved with gentle care away from direct sunlight.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How are Punarvsu bags different from other potli bags online?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is truly unique — fabric, pattern, and embroidery are one-of-a-kind. Each comes with a Certificate of Sanctity.",
+      },
+    },
   ],
 };
+
 
 // Speakable schema for AI voice assistants (AEO)
 const speakableSchema = {

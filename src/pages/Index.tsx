@@ -11,6 +11,10 @@ import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
+import UspStrip from "@/components/UspStrip";
+import ShopByOccasion from "@/components/ShopByOccasion";
+import BhagwanVastraStory from "@/components/BhagwanVastraStory";
+import SeoContentBlock from "@/components/SeoContentBlock";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
 
@@ -36,6 +40,10 @@ const Index = () => {
       <main>
         {/* 1. Hook */}
         <HeroSection />
+        <UspStrip />
+
+        {/* 1b. Shop by Occasion — category entry points */}
+        <ShopByOccasion />
         <SectionDivider variant="gold" />
 
         {/* 2. Product — buy now */}
@@ -52,12 +60,19 @@ const Index = () => {
         </div>
         <SectionDivider variant="sacred" />
 
-        {/* 5. Scarcity — one-of-a-kind */}
+        {/* 5. Brand story — Bhagwan Vastra */}
+        <BhagwanVastraStory />
+        <SectionDivider variant="sacred" />
+
+        {/* 6. Scarcity — one-of-a-kind */}
         <UrgencySection />
         <SectionDivider variant="gold" />
 
-        {/* 6. Objection handling */}
+        {/* 7. Objection handling */}
         <FAQSection />
+
+        {/* 8. SEO content block */}
+        <SeoContentBlock />
       </main>
       <Footer />
     </div>

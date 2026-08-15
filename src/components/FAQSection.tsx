@@ -37,8 +37,24 @@ const faqs = [
     a: "In a few real ways: you're keeping beautiful fabric out of landfills (we've saved 3,200+ kg so far), supporting artisan livelihoods through Sampurna NGO, and helping preserve a tradition that might otherwise be forgotten. It's fashion that does something good — without making a big deal about it.",
   },
   {
-    q: "Can I order in bulk — for gifts, weddings, or corporate events?",
-    a: "Yes! Lots of people order Punarvsu pieces as Diwali gifts, wedding favours, or corporate presents. We can customise packaging and add personal messages too. Just reach out at punarvsu.com@gmail.com or call 09220464425 and we'll sort it out.",
+    q: "Can I order potli bags in bulk for wedding return gifts?",
+    a: "Yes! Lots of people order Punarvsu potli bags as wedding return gifts, shagun potlis, Diwali gifts, or corporate presents. We can customise packaging and add personal messages too. Just reach out at punarvsu.com@gmail.com or call 09220464425 for bulk pricing.",
+  },
+  {
+    q: "Do you offer customisation on potli bags?",
+    a: "Yes — custom colours, embroidery, and packaging for weddings, corporate gifting, and festive events. Minimum order is 25 bags. Write to punarvsu.com@gmail.com and we'll work out the details with you.",
+  },
+  {
+    q: "What occasions are potli bags suitable for?",
+    a: "Weddings, shagun ceremonies, Diwali, Navratri, Karva Chauth, haldi, mehndi, bridal gifting, pooja, and corporate gifting — our bridal potli bags and shagun gift bags are made for exactly these moments.",
+  },
+  {
+    q: "Are your recycled cotton tote bags washable?",
+    a: "Spot cleaning is recommended. The sacred silk, velvet, or brocade fabric is best preserved with gentle care, away from direct sunlight.",
+  },
+  {
+    q: "How are Punarvsu bags different from other potli bags online?",
+    a: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is truly unique — fabric, pattern, and embroidery are one-of-a-kind — and each one comes with a Certificate of Sanctity.",
   },
 ];
 
