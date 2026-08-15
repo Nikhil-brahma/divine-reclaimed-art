@@ -40,6 +40,10 @@ const Index = () => {
       <main>
         {/* 1. Hook */}
         <HeroSection />
+        <UspStrip />
+
+        {/* 1b. Shop by Occasion — category entry points */}
+        <ShopByOccasion />
         <SectionDivider variant="gold" />
 
         {/* 2. Product — buy now */}
