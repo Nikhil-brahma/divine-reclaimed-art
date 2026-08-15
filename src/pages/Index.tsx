@@ -11,6 +11,10 @@ import StructuredData from "@/components/StructuredData";
 import SectionDivider from "@/components/SectionDivider";
 import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
+import UspStrip from "@/components/UspStrip";
+import ShopByOccasion from "@/components/ShopByOccasion";
+import BhagwanVastraStory from "@/components/BhagwanVastraStory";
+import SeoContentBlock from "@/components/SeoContentBlock";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
 
