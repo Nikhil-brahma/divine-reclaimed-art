@@ -90,7 +90,7 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
 
     setMeta("description", desc);
     setMeta("robots", noindex ? "noindex, nofollow" : "index, follow");
-    if (override.keywords) setMeta("keywords", override.keywords);
+    setMeta("keywords", override.keywords || DEFAULT_KEYWORDS);
 
     setMeta("og:title", ogTitle, true);
     setMeta("og:description", ogDesc, true);
