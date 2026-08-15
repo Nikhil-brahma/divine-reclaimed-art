@@ -1,53 +1,51 @@
-## Goal
+# Homepage SEO Report — What We Can Implement
 
-Stop the "zoom-in / reframe" flash on the homepage grid and featured card, and make above-the-fold product images appear as fast as possible — without changing how images are cropped once loaded.
+Of the 20 items in the audit, 17 can be implemented directly in the app. 2 are already done, and 1 needs a decision from you (see below).
 
-## Current state (verified in code)
+## Already correct (no work needed)
+- OG image is HTTPS, canonical tag correct, geo tags present (SEOHead already sets geo.region, geo.placename, geo.position, ICBM).
+- Organization schema and homepage FAQPage schema already exist in `StructuredData.tsx` — the crawler couldn't see them because they render client-side. Nothing missing, but see "Technical note" below.
+- Sitemap.xml exists and is generated from live data.
+- H1 exists on the homepage hero (crawler couldn't verify it client-side).
 
-- `GlassProductCard` already uses `aspect-[3/4]`, `object-cover`, a shimmer skeleton, `srcSet`, eager loading + `fetchPriority` for first cards. The flash comes from: (a) `group-hover:scale-105` is on the same `<img>` that fades in, so the very first paint can briefly appear scaled, (b) the skeleton and image share the same layer but the image starts `opacity-0` then hard-swaps to `opacity-100` with a 700ms transition — the eye reads that as "zooming in", (c) `fetchPriority` (camelCase) triggers a React DOM warning on the plain `<img>` (framer's motion.img accepts it; native `<img>` needs `fetchpriority`).
-- `NativeCollections` featured hero uses `aspect-[4/5] md:aspect-auto` — on desktop the container has no aspect ratio, so the image defines the height and any late size change reflows/rescales. It also has no skeleton and no `srcSet`.
-- No `<link rel="preload">` for the first product image exists anywhere.
-- `siteContentImages.ts` already supports width/quality transforms and srcSet; nothing to add there.
+## 1. Meta / social tags (Today items)
+Update the homepage defaults in `SEOHead.tsx`:
+- Title: `Potli Bags Online | Shagun, Bridal & Wedding Gift Bags – Punarvsu`
+- Meta description: `Shop handcrafted potli bags online for shagun, bridal ceremonies & wedding gifting. Made from sacred Bhagwan Vastra by women artisans in Delhi. Order now.`
+- og:title and twitter:title = same as title.
+- og:description and twitter:description = same as description (fixes the 55-char thin Twitter description).
+- Meta keywords updated to the commercial keyword clusters (potli bags online, shagun potli bags, bridal potli bags, wedding return gift bags, pooja bags, recycled cotton tote bags).
 
-## What to change
+## 2. Homepage H1 + hero copy
+- Rewrite the hero H1 to `Handcrafted Potli Bags Online — Shagun, Bridal & Wedding Gifting`, keeping the existing poetic line as a styled sub-line so the design and reverent tone are preserved.
+- Add the audit's hero paragraph (Bhagwan Vastra / Rohini artisans / shagun, bridal, wedding return gifting) below the H1, in brand voice.
 
-### 1. Kill the "zoom" flash on `GlassProductCard`
+## 3. New "Shop by Occasion" section (H2 + 4 category tiles)
+New section placed right after the hero, before the collection grid, with H3 tiles:
+- Bridal Potli Bags & Wedding Clutches
+- Shagun & Wedding Return Gift Bags
+- Pooja & Temple Bags
+- Eco-Friendly & Recycled Cotton Tote Bags
 
-- Wrap the `<img>` in an inner `<div>` that carries the `group-hover:scale-105` transform, so hover-zoom applies to a stable container instead of the fading image itself.
-- Replace the 700ms `opacity` transition on the image with an instant reveal (`opacity-100` as soon as `onLoad` fires). Keep the skeleton visible underneath until then — that gives a clean cross-fade feel without the image itself animating scale.
-- Set explicit `width` and `height` attributes on the `<img>` (matching the 3:4 ratio, e.g. `width={600} height={800}`) so the browser reserves the exact box before bytes arrive.
-- Fix the React warning: pass `fetchpriority` (lowercase) as a spread attribute, or drop it and rely on `loading="eager"` for the first cards.
+Each tile gets the audit's description and links into the collection. Note: the store currently has no category filter on a `/products` route — tiles will link to `/#collections` with a category preselected, unless you'd rather I build real filtered collection pages (bigger job, see question).
 
-### 2. Give the featured hero a fixed frame
+## 4. USP strip
+4-icon trust strip below the hero: Sacred Origin · Handstitched · Eco-Upcycled · Free Shipping above ₹999.
 
-- Change the featured `<Link>` container to `aspect-[4/5] md:aspect-[5/6]` (or a similar fixed desktop ratio) so the image box has a reserved size on every breakpoint. No more "image defines height".
-- Add a skeleton layer (same shimmer as the grid) behind the featured image and hide it on `onLoad`.
-- Add `width`/`height` attributes on the featured `<img>` and a `srcSet` via `buildSiteContentSrcSet` with `sizes="(min-width: 768px) 50vw, 100vw"`.
-- Move the `whileHover={{ scale: 1.08 }}` to a wrapper `motion.div`, not the image itself, so the initial paint never renders at 1.08x.
+## 5. "The Story Behind Bhagwan Vastra" H2 block
+Short brand-story section on the homepage (condensed from the About page content) so the term appears in body copy, linking to /about for the full story.
 
-### 3. Preload the LCP product image
+## 6. Homepage FAQ — merge in the 7 audit questions
+The homepage FAQ already has 8 questions. I'll fold in the audit's 7 (bulk orders, customisation minimum 25, occasions list, washability, "how are you different") without duplicating what's already there, and keep the H2 as "Frequently Asked Questions". FAQPage JSON-LD will be regenerated from the final list so schema and visible copy match.
 
-- In `NativeCollections`, once `products[0]` is known, inject a `<link rel="preload" as="image" href={featuredImage} imagesrcset={...} imagesizes="(min-width:768px) 50vw, 100vw" fetchpriority="high">` via a small `useEffect` that appends to `document.head` and cleans up on unmount / product change.
-- Keep `loading="eager"` + `fetchpriority="high"` on the featured `<img>` and the first two grid cards.
+## 7. SEO footer copy block
+~250-word keyword-rich block above the footer with the "Potli Bags for Every Sacred Occasion" heading and the four sub-paragraphs, plus internal links to bridal / shagun / pooja / eco tiles, sacred-knowledge, blog and about.
 
-### 4. Per-breakpoint `object-fit` tuning
+## What I will NOT copy verbatim
+- The audit says "Free shipping above Rs. 2,999" in two places. Your live threshold is ₹999 — I'll use ₹999 everywhere.
+- Phone/email in the FAQ answers will use your existing official contact details.
 
-- Product photos are shot upright (3:4-ish), so `object-cover` + `object-center` is correct on mobile and tablet.
-- On very wide desktop cards (`xl:grid-cols-4`), the crop can clip the tassel. Add `xl:object-[center_30%]` on the grid image so the top of the bag stays in frame at wider breakpoints. Featured hero stays `object-cover object-center`.
-- No change to product detail page (already correct).
+## Technical note
+The auditor's "schema missing / content not readable" findings are a limitation of server-side crawling a client-rendered React app, not a code fault. Google renders JS and does see them. If crawler-visible HTML matters to you long-term, the real fix is prerendering the homepage — that's a separate, larger change and is not part of this plan.
 
-## Technical details
-
-Files touched:
-
-- `src/components/GlassProductCard.tsx` — wrap img in scale container; add explicit width/height; drop opacity transition; fix `fetchpriority` casing; add `xl:object-[center_30%]`.
-- `src/components/NativeCollections.tsx` — fixed aspect ratio on featured link; add skeleton; add `srcSet` + width/height on featured img; inject preload link for `featuredImage`.
-- No changes to `src/lib/siteContentImages.ts`, DB, or routing.
-
-Non-goals: no visual redesign, no crop change on already-loaded images, no new dependency, no backend work.
-
-## Verification
-
-- Reload the homepage on desktop and mobile with cache disabled — the product frames should appear at their final size instantly (shimmer visible, no scale/reframe), then the image cross-fades in place.
-- DevTools → Network: the featured image request starts in the first wave (preload) with `priority: High`.
-- Console: the `fetchPriority` React warning is gone.
+Files touched: `src/components/SEOHead.tsx`, `src/components/HeroSection.tsx`, `src/components/FAQSection.tsx`, `src/components/StructuredData.tsx`, `src/pages/Index.tsx`, plus two new components (`ShopByOccasion.tsx`, `SeoContentBlock.tsx`). No backend or database changes.
