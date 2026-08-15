@@ -114,9 +114,23 @@ const HeroSection = () => {
               stagger={0.05}
             />
             <span className="block font-body text-sm sm:text-base md:text-lg tracking-[0.2em] uppercase text-ivory/70 mt-6 not-italic font-normal">
-              Punarvsu — Sacred Bags Upcycled from Temple Textiles
+              Handcrafted Potli Bags Online — Shagun, Bridal &amp; Wedding Gifting
             </span>
           </h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.6 }}
+            className="hero-description font-body text-sm md:text-base text-ivory/60 max-w-3xl mx-auto mb-6 leading-relaxed"
+          >
+            Every Punarvsu potli bag begins with Bhagwan Vastra — sacred fabric that once
+            adorned the idols at temples across Delhi. Transformed by the hands of women
+            artisans in Rohini, each bag carries a blessing no factory can replicate.
+            Whether you're gifting at a shagun ceremony, completing a bridal trousseau, or
+            wrapping a wedding return gift, our potli bags for women bring soul to every occasion.
+          </motion.p>
+
 
 
           <motion.p
