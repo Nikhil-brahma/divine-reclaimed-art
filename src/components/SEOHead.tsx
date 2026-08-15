@@ -67,7 +67,10 @@ const SEOHead = ({ title, description, canonical, type = "website", image, noind
     if (t.length <= max) return t;
     return `${t.slice(0, max - 1).trimEnd()}…`;
   };
-  const finalTitle = override.title ? (override.title.length > 60 ? override.title.slice(0, 59).trimEnd() + "…" : override.title) : buildTitle(title);
+  const TITLE_MAX = 70;
+  const finalTitle = override.title
+    ? (override.title.length > TITLE_MAX ? override.title.slice(0, TITLE_MAX - 1).trimEnd() + "…" : override.title)
+    : buildTitle(title);
   const desc = override.description || description || DEFAULT_DESCRIPTION;
   const img = override.image || image || DEFAULT_IMAGE;
   const ogTitle = override.og_title || finalTitle;
