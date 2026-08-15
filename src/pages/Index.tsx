@@ -60,12 +60,19 @@ const Index = () => {
         </div>
         <SectionDivider variant="sacred" />
 
-        {/* 5. Scarcity — one-of-a-kind */}
+        {/* 5. Brand story — Bhagwan Vastra */}
+        <BhagwanVastraStory />
+        <SectionDivider variant="sacred" />
+
+        {/* 6. Scarcity — one-of-a-kind */}
         <UrgencySection />
         <SectionDivider variant="gold" />
 
-        {/* 6. Objection handling */}
+        {/* 7. Objection handling */}
         <FAQSection />
+
+        {/* 8. SEO content block */}
+        <SeoContentBlock />
       </main>
       <Footer />
     </div>
