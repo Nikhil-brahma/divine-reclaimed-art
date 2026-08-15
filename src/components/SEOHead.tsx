@@ -18,9 +18,11 @@ interface SEOProps {
 }
 
 const SITE_NAME = "Punarvsu";
-const DEFAULT_TITLE = "Punarvsu — Sacred Temple Textile Bags from Delhi";
+const DEFAULT_TITLE = "Potli Bags Online | Shagun, Bridal & Wedding Gift Bags – Punarvsu";
 const DEFAULT_DESCRIPTION =
-  "Handcrafted bags from upcycled sacred temple textiles, made by Delhi artisans. Carry blessings, wear heritage. Free shipping above ₹999.";
+  "Shop handcrafted potli bags online for shagun, bridal ceremonies & wedding gifting. Made from sacred Bhagwan Vastra by women artisans in Delhi. Order now.";
+const DEFAULT_KEYWORDS =
+  "potli bags online, potli bags for women, designer potli bags, shagun potli bags, shagun gift bag, bridal potli bags, bridal clutch bag, wedding return gift bags, wedding favor bags, pooja bags, mandir bags, temple bags, recycled cotton tote bag, eco friendly tote bags, bhagwan vastra";
 const DEFAULT_IMAGE = "https://punarvsu.com/lovable-uploads/552a4819-fe43-46cc-876c-80489ab608d6.png";
 
 
