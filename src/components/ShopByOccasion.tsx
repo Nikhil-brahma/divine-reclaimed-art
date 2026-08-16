@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Gem, Gift, Flame, Leaf } from "lucide-react";
 
 const tiles = [
