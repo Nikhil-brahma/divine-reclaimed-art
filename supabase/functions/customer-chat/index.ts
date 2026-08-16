@@ -5,78 +5,33 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SHOPIFY_STORE_PERMANENT_DOMAIN = "str4c2-32.myshopify.com";
-const SHOPIFY_API_VERSION = "2025-07";
-const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-
 async function fetchLiveProducts(): Promise<string> {
-  const SHOPIFY_STOREFRONT_TOKEN = Deno.env.get("SHOPIFY_STOREFRONT_ACCESS_TOKEN");
-  if (!SHOPIFY_STOREFRONT_TOKEN) {
-    console.error("SHOPIFY_STOREFRONT_ACCESS_TOKEN not set");
-    return "Products are currently unavailable. Direct customers to the website.";
-  }
+  const url = Deno.env.get("SUPABASE_URL");
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY");
+  if (!url || !key) return "Products are currently unavailable. Direct customers to the website.";
 
   try {
-    const query = `{
-      products(first: 20) {
-        edges {
-          node {
-            title
-            handle
-            description
-            availableForSale
-            priceRange {
-              minVariantPrice { amount currencyCode }
-            }
-            variants(first: 5) {
-              edges {
-                node {
-                  title
-                  availableForSale
-                  price { amount currencyCode }
-                }
-              }
-            }
-          }
-        }
-      }
-    }`;
-
-    const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
-      },
-      body: JSON.stringify({ query }),
-    });
-
+    const resp = await fetch(
+      `${url}/rest/v1/products?select=handle,title,description,price,compare_at_price,currency,stock,category&status=eq.active&parent_product_id=is.null&order=updated_at.desc&limit=30`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } },
+    );
     if (!resp.ok) {
-      console.error("Shopify API error:", resp.status);
+      console.error("Products fetch error:", resp.status, await resp.text());
       return "Products are currently unavailable. Direct customers to the website.";
     }
-
-    const data = await resp.json();
-    const products = data?.data?.products?.edges || [];
-
-    if (products.length === 0) {
+    const rows = await resp.json();
+    if (!Array.isArray(rows) || rows.length === 0) {
       return "No products are currently available. Inform customers new collections are coming soon.";
     }
-
-    const catalog = products
-      .filter((p: any) => p.node.availableForSale)
+    return rows
       .map((p: any, i: number) => {
-        const n = p.node;
-        const price = n.priceRange.minVariantPrice;
-        const variants = n.variants.edges
-          .filter((v: any) => v.node.availableForSale)
-          .map((v: any) => `${v.node.title} (${v.node.price.currencyCode} ${v.node.price.amount})`)
-          .join(", ");
-        return `${i + 1}. ${n.title} — ${price.currencyCode} ${price.amount} | Handle: ${n.handle} | Link: /product/${n.handle}${n.description ? ` | ${n.description.slice(0, 150)}` : ""}${variants ? ` | Variants: ${variants}` : ""}`;
+        const cur = p.currency || "INR";
+        const mrp = p.compare_at_price ? ` (MRP ${cur} ${p.compare_at_price})` : "";
+        const stock = typeof p.stock === "number" ? ` | Stock: ${p.stock > 0 ? `${p.stock} left` : "sold out"}` : "";
+        const desc = p.description ? ` | ${String(p.description).replace(/\s+/g, " ").slice(0, 180)}` : "";
+        return `${i + 1}. ${p.title} — ${cur} ${p.price}${mrp}${stock} | Link: /products/${p.handle}${desc}`;
       })
       .join("\n");
-
-    return catalog || "No products are currently in stock.";
   } catch (e) {
     console.error("Failed to fetch products:", e);
     return "Products are currently unavailable. Direct customers to the website.";
