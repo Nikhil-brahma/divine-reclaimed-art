@@ -196,20 +196,24 @@ serve(async (req) => {
     const systemPrompt = buildSystemPrompt(liveCatalog);
     const recentMessages = messages.slice(-20);
 
-    // Call Google AI Studio (Gemini) directly — free tier, no Lovable credits.
-    const geminiContents = recentMessages.map((m: any) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: String(m.content) }],
-    }));
-
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
-    const response = await fetch(geminiUrl, {
+    // Call Lovable AI Gateway (OpenAI-compatible streaming).
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Lovable-API-Key": LOVABLE_API_KEY,
+      },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: geminiContents,
-        generationConfig: { temperature: 0.8, maxOutputTokens: 800 },
+        model: "google/gemini-3.6-flash",
+        stream: true,
+        temperature: 0.8,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...recentMessages.map((m: any) => ({
+            role: m.role === "assistant" ? "assistant" : "user",
+            content: String(m.content),
+          })),
+        ],
       }),
     });
 
@@ -219,49 +223,17 @@ serve(async (req) => {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "Our sacred guide is resting. Please try again later 🙏" }), {
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
       const t = await response.text();
-      console.error("Gemini error:", response.status, t);
-      throw new Error(`Gemini error: ${response.status}`);
+      console.error("AI gateway error:", response.status, t);
+      throw new Error(`AI error: ${response.status}`);
     }
 
-    // Transform Gemini SSE → OpenAI-style SSE (what ChatWidget expects)
-    const reader = response.body!.getReader();
-    const decoder = new TextDecoder();
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        let buf = "";
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buf += decoder.decode(value, { stream: true });
-            const lines = buf.split("\n");
-            buf = lines.pop() || "";
-            for (const line of lines) {
-              if (!line.startsWith("data: ")) continue;
-              const data = line.slice(6).trim();
-              if (!data || data === "[DONE]") continue;
-              try {
-                const j = JSON.parse(data);
-                const text = j?.candidates?.[0]?.content?.parts?.map((p: any) => p.text || "").join("") || "";
-                if (text) {
-                  const chunk = `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`;
-                  controller.enqueue(encoder.encode(chunk));
-                }
-              } catch { /* skip */ }
-            }
-          }
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-        } catch (e) {
-          console.error("stream transform error:", e);
-        } finally {
-          controller.close();
-        }
-      },
-    });
-
-    return new Response(stream, {
+    return new Response(response.body, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
