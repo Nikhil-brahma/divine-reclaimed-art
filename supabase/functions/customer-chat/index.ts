@@ -5,78 +5,33 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SHOPIFY_STORE_PERMANENT_DOMAIN = "str4c2-32.myshopify.com";
-const SHOPIFY_API_VERSION = "2025-07";
-const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-
 async function fetchLiveProducts(): Promise<string> {
-  const SHOPIFY_STOREFRONT_TOKEN = Deno.env.get("SHOPIFY_STOREFRONT_ACCESS_TOKEN");
-  if (!SHOPIFY_STOREFRONT_TOKEN) {
-    console.error("SHOPIFY_STOREFRONT_ACCESS_TOKEN not set");
-    return "Products are currently unavailable. Direct customers to the website.";
-  }
+  const url = Deno.env.get("SUPABASE_URL");
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY");
+  if (!url || !key) return "Products are currently unavailable. Direct customers to the website.";
 
   try {
-    const query = `{
-      products(first: 20) {
-        edges {
-          node {
-            title
-            handle
-            description
-            availableForSale
-            priceRange {
-              minVariantPrice { amount currencyCode }
-            }
-            variants(first: 5) {
-              edges {
-                node {
-                  title
-                  availableForSale
-                  price { amount currencyCode }
-                }
-              }
-            }
-          }
-        }
-      }
-    }`;
-
-    const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": SHOPIFY_STOREFRONT_TOKEN,
-      },
-      body: JSON.stringify({ query }),
-    });
-
+    const resp = await fetch(
+      `${url}/rest/v1/products?select=handle,title,description,price,compare_at_price,currency,stock,category&status=eq.active&parent_product_id=is.null&order=updated_at.desc&limit=30`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } },
+    );
     if (!resp.ok) {
-      console.error("Shopify API error:", resp.status);
+      console.error("Products fetch error:", resp.status, await resp.text());
       return "Products are currently unavailable. Direct customers to the website.";
     }
-
-    const data = await resp.json();
-    const products = data?.data?.products?.edges || [];
-
-    if (products.length === 0) {
+    const rows = await resp.json();
+    if (!Array.isArray(rows) || rows.length === 0) {
       return "No products are currently available. Inform customers new collections are coming soon.";
     }
-
-    const catalog = products
-      .filter((p: any) => p.node.availableForSale)
+    return rows
       .map((p: any, i: number) => {
-        const n = p.node;
-        const price = n.priceRange.minVariantPrice;
-        const variants = n.variants.edges
-          .filter((v: any) => v.node.availableForSale)
-          .map((v: any) => `${v.node.title} (${v.node.price.currencyCode} ${v.node.price.amount})`)
-          .join(", ");
-        return `${i + 1}. ${n.title} — ${price.currencyCode} ${price.amount} | Handle: ${n.handle} | Link: /product/${n.handle}${n.description ? ` | ${n.description.slice(0, 150)}` : ""}${variants ? ` | Variants: ${variants}` : ""}`;
+        const cur = p.currency || "INR";
+        const mrp = p.compare_at_price ? ` (MRP ${cur} ${p.compare_at_price})` : "";
+        const stock = typeof p.stock === "number" ? ` | Stock: ${p.stock > 0 ? `${p.stock} left` : "sold out"}` : "";
+        const desc = p.description ? ` | ${String(p.description).replace(/\s+/g, " ").slice(0, 180)}` : "";
+        return `${i + 1}. ${p.title} — ${cur} ${p.price}${mrp}${stock} | Link: /products/${p.handle}${desc}`;
       })
       .join("\n");
-
-    return catalog || "No products are currently in stock.";
   } catch (e) {
     console.error("Failed to fetch products:", e);
     return "Products are currently unavailable. Direct customers to the website.";
@@ -152,8 +107,8 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
-    if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is not configured");
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) throw new Error("AI is not configured");
 
     const ip = (req.headers.get("x-forwarded-for") ?? "unknown").split(",")[0].trim();
     if (!rateLimit(ip)) {
@@ -196,20 +151,24 @@ serve(async (req) => {
     const systemPrompt = buildSystemPrompt(liveCatalog);
     const recentMessages = messages.slice(-20);
 
-    // Call Google AI Studio (Gemini) directly — free tier, no Lovable credits.
-    const geminiContents = recentMessages.map((m: any) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: String(m.content) }],
-    }));
-
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
-    const response = await fetch(geminiUrl, {
+    // Call Lovable AI Gateway (OpenAI-compatible streaming).
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Lovable-API-Key": LOVABLE_API_KEY,
+      },
       body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: geminiContents,
-        generationConfig: { temperature: 0.8, maxOutputTokens: 800 },
+        model: "google/gemini-3.6-flash",
+        stream: true,
+        temperature: 0.8,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...recentMessages.map((m: any) => ({
+            role: m.role === "assistant" ? "assistant" : "user",
+            content: String(m.content),
+          })),
+        ],
       }),
     });
 
@@ -219,49 +178,17 @@ serve(async (req) => {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ error: "Our sacred guide is resting. Please try again later 🙏" }), {
+          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
       const t = await response.text();
-      console.error("Gemini error:", response.status, t);
-      throw new Error(`Gemini error: ${response.status}`);
+      console.error("AI gateway error:", response.status, t);
+      throw new Error(`AI error: ${response.status}`);
     }
 
-    // Transform Gemini SSE → OpenAI-style SSE (what ChatWidget expects)
-    const reader = response.body!.getReader();
-    const decoder = new TextDecoder();
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        let buf = "";
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buf += decoder.decode(value, { stream: true });
-            const lines = buf.split("\n");
-            buf = lines.pop() || "";
-            for (const line of lines) {
-              if (!line.startsWith("data: ")) continue;
-              const data = line.slice(6).trim();
-              if (!data || data === "[DONE]") continue;
-              try {
-                const j = JSON.parse(data);
-                const text = j?.candidates?.[0]?.content?.parts?.map((p: any) => p.text || "").join("") || "";
-                if (text) {
-                  const chunk = `data: ${JSON.stringify({ choices: [{ delta: { content: text } }] })}\n\n`;
-                  controller.enqueue(encoder.encode(chunk));
-                }
-              } catch { /* skip */ }
-            }
-          }
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-        } catch (e) {
-          console.error("stream transform error:", e);
-        } finally {
-          controller.close();
-        }
-      },
-    });
-
-    return new Response(stream, {
+    return new Response(response.body, {
       headers: { ...corsHeaders, "Content-Type": "text/event-stream" },
     });
   } catch (e) {
