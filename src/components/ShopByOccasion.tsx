@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Gem, Gift, Flame, Leaf } from "lucide-react";
 
 const tiles = [
@@ -30,6 +30,21 @@ const tiles = [
 ];
 
 const ShopByOccasion = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const goToCollections = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const scroll = () =>
+      document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(scroll, 500);
+    } else {
+      scroll();
+    }
+  };
+
   return (
     <section id="shop-by-occasion" className="py-20 md:py-24 bg-background relative">
       <div className="container mx-auto px-6">
@@ -58,9 +73,10 @@ const ShopByOccasion = () => {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <Link
-                to={tile.to}
-                className="group block h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-6 hover:border-primary/40 hover:shadow-sacred transition-all duration-300"
+              <a
+                href="/#collections"
+                onClick={goToCollections}
+                className="group block h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-6 hover:border-primary/40 hover:shadow-sacred transition-all duration-300 cursor-pointer"
               >
                 <span className="inline-flex w-11 h-11 items-center justify-center rounded-full border border-primary/25 text-primary mb-4 group-hover:bg-primary/10 transition-colors">
                   <tile.icon size={18} aria-hidden="true" />
@@ -72,7 +88,7 @@ const ShopByOccasion = () => {
                 <span className="font-body text-[10px] tracking-[0.25em] uppercase text-primary mt-4 inline-block group-hover:translate-x-1 transition-transform">
                   Shop now →
                 </span>
-              </Link>
+              </a>
             </motion.div>
           ))}
         </div>
