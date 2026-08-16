@@ -30,6 +30,21 @@ const tiles = [
 ];
 
 const ShopByOccasion = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const goToCollections = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const scroll = () =>
+      document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(scroll, 500);
+    } else {
+      scroll();
+    }
+  };
+
   return (
     <section id="shop-by-occasion" className="py-20 md:py-24 bg-background relative">
       <div className="container mx-auto px-6">
