@@ -88,7 +88,7 @@ const ShopByOccasion = () => {
                 <span className="font-body text-[10px] tracking-[0.25em] uppercase text-primary mt-4 inline-block group-hover:translate-x-1 transition-transform">
                   Shop now →
                 </span>
-              </Link>
+              </a>
             </motion.div>
           ))}
         </div>
