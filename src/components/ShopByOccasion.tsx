@@ -73,9 +73,10 @@ const ShopByOccasion = () => {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <Link
-                to={tile.to}
-                className="group block h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-6 hover:border-primary/40 hover:shadow-sacred transition-all duration-300"
+              <a
+                href="/#collections"
+                onClick={goToCollections}
+                className="group block h-full rounded-2xl border border-border/60 bg-card/60 backdrop-blur-sm p-6 hover:border-primary/40 hover:shadow-sacred transition-all duration-300 cursor-pointer"
               >
                 <span className="inline-flex w-11 h-11 items-center justify-center rounded-full border border-primary/25 text-primary mb-4 group-hover:bg-primary/10 transition-colors">
                   <tile.icon size={18} aria-hidden="true" />
