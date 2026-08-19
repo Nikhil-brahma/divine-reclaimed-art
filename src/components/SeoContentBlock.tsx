@@ -10,26 +10,28 @@ const SeoContentBlock = () => (
         <p>
           Punarvsu is India's only brand crafting potli bags from Bhagwan Vastra — the sacred
           cloth used to drape deities in temples. When the fabric completes its spiritual
-          service, we reclaim it, wash it with care, and give it a second life as beautifully
-          embroidered potli bags for women that carry meaning far beyond their form.
+          service, we reclaim it and give it a second life as beautifully embroidered potli bags
+          for women.
         </p>
         <p>
-          <strong className="text-foreground">For Weddings &amp; Shagun</strong> — Our shagun
-          potli bags and wedding gift bags are designed for moments that matter. Perfect return
-          gift bags for wedding guests, bridal clutches, and shagun pouches, available in bulk.
+          <strong className="text-foreground">For Weddings and Shagun</strong> — our shagun potli
+          bags and wedding gift bags make perfect return gift bags for wedding guests, bridal
+          clutches, and shagun ceremony pouches.
         </p>
         <p>
-          <strong className="text-foreground">Eco-Friendly &amp; Recycled</strong> — Our recycled
-          cotton tote bags give temple cloth a sustainable afterlife. Each bag reduces textile
-          waste while honouring its divine origin.
+          <strong className="text-foreground">Eco-Friendly and Recycled</strong> — our recycled
+          cotton tote bags and eco-friendly wedding bags give temple cloth a sustainable
+          afterlife.
         </p>
         <p>
-          <strong className="text-foreground">Pooja &amp; Temple Bags</strong> — Sacred pooja bags
-          and mandir bags from Bhagwan Vastra, designed to hold sacred items with reverence.
+          <strong className="text-foreground">Pooja and Temple Bags</strong> — our pooja cloth
+          bags and mandir bags hold sacred items, prasad, and offerings with reverence.
         </p>
         <p>
-          Shop potli bags for women — delivered across India. Free shipping above ₹999.
+          <strong className="text-foreground">Designer Potli Bags Online</strong> — every Punarvsu
+          bag is one-of-a-kind, handstitched in Rohini, Delhi. Free shipping above ₹999.
         </p>
+
         <p className="pt-2">
           Explore{" "}
           <Link to="/#shop-by-occasion" className="text-primary hover:underline">bridal, shagun, pooja and eco collections</Link>,
