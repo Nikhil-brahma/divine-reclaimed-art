@@ -15,11 +15,13 @@ const organizationSchema = {
   telephone: "+919220464425",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Maharana Pratap Community Centre, Sector-9, Rohini",
-    addressLocality: "Delhi",
+    streetAddress: "Maharana Pratap Community Centre, Sector-9",
+    addressLocality: "Rohini",
+    addressRegion: "Delhi",
     postalCode: "110085",
     addressCountry: "IN",
   },
+
   sameAs: [],
   foundingDate: "2024",
   areaServed: {
