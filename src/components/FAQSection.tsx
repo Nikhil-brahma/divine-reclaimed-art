@@ -79,9 +79,10 @@ const FAQSection = () => {
             Got Questions?
           </span>
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
-            We've Got{" "}
-            <span className="text-gradient-gold">Answers</span>
+            Frequently Asked{" "}
+            <span className="text-gradient-gold">Questions</span>
           </h2>
+
           <p className="font-body text-muted-foreground mt-3 max-w-md mx-auto text-sm">
             Here's what people usually ask us. If you don't find your answer, just email us.
           </p>
