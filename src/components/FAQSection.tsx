@@ -9,8 +9,32 @@ import {
 
 const faqs = [
   {
-    q: "What exactly is 'Bhagwan ki Poshak'?",
-    a: "It's the sacred garment that dresses deities in temples. After a while, temples replace these clothes with new ones. Instead of letting them go to waste, we collect them — respectfully — from temple partners like Khatushyam Delhi Dham and from individual devotees.",
+    q: "What is Bhagwan Vastra and why is it special?",
+    a: "Bhagwan Vastra is the sacred fabric used to adorn deities at Hindu temples. At Punarvsu we reclaim this cloth, sanitise it using UV sterilisation and plant-based washing, and transform it into handcrafted potli bags. Each bag carries the blessings of the temple.",
+  },
+  {
+    q: "Can I order potli bags in bulk for wedding return gifts?",
+    a: "Yes. Bulk orders from 25 bags for return gift bags, shagun potlis, and corporate gifting. Email punarvsu.com@gmail.com or call 09220464425.",
+  },
+  {
+    q: "Do you offer customisation on potli bags?",
+    a: "Yes — custom colours, embroidery, and packaging for weddings and corporate gifting. Minimum 25 bags. Contact us for details.",
+  },
+  {
+    q: "Do you ship potli bags across India?",
+    a: "Yes. Free shipping on orders above ₹999. Delivered pan-India.",
+  },
+  {
+    q: "What occasions are potli bags suitable for?",
+    a: "Weddings, shagun ceremonies, Diwali, Navratri, Karva Chauth, haldi, mehndi, bridal gifting, pooja, and corporate gifting.",
+  },
+  {
+    q: "Are your recycled cotton tote bags washable?",
+    a: "Spot cleaning recommended. Sacred silk, velvet or brocade is best preserved with gentle care away from direct sunlight.",
+  },
+  {
+    q: "How are Punarvsu bags different from other potli bags online?",
+    a: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is unique — fabric, pattern, and embroidery are one-of-a-kind. Each comes with a Certificate of Sanctity.",
   },
   {
     q: "Is everything really handmade?",
@@ -25,10 +49,6 @@ const faqs = [
     a: "Absolutely! If you have a special piece of cloth — maybe from a temple visit, a family heirloom — we'd love to turn it into something you can carry every day. Just email us at punarvsu.com@gmail.com and we'll work out the details together.",
   },
   {
-    q: "Do you deliver outside India?",
-    a: "Not yet, but we're working on it. Right now we ship across India with free delivery on orders above ₹999. Join our newsletter and we'll let you know the moment international shipping goes live. For urgent requests, drop us a line directly.",
-  },
-  {
     q: "What if I'm not happy with my order?",
     a: "Since every piece is one-of-a-kind, we can't accept returns. But if something arrives damaged or looks very different from what was described, we'll exchange it within 7 days — no questions asked. We share detailed photos before shipping so you know exactly what you're getting.",
   },
@@ -36,27 +56,8 @@ const faqs = [
     q: "How does buying from Punarvsu actually help?",
     a: "In a few real ways: you're keeping beautiful fabric out of landfills (we've saved 3,200+ kg so far), supporting artisan livelihoods through Sampurna NGO, and helping preserve a tradition that might otherwise be forgotten. It's fashion that does something good — without making a big deal about it.",
   },
-  {
-    q: "Can I order potli bags in bulk for wedding return gifts?",
-    a: "Yes! Lots of people order Punarvsu potli bags as wedding return gifts, shagun potlis, Diwali gifts, or corporate presents. We can customise packaging and add personal messages too. Just reach out at punarvsu.com@gmail.com or call 09220464425 for bulk pricing.",
-  },
-  {
-    q: "Do you offer customisation on potli bags?",
-    a: "Yes — custom colours, embroidery, and packaging for weddings, corporate gifting, and festive events. Minimum order is 25 bags. Write to punarvsu.com@gmail.com and we'll work out the details with you.",
-  },
-  {
-    q: "What occasions are potli bags suitable for?",
-    a: "Weddings, shagun ceremonies, Diwali, Navratri, Karva Chauth, haldi, mehndi, bridal gifting, pooja, and corporate gifting — our bridal potli bags and shagun gift bags are made for exactly these moments.",
-  },
-  {
-    q: "Are your recycled cotton tote bags washable?",
-    a: "Spot cleaning is recommended. The sacred silk, velvet, or brocade fabric is best preserved with gentle care, away from direct sunlight.",
-  },
-  {
-    q: "How are Punarvsu bags different from other potli bags online?",
-    a: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is truly unique — fabric, pattern, and embroidery are one-of-a-kind — and each one comes with a Certificate of Sanctity.",
-  },
 ];
+
 
 const FAQSection = () => {
   const ref = useRef<HTMLElement>(null);
