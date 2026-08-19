@@ -15,11 +15,13 @@ const organizationSchema = {
   telephone: "+919220464425",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Maharana Pratap Community Centre, Sector-9, Rohini",
-    addressLocality: "Delhi",
+    streetAddress: "Maharana Pratap Community Centre, Sector-9",
+    addressLocality: "Rohini",
+    addressRegion: "Delhi",
     postalCode: "110085",
     addressCountry: "IN",
   },
+
   sameAs: [],
   foundingDate: "2024",
   areaServed: {
@@ -55,57 +57,17 @@ const localBusinessSchema = {
   openingHours: "Mo-Sa 10:00-18:00",
 };
 
-// FAQ schema for AEO — answers show up in AI search engines
+// FAQ schema for AEO — mirrors the visible homepage FAQ accordion
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
     {
       "@type": "Question",
-      name: "What exactly is Bhagwan ki Poshak?",
+      name: "What is Bhagwan Vastra and why is it special?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "It's the sacred garment that dresses deities in temples. After a while, temples replace these clothes with new ones. Instead of letting them go to waste, Punarvsu collects them respectfully from temple partners like Khatushyam Delhi Dham and from individual devotees.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Are Punarvsu products really handmade?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, 100%. Every single piece is made by hand at the workshop in Rohini, Delhi managed by Sampurna NGO. Each bag takes 8–15 hours to complete with no machines or shortcuts.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How does Punarvsu clean temple fabrics?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Punarvsu uses a three-step process: UV sterilisation, gentle washing with plant-based solutions, and steam treatment. It makes everything perfectly hygienic while keeping the fabric's colours and character intact.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I send my own sacred cloth to make into a bag?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Absolutely! If you have a special piece of cloth from a temple visit or family heirloom, Punarvsu can turn it into something you carry every day. Email punarvsu.com@gmail.com to discuss.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Does Punarvsu ship internationally?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes! Punarvsu ships worldwide. Within India, delivery takes 3–10 business days with free shipping on orders above ₹999. International shipping takes 10–21 business days with rates calculated at checkout.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How does buying from Punarvsu help the environment?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Every purchase keeps beautiful fabric out of landfills (3,200+ kg saved so far), supports artisan livelihoods through Sampurna NGO, and helps preserve a tradition that might otherwise be forgotten.",
+        text: "Bhagwan Vastra is the sacred fabric used to adorn deities at Hindu temples. At Punarvsu we reclaim this cloth, sanitise it using UV sterilisation and plant-based washing, and transform it into handcrafted potli bags. Each bag carries the blessings of the temple.",
       },
     },
     {
@@ -113,7 +75,7 @@ const faqSchema = {
       name: "Can I order potli bags in bulk for wedding return gifts?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Punarvsu offers bulk orders for wedding return gift bags, shagun potlis, and corporate gifting. Contact punarvsu.com@gmail.com or call 09220464425 for bulk pricing.",
+        text: "Yes. Bulk orders from 25 bags for return gift bags, shagun potlis, and corporate gifting. Email punarvsu.com@gmail.com or call 09220464425.",
       },
     },
     {
@@ -121,7 +83,15 @@ const faqSchema = {
       name: "Do you offer customisation on potli bags?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes — custom colours, embroidery, and packaging for weddings, corporate gifting, and festive events. Minimum order is 25 bags. Contact punarvsu.com@gmail.com for details.",
+        text: "Yes — custom colours, embroidery, and packaging for weddings and corporate gifting. Minimum 25 bags. Contact us for details.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do you ship potli bags across India?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Free shipping on orders above ₹999. Delivered pan-India.",
       },
     },
     {
@@ -134,10 +104,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      name: "Are Punarvsu recycled cotton tote bags washable?",
+      name: "Are your recycled cotton tote bags washable?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Spot cleaning is recommended. The sacred silk, velvet, or brocade fabric is best preserved with gentle care away from direct sunlight.",
+        text: "Spot cleaning recommended. Sacred silk, velvet or brocade is best preserved with gentle care away from direct sunlight.",
       },
     },
     {
@@ -145,11 +115,12 @@ const faqSchema = {
       name: "How are Punarvsu bags different from other potli bags online?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is truly unique — fabric, pattern, and embroidery are one-of-a-kind. Each comes with a Certificate of Sanctity.",
+        text: "No other brand makes potli bags from Bhagwan Vastra. Every Punarvsu bag is unique — fabric, pattern, and embroidery are one-of-a-kind. Each comes with a Certificate of Sanctity.",
       },
     },
   ],
 };
+
 
 
 // Speakable schema for AI voice assistants (AEO)

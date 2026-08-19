@@ -98,25 +98,26 @@ const HeroSection = () => {
             className="ornament-line mx-auto mb-8 overflow-hidden"
           />
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
+          <h1 className="font-display text-ivory mb-8">
             <TextReveal
               text="Because Devotion"
               as="span"
-              className="block"
+              className="block font-light text-2xl sm:text-3xl md:text-4xl leading-tight"
               delay={0.4}
               stagger={0.04}
             />
             <TextReveal
               text="Never Ends."
               as="span"
-              className="block text-gradient-gold font-semibold italic mt-2"
+              className="block text-gradient-gold font-semibold italic text-2xl sm:text-3xl md:text-4xl leading-tight"
               delay={0.9}
               stagger={0.05}
             />
-            <span className="block font-body text-sm sm:text-base md:text-lg tracking-[0.2em] uppercase text-ivory/70 mt-6 not-italic font-normal">
+            <span className="block font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mt-5">
               Handcrafted Potli Bags Online — Shagun, Bridal &amp; Wedding Gifting
             </span>
           </h1>
+
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -127,8 +128,9 @@ const HeroSection = () => {
             Every Punarvsu potli bag begins with Bhagwan Vastra — sacred fabric that once
             adorned the idols at temples across Delhi. Transformed by the hands of women
             artisans in Rohini, each bag carries a blessing no factory can replicate.
-            Whether you're gifting at a shagun ceremony, completing a bridal trousseau, or
+            Whether gifting at a shagun ceremony, completing a bridal trousseau, or
             wrapping a wedding return gift, our potli bags for women bring soul to every occasion.
+
           </motion.p>
 
 
@@ -171,7 +173,7 @@ const HeroSection = () => {
               className="bg-gradient-saffron text-primary-foreground px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase shadow-sacred relative overflow-hidden group"
             >
               <span className="relative z-10">
-                <EditableText contentKey="hero.cta_primary" defaultText="Explore the Sacred Collection" />
+                <EditableText contentKey="hero.cta_primary" defaultText="Shop All Potli Bags" />
               </span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-ivory/10 to-transparent"
@@ -180,13 +182,14 @@ const HeroSection = () => {
               />
             </motion.a>
             <motion.a
-              href="#why-how-what"
+              href="#collections"
               whileHover={{ scale: 1.05, borderColor: "hsl(42 85% 55% / 0.5)" }}
               whileTap={{ scale: 0.98 }}
-              className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
+              className="border border-ivory/40 bg-transparent text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              <EditableText contentKey="hero.cta_secondary" defaultText="Want to Carry a Blessing?" />
+              <EditableText contentKey="hero.cta_secondary" defaultText="Explore Bridal Collection" />
             </motion.a>
+
           </motion.div>
         </motion.div>
 
