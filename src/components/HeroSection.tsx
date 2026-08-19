@@ -173,7 +173,7 @@ const HeroSection = () => {
               className="bg-gradient-saffron text-primary-foreground px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase shadow-sacred relative overflow-hidden group"
             >
               <span className="relative z-10">
-                <EditableText contentKey="hero.cta_primary" defaultText="Explore the Sacred Collection" />
+                <EditableText contentKey="hero.cta_primary" defaultText="Shop All Potli Bags" />
               </span>
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-ivory/10 to-transparent"
@@ -182,13 +182,14 @@ const HeroSection = () => {
               />
             </motion.a>
             <motion.a
-              href="#why-how-what"
+              href="#collections"
               whileHover={{ scale: 1.05, borderColor: "hsl(42 85% 55% / 0.5)" }}
               whileTap={{ scale: 0.98 }}
-              className="border border-ivory/30 text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
+              className="border border-ivory/40 bg-transparent text-ivory px-10 py-5 rounded-sm font-body text-sm tracking-[0.25em] uppercase transition-colors"
             >
-              <EditableText contentKey="hero.cta_secondary" defaultText="Want to Carry a Blessing?" />
+              <EditableText contentKey="hero.cta_secondary" defaultText="Explore Bridal Collection" />
             </motion.a>
+
           </motion.div>
         </motion.div>
 
