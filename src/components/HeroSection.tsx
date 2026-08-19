@@ -128,8 +128,9 @@ const HeroSection = () => {
             Every Punarvsu potli bag begins with Bhagwan Vastra — sacred fabric that once
             adorned the idols at temples across Delhi. Transformed by the hands of women
             artisans in Rohini, each bag carries a blessing no factory can replicate.
-            Whether you're gifting at a shagun ceremony, completing a bridal trousseau, or
+            Whether gifting at a shagun ceremony, completing a bridal trousseau, or
             wrapping a wedding return gift, our potli bags for women bring soul to every occasion.
+
           </motion.p>
 
 
