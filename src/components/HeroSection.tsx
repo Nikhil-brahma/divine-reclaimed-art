@@ -98,25 +98,26 @@ const HeroSection = () => {
             className="ornament-line mx-auto mb-8 overflow-hidden"
           />
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-light text-ivory leading-[0.9] mb-8">
+          <h1 className="font-display text-ivory mb-8">
             <TextReveal
               text="Because Devotion"
               as="span"
-              className="block"
+              className="block font-light text-2xl sm:text-3xl md:text-4xl leading-tight"
               delay={0.4}
               stagger={0.04}
             />
             <TextReveal
               text="Never Ends."
               as="span"
-              className="block text-gradient-gold font-semibold italic mt-2"
+              className="block text-gradient-gold font-semibold italic text-2xl sm:text-3xl md:text-4xl leading-tight"
               delay={0.9}
               stagger={0.05}
             />
-            <span className="block font-body text-sm sm:text-base md:text-lg tracking-[0.2em] uppercase text-ivory/70 mt-6 not-italic font-normal">
+            <span className="block font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light leading-[0.95] mt-5">
               Handcrafted Potli Bags Online — Shagun, Bridal &amp; Wedding Gifting
             </span>
           </h1>
+
 
           <motion.p
             initial={{ opacity: 0 }}
