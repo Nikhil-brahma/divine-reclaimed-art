@@ -18,16 +18,18 @@ const BhagwanVastraStory = () => (
         </h2>
         <div className="ornament-line mx-auto mb-8 w-20" />
         <p className="font-body text-muted-foreground leading-relaxed mb-4">
-          Bhagwan Vastra is the sacred cloth used to drape deities in Hindu temples. When the
-          fabric completes its spiritual service, most of it is discarded. Punarvsu reclaims it
-          from temple partners across Delhi, sanitises it with UV sterilisation and plant-based
-          washing, and hands it to women artisans in Rohini who work with Sampurna NGO.
+          Bhagwan Vastra is the sacred fabric used to drape deities at Hindu temples. At Punarvsu,
+          we respectfully reclaim this cloth after its divine service, sanitise it using UV
+          sterilisation and plant-based washing, and transform it into handcrafted potli bags that
+          carry meaning far beyond their form.
         </p>
         <p className="font-body text-muted-foreground leading-relaxed mb-8">
-          What comes back is a handcrafted potli bag — silk, velvet or brocade, one of a kind,
-          arriving with a Certificate of Sanctity. No other brand in India makes potli bags this
-          way, which is why every Punarvsu piece is genuinely unrepeatable.
+          Every bag is made by Kiran Mam and her team at Sampurna NGO in Rohini, Delhi — an
+          organisation with 35+ years of work empowering women through craft. When you buy a
+          Punarvsu bag, you support sacred heritage, the livelihood of women artisans, and
+          sustainable fashion.
         </p>
+
         <Link
           to="/about"
           className="inline-block font-body text-[11px] tracking-[0.25em] uppercase text-primary border border-primary/30 px-8 py-4 rounded-sm hover:bg-primary/10 transition-colors"
