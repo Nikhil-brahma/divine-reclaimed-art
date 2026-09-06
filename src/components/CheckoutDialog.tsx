@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { trackInitiateCheckout, trackPurchase } from "@/lib/metaPixel";
 
 declare global { interface Window { Razorpay?: any } }
 
@@ -45,6 +46,11 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
 
   useEffect(() => {
     if (!open) return;
+    // Fire Meta Pixel InitiateCheckout when the dialog opens
+    trackInitiateCheckout({
+      value: subtotal,
+      contents: items.map((i) => ({ id: i.productId, quantity: i.quantity, item_price: i.price })),
+    });
     (async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
@@ -127,6 +133,11 @@ const CheckoutDialog = ({ open, onClose }: Props) => {
             body: { ...response, order_id: rzpData.order_id },
           });
           if (vData?.verified) {
+            trackPurchase({
+              value: total,
+              orderId: rzpData.order_number,
+              contents: items.map((i) => ({ id: i.productId, quantity: i.quantity, item_price: i.price })),
+            });
             toast.success("Payment received — blessings on their way 🪷");
             clear();
             onClose();

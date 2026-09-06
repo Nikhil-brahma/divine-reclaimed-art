@@ -4,7 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense, useState, useCallback, useEffect } from "react";
+import { trackPageView } from "@/lib/metaPixel";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Blog from "./pages/Blog";
@@ -37,6 +38,10 @@ const AppContent = () => {
   useCartSync();
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith("/admin");
+  // Fire Meta Pixel PageView on client-side route changes (initial load handled by index.html base code)
+  useEffect(() => {
+    trackPageView();
+  }, [pathname]);
   return (
     <>
       <ScrollToTop />

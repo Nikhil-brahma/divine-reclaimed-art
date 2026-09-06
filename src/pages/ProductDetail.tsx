@@ -5,6 +5,7 @@ import { Loader2, ArrowLeft, ShoppingBag, ShieldCheck, Truck, Sparkles } from "l
 import { supabase } from "@/integrations/supabase/client";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
+import { trackViewContent, trackAddToCart } from "@/lib/metaPixel";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
@@ -49,6 +50,7 @@ const ProductDetail = () => {
       // Fetch sibling variants: the parent (if any) + all children of that parent,
       // excluding the currently viewed product.
       if (p) {
+        trackViewContent({ id: p.id, name: p.title, price: p.price });
         const rootId = p.parent_product_id || p.id;
         const { data: sibs } = await supabase
           .from("products")
@@ -103,6 +105,7 @@ const ProductDetail = () => {
       productId: product.id, handle: product.handle, title: product.title,
       image: displayImages[0], price: product.price, stock: product.stock,
     }, qty);
+    trackAddToCart({ id: product.id, name: product.title, price: product.price, quantity: qty });
     toast.success(`${product.title} added to cart`);
   };
 

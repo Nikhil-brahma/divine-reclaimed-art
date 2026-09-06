@@ -4,6 +4,7 @@ import { Sparkles, RotateCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
+import { trackAddToCart } from "@/lib/metaPixel";
 import { supabase } from "@/integrations/supabase/client";
 import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
 
@@ -108,6 +109,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
       productId: product.id, handle: product.handle, title: product.title,
       image: displayHeroImg, price: product.price, stock: product.stock,
     });
+    trackAddToCart({ id: product.id, name: product.title, price: product.price });
     toast.success(`${product.title} added to cart`);
   };
 
