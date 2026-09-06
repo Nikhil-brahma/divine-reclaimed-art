@@ -5,6 +5,7 @@ import { Loader2, ArrowLeft, ShoppingBag, ShieldCheck, Truck, Sparkles } from "l
 import { supabase } from "@/integrations/supabase/client";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
+import { trackViewContent, trackAddToCart } from "@/lib/metaPixel";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
