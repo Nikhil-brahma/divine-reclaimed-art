@@ -26,6 +26,7 @@ interface StandardEventPayload {
   contents?: ContentItem[];
   currency?: string;
   value?: number;
+  order_id?: string;
 }
 
 function fbqAvailable(): boolean {
