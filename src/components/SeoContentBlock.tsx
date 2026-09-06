@@ -34,9 +34,9 @@ const SeoContentBlock = () => (
 
         <p className="pt-2">
           Explore{" "}
-          <Link to="/#shop-by-occasion" className="text-primary hover:underline">bridal, shagun, pooja and eco collections</Link>,
+          <a href="/#shop-by-occasion" className="text-primary hover:underline">bridal, shagun, pooja and eco collections</a>,
           read the{" "}
-          <Link to="/#bhagwan-vastra" className="text-primary hover:underline">Bhagwan Vastra story</Link>, browse our{" "}
+          <a href="/#bhagwan-vastra" className="text-primary hover:underline">Bhagwan Vastra story</a>, browse our{" "}
           <Link to="/sacred-knowledge" className="text-primary hover:underline">sacred knowledge guide</Link>, the{" "}
           <Link to="/blog" className="text-primary hover:underline">journal</Link>, or learn{" "}
           <Link to="/about" className="text-primary hover:underline">about Punarvsu</Link>.
