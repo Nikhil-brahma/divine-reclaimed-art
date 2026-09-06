@@ -105,6 +105,7 @@ const ProductDetail = () => {
       productId: product.id, handle: product.handle, title: product.title,
       image: displayImages[0], price: product.price, stock: product.stock,
     }, qty);
+    trackAddToCart({ id: product.id, name: product.title, price: product.price, quantity: qty });
     toast.success(`${product.title} added to cart`);
   };
 
