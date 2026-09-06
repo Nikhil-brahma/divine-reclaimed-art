@@ -49,6 +49,7 @@ const ProductDetail = () => {
       // Fetch sibling variants: the parent (if any) + all children of that parent,
       // excluding the currently viewed product.
       if (p) {
+        trackViewContent({ id: p.id, name: p.title, price: p.price });
         const rootId = p.parent_product_id || p.id;
         const { data: sibs } = await supabase
           .from("products")
