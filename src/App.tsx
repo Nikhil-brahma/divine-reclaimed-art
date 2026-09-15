@@ -42,10 +42,10 @@ const AppContent = () => {
     const reveal = () => setShowAssistant(true);
     const idle = "requestIdleCallback" in window
       ? window.requestIdleCallback(reveal, { timeout: 3500 })
-      : window.setTimeout(reveal, 2500);
+      : globalThis.setTimeout(reveal, 2500);
     return () => {
       if ("cancelIdleCallback" in window && typeof idle === "number") window.cancelIdleCallback(idle);
-      else window.clearTimeout(idle);
+      else globalThis.clearTimeout(idle);
     };
   }, [isAdmin]);
   // Fire Meta Pixel PageView on client-side route changes (initial load handled by index.html base code)

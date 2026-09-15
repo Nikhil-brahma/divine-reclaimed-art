@@ -18,10 +18,10 @@ const HeroSection = () => {
     const reveal = () => setShowParticles(true);
     const idle = "requestIdleCallback" in window
       ? window.requestIdleCallback(reveal, { timeout: 2500 })
-      : window.setTimeout(reveal, 1800);
+      : globalThis.setTimeout(reveal, 1800);
     return () => {
       if ("cancelIdleCallback" in window && typeof idle === "number") window.cancelIdleCallback(idle);
-      else window.clearTimeout(idle);
+      else globalThis.clearTimeout(idle);
     };
   }, []);
   const { scrollYProgress } = useScroll({
