@@ -46,7 +46,7 @@ const ShopByOccasion = () => {
   };
 
   return (
-    <section id="shop-by-occasion" className="py-20 md:py-24 bg-background relative">
+    <section id="shop-by-occasion" className="deferred-section py-20 md:py-24 bg-background relative">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

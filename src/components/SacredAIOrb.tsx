@@ -8,8 +8,8 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/customer-chat`;
 
-const SacredAIOrb = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const SacredAIOrb = ({ initialOpen = false }: { initialOpen?: boolean }) => {
+  const [isOpen, setIsOpen] = useState(initialOpen);
   const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -20,7 +20,6 @@ const SacredAIOrb = () => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [pulseIntensity, setPulseIntensity] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -32,14 +31,6 @@ const SacredAIOrb = () => {
   useEffect(() => {
     if (isOpen && inputRef.current) inputRef.current.focus();
   }, [isOpen]);
-
-  // Ambient pulse animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPulseIntensity(Math.sin(Date.now() / 1000) * 0.5 + 0.5);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
 
   const streamChat = useCallback(async (allMessages: Message[]) => {
     setIsLoading(true);
@@ -180,11 +171,7 @@ const SacredAIOrb = () => {
           >
             {/* Outer rings */}
             <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `radial-gradient(circle, hsla(42, 85%, 55%, ${0.1 + pulseIntensity * 0.15}) 0%, transparent 70%)`,
-                transform: `scale(${2.5 + pulseIntensity * 0.5})`,
-              }}
+              className="ai-orb-pulse absolute inset-0 rounded-full bg-[radial-gradient(circle,hsl(var(--gold)/0.25)_0%,transparent_70%)]"
             />
             <motion.div
               animate={{ rotate: 360 }}
@@ -208,7 +195,7 @@ const SacredAIOrb = () => {
               className="relative w-16 h-16 rounded-full flex items-center justify-center overflow-hidden"
               style={{
                 background: "radial-gradient(circle at 35% 35%, hsl(42 85% 65%), hsl(30 80% 48%), hsl(345 60% 28%))",
-                boxShadow: `0 0 ${20 + pulseIntensity * 20}px hsla(42, 85%, 55%, ${0.3 + pulseIntensity * 0.3}), 0 0 ${40 + pulseIntensity * 30}px hsla(30, 80%, 48%, 0.15)`,
+                boxShadow: "0 0 30px hsl(var(--gold) / 0.45), 0 0 55px hsl(var(--saffron) / 0.15)",
               }}
               aria-label="Open Sacred AI Guide"
             >

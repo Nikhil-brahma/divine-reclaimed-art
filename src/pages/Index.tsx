@@ -1,22 +1,23 @@
 import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import CollectionsSection from "@/components/NativeCollections";
-import SocialProofSection from "@/components/SocialProofSection";
-import UrgencySection from "@/components/UrgencySection";
-import FAQSection from "@/components/FAQSection";
-import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
-import SectionDivider from "@/components/SectionDivider";
-import SacredJourneyTimeline from "@/components/SacredJourneyTimeline";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
 import UspStrip from "@/components/UspStrip";
-import ShopByOccasion from "@/components/ShopByOccasion";
-import BhagwanVastraStory from "@/components/BhagwanVastraStory";
-import SeoContentBlock from "@/components/SeoContentBlock";
+import DeferredRender from "@/components/DeferredRender";
 
 const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
+const CollectionsSection = lazy(() => import("@/components/NativeCollections"));
+const SocialProofSection = lazy(() => import("@/components/SocialProofSection"));
+const UrgencySection = lazy(() => import("@/components/UrgencySection"));
+const FAQSection = lazy(() => import("@/components/FAQSection"));
+const Footer = lazy(() => import("@/components/Footer"));
+const SectionDivider = lazy(() => import("@/components/SectionDivider"));
+const SacredJourneyTimeline = lazy(() => import("@/components/SacredJourneyTimeline"));
+const ShopByOccasion = lazy(() => import("@/components/ShopByOccasion"));
+const BhagwanVastraStory = lazy(() => import("@/components/BhagwanVastraStory"));
+const SeoContentBlock = lazy(() => import("@/components/SeoContentBlock"));
 
 // Home page is a tight conversion funnel:
 // Hero → Shop the collection → Trust (reviews) → How it's made → Scarcity → FAQ.
@@ -43,38 +44,33 @@ const Index = () => {
         <UspStrip />
 
         {/* 1b. Shop by Occasion — category entry points */}
-        <ShopByOccasion />
-        <SectionDivider variant="gold" />
+        <Suspense fallback={null}><ShopByOccasion /><SectionDivider variant="gold" /></Suspense>
 
         {/* 2. Product — buy now */}
-        <CollectionsSection />
-        <SectionDivider variant="sacred" />
+        <Suspense fallback={<div className="min-h-[70vh] bg-background" aria-busy="true" />}><CollectionsSection /><SectionDivider variant="sacred" /></Suspense>
 
         {/* 3. Trust — real customers */}
-        <SocialProofSection />
-        <SectionDivider variant="gold" />
+        <DeferredRender minHeight="900px"><Suspense fallback={null}><SocialProofSection /><SectionDivider variant="gold" /></Suspense></DeferredRender>
 
         {/* 4. Why it's special — the sacred journey */}
-        <div id="sacred-journey">
-          <SacredJourneyTimeline />
-        </div>
-        <SectionDivider variant="sacred" />
+        <DeferredRender id="sacred-journey" minHeight="1100px">
+          <Suspense fallback={null}><SacredJourneyTimeline /></Suspense>
+          <Suspense fallback={null}><SectionDivider variant="sacred" /></Suspense>
+        </DeferredRender>
 
         {/* 5. Brand story — Bhagwan Vastra */}
-        <BhagwanVastraStory />
-        <SectionDivider variant="sacred" />
+        <DeferredRender id="bhagwan-vastra" minHeight="650px"><Suspense fallback={null}><BhagwanVastraStory /><SectionDivider variant="sacred" /></Suspense></DeferredRender>
 
         {/* 6. Scarcity — one-of-a-kind */}
-        <UrgencySection />
-        <SectionDivider variant="gold" />
+        <DeferredRender minHeight="950px"><Suspense fallback={null}><UrgencySection /><SectionDivider variant="gold" /></Suspense></DeferredRender>
 
         {/* 7. Objection handling */}
-        <FAQSection />
+        <DeferredRender id="faq" minHeight="1000px"><Suspense fallback={null}><FAQSection /></Suspense></DeferredRender>
 
         {/* 8. SEO content block */}
-        <SeoContentBlock />
+        <DeferredRender minHeight="520px"><Suspense fallback={null}><SeoContentBlock /></Suspense></DeferredRender>
       </main>
-      <Footer />
+      <DeferredRender minHeight="620px"><Suspense fallback={null}><Footer /></Suspense></DeferredRender>
     </div>
   );
 };

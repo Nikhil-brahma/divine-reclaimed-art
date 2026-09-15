@@ -16,7 +16,7 @@ const SacredGeoIcon = ({ children, href, label }: { children: React.ReactNode; h
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-gradient-sacred text-ivory py-20 relative overflow-hidden">
+    <footer id="contact" className="deferred-section bg-gradient-sacred text-ivory py-20 relative overflow-hidden">
       {/* Mandala animation */}
       <FooterMandala />
 
@@ -24,7 +24,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <img alt="Punarvsu — Handcrafted bags from sacred temple textiles" className="h-16 w-auto mb-4 brightness-0 invert opacity-80" src="/lovable-uploads/381c34da-f415-4980-aab3-d621d551f63a.png" />
+            <img alt="Punarvsu — Handcrafted bags from sacred temple textiles" className="h-16 w-auto mb-4 brightness-0 invert opacity-80" src="/lovable-uploads/punarvsu-footer-logo.webp" width="160" height="160" loading="lazy" decoding="async" />
             <p className="font-body text-sm text-ivory/50 leading-relaxed mb-6">
               We turn retired temple textiles into bags people actually love carrying.
               Handmade in Delhi. Rooted in faith.

@@ -120,7 +120,10 @@ const Navbar = () => {
           <motion.img
             alt="Punarvasu — Sacred Threads, Sustainable Art"
             className="h-20 md:h-28 w-auto object-contain"
-            src="/lovable-uploads/punarvasu-logo-new.png"
+            src="/lovable-uploads/punarvasu-logo-optimized.webp"
+            width="320"
+            height="303"
+            decoding="async"
             animate={{ opacity: scrolled ? 0 : 1 }}
             style={{ background: "transparent" }}
             whileHover={{ scale: 1.05 }}

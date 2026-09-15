@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ShieldCheck, TrendingUp } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const testimonials = [
   {
@@ -63,27 +63,39 @@ function generatePulseMessage(): string {
 }
 
 const SocialProofSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(false);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [pulseMessage, setPulseMessage] = useState(() => generatePulseMessage());
   const [pulseKey, setPulseKey] = useState(0);
 
   useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { rootMargin: "200px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!active || document.hidden) return;
     const timer = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [active]);
 
   useEffect(() => {
+    if (!active || document.hidden) return;
     const timer = setInterval(() => {
       setPulseMessage(generatePulseMessage());
       setPulseKey((prev) => prev + 1);
     }, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [active]);
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section ref={sectionRef} className="deferred-section py-24 bg-background relative overflow-hidden">
       {/* Live activity pulse - fixed for mobile visibility */}
       <AnimatePresence mode="wait">
         <motion.div

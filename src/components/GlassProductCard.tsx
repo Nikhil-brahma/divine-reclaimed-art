@@ -162,8 +162,8 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
                 onLoad={() => setImgLoaded(true)}
                 onError={() => setImgLoaded(true)}
                 className={`w-full h-full object-cover object-center xl:object-[center_30%] ${imgLoaded ? "opacity-100" : "opacity-0"}`}
-                loading={index < 4 ? "eager" : "lazy"}
-                {...({ fetchpriority: index < 2 ? "high" : "auto" } as any)}
+                loading="lazy"
+                fetchPriority="low"
                 decoding="async"
               />
             </div>

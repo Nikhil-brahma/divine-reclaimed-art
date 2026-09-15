@@ -64,7 +64,7 @@ const FAQSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} id="faq" className="py-24 bg-card relative overflow-hidden">
+    <section ref={ref} className="deferred-section py-24 bg-card relative overflow-hidden">
       <div className="absolute top-0 left-0 w-72 h-72 rounded-full bg-primary/5 blur-[100px]" />
       <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/5 blur-[120px]" />
 

@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { useRef, lazy, Suspense } from "react";
-import heroBg from "@/assets/hero-bg.jpg";
+import { useEffect, useRef, lazy, Suspense, useState } from "react";
+import heroBg from "@/assets/hero-bg-1920.webp";
+import heroBgSmall from "@/assets/hero-bg-768.webp";
+import heroBgMedium from "@/assets/hero-bg-1280.webp";
 import TextReveal from "@/components/TextReveal";
 import EditableText from "@/components/EditableText";
 
@@ -9,6 +11,19 @@ const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [showParticles, setShowParticles] = useState(false);
+  useEffect(() => {
+    const eligible = window.matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)").matches;
+    if (!eligible) return;
+    const reveal = () => setShowParticles(true);
+    const idle = "requestIdleCallback" in window
+      ? window.requestIdleCallback(reveal, { timeout: 2500 })
+      : globalThis.setTimeout(reveal, 1800);
+    return () => {
+      if ("cancelIdleCallback" in window && typeof idle === "number") window.cancelIdleCallback(idle);
+      else globalThis.clearTimeout(idle);
+    };
+  }, []);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -24,12 +39,11 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative min-h-[120vh] flex items-center justify-center overflow-hidden">
       {/* Parallax Background */}
       <motion.div className="absolute inset-0" style={{ y: bgY, scale: bgScale }}>
-        <img
-          src={heroBg}
-          alt="Sacred textile embroidery"
-          className="w-full h-full object-cover"
-          loading="eager"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet={heroBgSmall} />
+          <source media="(max-width: 1279px)" srcSet={heroBgMedium} />
+          <img src={heroBg} alt="Sacred textile embroidery" width="1920" height="1080" className="w-full h-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
+        </picture>
       </motion.div>
 
       {/* Sacred overlay */}
@@ -75,9 +89,7 @@ const HeroSection = () => {
       </div>
 
       {/* 3D Sacred Particles */}
-      <Suspense fallback={null}>
-        <SacredParticles className="z-[5]" />
-      </Suspense>
+      {showParticles && <Suspense fallback={null}><SacredParticles className="z-[5]" /></Suspense>}
 
       {/* Content */}
       <motion.div
