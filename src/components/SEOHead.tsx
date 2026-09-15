@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { useEditMode } from "@/contexts/EditModeContext";
 
 interface SEOProps {
   title?: string;
@@ -37,27 +37,13 @@ type MetaOverride = {
 
 const SEOHead = ({ title, description, canonical, type = "website", image, noindex, geo }: SEOProps) => {
   const location = useLocation();
-  const [override, setOverride] = useState<MetaOverride>({});
-
-  // Fetch DB meta overrides for this page
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const { data } = await supabase
-        .from("content_overrides")
-        .select("key,text_value")
-        .eq("page_path", location.pathname)
-        .like("key", "meta:%");
-      if (cancelled || !data) return;
-      const next: MetaOverride = {};
-      data.forEach((row) => {
-        const k = row.key.replace(/^meta:/, "") as keyof MetaOverride;
-        if (row.text_value) (next as any)[k] = row.text_value;
-      });
-      setOverride(next);
-    })();
-    return () => { cancelled = true; };
-  }, [location.pathname]);
+  const { overrides } = useEditMode();
+  const override = Object.entries(overrides).reduce<MetaOverride>((next, [key, row]) => {
+    if (!key.startsWith("meta:") || !row.text_value) return next;
+    const metaKey = key.slice(5) as keyof MetaOverride;
+    next[metaKey] = row.text_value;
+    return next;
+  }, {});
 
   const buildTitle = (t?: string) => {
     if (!t) return DEFAULT_TITLE;

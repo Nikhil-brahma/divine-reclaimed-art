@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
+import { cachedPublicRequest, invalidatePublicCache } from "@/lib/publicDataCache";
 
 type Override = {
   page_path: string;
@@ -98,10 +99,13 @@ export const EditModeProvider = ({ children }: { children: ReactNode }) => {
 
   // load overrides for current page
   const loadOverrides = useCallback(async () => {
-    const { data } = await supabase
-      .from("content_overrides")
-      .select("page_path,key,text_value,image_url,alt_text")
-      .eq("page_path", path);
+    const data = await cachedPublicRequest(`overrides:${path}`, async () => {
+      const { data: rows } = await supabase
+        .from("content_overrides")
+        .select("page_path,key,text_value,image_url,alt_text")
+        .eq("page_path", path);
+      return rows ?? [];
+    }, 120_000);
     const map: Record<string, Override> = {};
     data?.forEach(o => { map[o.key] = o as Override; });
     setOverrides(map);
@@ -131,6 +135,7 @@ export const EditModeProvider = ({ children }: { children: ReactNode }) => {
       .from("content_overrides")
       .upsert(row, { onConflict: "page_path,key" });
     if (error) throw error;
+    invalidatePublicCache(`overrides:${path}`);
     setOverrides(prev => ({ ...prev, [key]: row as any }));
   };
 

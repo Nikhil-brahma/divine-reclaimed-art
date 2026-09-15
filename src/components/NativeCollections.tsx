@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
 import { resolveSiteContentImageUrlSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
+import { cachedPublicRequest } from "@/lib/publicDataCache";
 
 interface Product {
   id: string;
@@ -37,24 +38,32 @@ const NativeCollections = () => {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status, parent_product_id")
-        .eq("status", "active")
-        .is("parent_product_id", null)
-        .order("updated_at", { ascending: false })
-        .limit(24);
-      if (error) console.error(error);
-      const list = (data || []) as Product[];
+      const list = await cachedPublicRequest("products:home", async () => {
+        const { data, error } = await supabase
+          .from("products")
+          .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status, parent_product_id")
+          .eq("status", "active")
+          .is("parent_product_id", null)
+          .order("updated_at", { ascending: false })
+          .limit(24);
+        if (error) throw error;
+        return (data || []) as Product[];
+      }, 60_000).catch((error) => {
+        console.error(error);
+        return [] as Product[];
+      });
       setProducts(list);
       setLoading(false);
 
       // Batch fetch all product media in one query so cards don't each query.
       if (list.length) {
-        const { data: mediaRows } = await (supabase as any)
-          .from("product_media")
-          .select("product_id, hero_url, angle_urls, spin_urls")
-          .in("product_id", list.map((p) => p.id));
+        const mediaRows = await cachedPublicRequest("product-media:home", async () => {
+          const { data } = await (supabase as any)
+            .from("product_media")
+            .select("product_id, hero_url, angle_urls, spin_urls")
+            .in("product_id", list.map((p) => p.id));
+          return data || [];
+        }, 300_000);
         const map: Record<string, any> = {};
         for (const p of list) map[p.id] = null;
         for (const row of (mediaRows || [])) map[row.product_id] = row;
