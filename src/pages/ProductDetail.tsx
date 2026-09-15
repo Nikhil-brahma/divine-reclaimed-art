@@ -10,7 +10,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import StructuredData from "@/components/StructuredData";
-import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync } from "@/lib/siteContentImages";
+import { resolveSiteContentImageUrlSync, resolveSiteContentImageUrlsSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
+import { cachedPublicRequest } from "@/lib/publicDataCache";
 
 
 interface Product {
@@ -40,8 +41,14 @@ const ProductDetail = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const { data } = await supabase.from("products").select("*").eq("handle", handle).eq("status", "active").maybeSingle();
-      const p = (data as Product) || null;
+      const p = await cachedPublicRequest(`product:${handle}`, async () => {
+        const { data } = await supabase.from("products")
+          .select("id, handle, title, description, price, compare_at_price, currency, stock, sku, category, tags, images, weight_grams, seo_title, seo_description, parent_product_id, variant_label")
+          .eq("handle", handle)
+          .eq("status", "active")
+          .maybeSingle();
+        return (data as Product) || null;
+      }, 60_000);
       setProduct(p);
       setLoading(false);
       setSelectedImage(0);
@@ -52,12 +59,15 @@ const ProductDetail = () => {
       if (p) {
         trackViewContent({ id: p.id, name: p.title, price: p.price });
         const rootId = p.parent_product_id || p.id;
-        const { data: sibs } = await supabase
-          .from("products")
-          .select("id, handle, title, images, price, variant_label, parent_product_id")
-          .eq("status", "active")
-          .or(`id.eq.${rootId},parent_product_id.eq.${rootId}`);
-        setVariants(((sibs as any[]) || []).filter((s) => s.id !== p.id));
+        const sibs = await cachedPublicRequest(`product-variants:${rootId}`, async () => {
+          const { data } = await supabase
+            .from("products")
+            .select("id, handle, title, images, price, variant_label, parent_product_id")
+            .eq("status", "active")
+            .or(`id.eq.${rootId},parent_product_id.eq.${rootId}`);
+          return (data as VariantSummary[]) || [];
+        }, 120_000);
+        setVariants(sibs.filter((s) => s.id !== p.id));
       } else {
         setVariants([]);
       }
@@ -79,7 +89,18 @@ const ProductDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background"><Navbar />
-        <div className="flex justify-center items-center h-[60vh]"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>
+        <main className="pt-28 pb-20" aria-busy="true">
+          <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12">
+            <div className="aspect-square rounded-2xl bg-muted/50 animate-pulse" />
+            <div className="space-y-5 pt-8">
+              <div className="h-4 w-28 rounded bg-muted/60 animate-pulse" />
+              <div className="h-12 w-4/5 rounded bg-muted/60 animate-pulse" />
+              <div className="h-8 w-28 rounded bg-muted/60 animate-pulse" />
+              <div className="h-24 rounded bg-muted/40 animate-pulse" />
+              <div className="h-14 rounded-full bg-muted/60 animate-pulse" />
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -97,6 +118,9 @@ const ProductDetail = () => {
   }
 
   const images = (product.images && product.images.length > 0) ? product.images : ["/placeholder.svg"];
+  const selectedRawImage = images[selectedImage] || images[0];
+  const selectedDisplayImage = resolveSiteContentImageUrlSync(selectedRawImage, { width: 960, quality: 78, resize: "contain" });
+  const selectedSrcSet = buildSiteContentSrcSet(selectedRawImage, [480, 720, 960, 1280]);
   const soldOut = product.stock <= 0;
 
   const handleAdd = () => {
@@ -139,7 +163,7 @@ const ProductDetail = () => {
             {/* Images */}
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
               <div className="aspect-square rounded-2xl overflow-hidden glass-card mb-4">
-                <img src={displayImages[selectedImage] || displayImages[0]} alt={product.title} className="w-full h-full object-cover" />
+                <img src={selectedDisplayImage} srcSet={selectedSrcSet || undefined} sizes="(min-width: 768px) 50vw, 100vw" alt={product.title} width="960" height="960" className="w-full h-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
               </div>
               {images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-1">
@@ -148,7 +172,7 @@ const ProductDetail = () => {
                             aria-label={`View image ${i + 1} of ${product.title}`}
                             aria-pressed={i === selectedImage}
                             className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${i === selectedImage ? "border-primary" : "border-transparent hover:border-primary/40"}`}>
-                      <img src={displayImages[i] || img} alt={`${product.title} — view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                      <img src={resolveSiteContentImageUrlSync(img, { width: 160, height: 160, quality: 65 })} alt={`${product.title} — view ${i + 1}`} width="80" height="80" className="w-full h-full object-cover" loading="lazy" decoding="async" />
                     </button>
                   ))}
                 </div>
@@ -215,8 +239,12 @@ const ProductDetail = () => {
                         className="group flex items-center gap-3 bg-card/70 hover:bg-card border border-border/50 hover:border-primary/50 rounded-xl p-2 pr-4 transition-colors"
                       >
                         <img
-                          src={v.images?.[0] || "/placeholder.svg"}
+                          src={resolveSiteContentImageUrlSync(v.images?.[0], { width: 96, height: 96, quality: 65 })}
                           alt={v.title}
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                          decoding="async"
                           className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
                         />
                         <div className="text-left">

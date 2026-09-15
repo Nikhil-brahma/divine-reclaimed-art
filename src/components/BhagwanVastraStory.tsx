@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const BhagwanVastraStory = () => (
-  <section id="bhagwan-vastra" className="py-20 md:py-24 bg-background">
+  <section id="bhagwan-vastra" className="deferred-section py-20 md:py-24 bg-background">
     <div className="container mx-auto px-6 max-w-3xl text-center">
       <motion.div
         initial={{ opacity: 0, y: 30 }}

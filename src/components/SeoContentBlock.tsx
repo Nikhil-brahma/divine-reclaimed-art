@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const SeoContentBlock = () => (
-  <section aria-label="About Punarvsu potli bags" className="py-16 bg-card/40 border-t border-border/50">
+  <section aria-label="About Punarvsu potli bags" className="deferred-section py-16 bg-card/40 border-t border-border/50">
     <div className="container mx-auto px-6 max-w-4xl">
       <h2 className="font-display text-2xl md:text-3xl text-foreground mb-6">
         Potli Bags for Every Sacred Occasion

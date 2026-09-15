@@ -109,7 +109,7 @@ const SacredJourneyTimeline = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden">
+    <section ref={sectionRef} className="deferred-section relative py-32 overflow-hidden">
       {/* Dark sacred background */}
       <div className="absolute inset-0 bg-gradient-sacred" />
       <div className="absolute inset-0 bg-gradient-to-b from-temple-dark/50 via-transparent to-temple-dark/50" />

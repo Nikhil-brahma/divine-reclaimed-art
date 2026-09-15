@@ -34,7 +34,7 @@ const UrgencySection = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-card relative overflow-hidden">
+    <section className="deferred-section py-20 bg-card relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <motion.div
           className="absolute w-96 h-96 rounded-full bg-primary blur-[100px]"
