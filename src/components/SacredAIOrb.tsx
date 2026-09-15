@@ -8,8 +8,8 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/customer-chat`;
 
-const SacredAIOrb = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const SacredAIOrb = ({ initialOpen = false }: { initialOpen?: boolean }) => {
+  const [isOpen, setIsOpen] = useState(initialOpen);
   const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { useCartSync } from "@/hooks/useCartSync";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { trackPageView } from "@/lib/metaPixel";
+import { Sparkles } from "lucide-react";
 import Index from "./pages/Index";
 import ScrollToTop from "./components/ScrollToTop";
 import { EditModeProvider } from "./contexts/EditModeContext";
@@ -37,17 +38,6 @@ const AppContent = () => {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith("/admin");
   const [showAssistant, setShowAssistant] = useState(false);
-  useEffect(() => {
-    if (isAdmin) return;
-    const reveal = () => setShowAssistant(true);
-    const idle = "requestIdleCallback" in window
-      ? window.requestIdleCallback(reveal, { timeout: 3500 })
-      : globalThis.setTimeout(reveal, 2500);
-    return () => {
-      if ("cancelIdleCallback" in window && typeof idle === "number") window.cancelIdleCallback(idle);
-      else globalThis.clearTimeout(idle);
-    };
-  }, [isAdmin]);
   // Fire Meta Pixel PageView on client-side route changes (initial load handled by index.html base code)
   useEffect(() => {
     trackPageView();
@@ -80,9 +70,20 @@ const AppContent = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      {!isAdmin && !showAssistant && (
+        <button
+          type="button"
+          onClick={() => setShowAssistant(true)}
+          className="fixed bottom-20 right-4 z-40 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-saffron text-primary-foreground shadow-sacred transition-transform hover:scale-105"
+          aria-label="Open Sacred AI Guide"
+        >
+          <span className="ai-orb-pulse absolute inset-0 rounded-full border border-accent/30" aria-hidden="true" />
+          <Sparkles className="relative z-10" size={22} />
+        </button>
+      )}
       {!isAdmin && showAssistant && (
         <Suspense fallback={null}>
-          <SacredAIOrb />
+          <SacredAIOrb initialOpen />
         </Suspense>
       )}
       {!isAdmin && <EditModeBanner />}
