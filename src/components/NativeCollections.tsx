@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
 import { resolveSiteContentImageUrlSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
-
-const SacredParticles = lazy(() => import("@/components/SacredParticles"));
 
 interface Product {
   id: string;
@@ -44,7 +42,8 @@ const NativeCollections = () => {
         .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status, parent_product_id")
         .eq("status", "active")
         .is("parent_product_id", null)
-        .order("updated_at", { ascending: false });
+        .order("updated_at", { ascending: false })
+        .limit(24);
       if (error) console.error(error);
       const list = (data || []) as Product[];
       setProducts(list);
@@ -68,32 +67,8 @@ const NativeCollections = () => {
   const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
   const featuredSrcSet = featuredRaw ? buildSiteContentSrcSet(featuredRaw, [480, 720, 960, 1280]) : "";
 
-  // Preload the LCP featured image once known.
-  useEffect(() => {
-    if (!featuredRaw) return;
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "image";
-    link.href = featuredImage;
-    if (featuredSrcSet) {
-      link.setAttribute("imagesrcset", featuredSrcSet);
-      link.setAttribute("imagesizes", "(min-width: 768px) 50vw, 100vw");
-    }
-    link.setAttribute("fetchpriority", "high");
-    document.head.appendChild(link);
-    return () => { document.head.removeChild(link); };
-  }, [featuredImage, featuredSrcSet, featuredRaw]);
-
-
-
   return (
-    <section ref={sectionRef} id="collections" className="relative py-32 bg-background overflow-hidden">
-      <Suspense fallback={null}>
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <SacredParticles />
-        </div>
-      </Suspense>
-
+    <section ref={sectionRef} id="collections" className="deferred-section relative py-32 bg-background overflow-hidden">
       <motion.div className="container mx-auto px-6 relative z-10" style={{ y: bgY }}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -163,8 +138,8 @@ const NativeCollections = () => {
                       onLoad={() => setFeaturedLoaded(true)}
                       onError={() => setFeaturedLoaded(true)}
                       className={`w-full h-full object-cover object-center ${featuredLoaded ? "opacity-100" : "opacity-0"}`}
-                      loading="eager"
-                      {...({ fetchpriority: "high" } as any)}
+                      loading="lazy"
+                      fetchPriority="low"
                       decoding="async"
                     />
                   </motion.div>
