@@ -55,19 +55,23 @@ const NativeCollections = () => {
       setProducts(list);
       setLoading(false);
 
-      // Batch fetch all product media in one query so cards don't each query.
+      // Enhanced media is non-critical; wait until the browser has finished first-screen work.
       if (list.length) {
-        const mediaRows = await cachedPublicRequest("product-media:home", async () => {
-          const { data } = await (supabase as any)
-            .from("product_media")
-            .select("product_id, hero_url, angle_urls, spin_urls")
-            .in("product_id", list.map((p) => p.id));
-          return data || [];
-        }, 300_000);
-        const map: Record<string, any> = {};
-        for (const p of list) map[p.id] = null;
-        for (const row of (mediaRows || [])) map[row.product_id] = row;
-        setMediaMap(map);
+        const loadMedia = async () => {
+          const mediaRows = await cachedPublicRequest("product-media:home", async () => {
+            const { data } = await (supabase as any)
+              .from("product_media")
+              .select("product_id, hero_url, angle_urls, spin_urls")
+              .in("product_id", list.map((p) => p.id));
+            return data || [];
+          }, 300_000);
+          const map: Record<string, any> = {};
+          for (const p of list) map[p.id] = null;
+          for (const row of mediaRows) map[row.product_id] = row;
+          setMediaMap(map);
+        };
+        if ("requestIdleCallback" in window) window.requestIdleCallback(() => { void loadMedia(); }, { timeout: 4000 });
+        else globalThis.setTimeout(() => { void loadMedia(); }, 2500);
       }
     })();
   }, []);

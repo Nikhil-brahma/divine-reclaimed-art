@@ -16,7 +16,7 @@ const SacredGeoIcon = ({ children, href, label }: { children: React.ReactNode; h
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-gradient-sacred text-ivory py-20 relative overflow-hidden">
+    <footer id="contact" className="deferred-section bg-gradient-sacred text-ivory py-20 relative overflow-hidden">
       {/* Mandala animation */}
       <FooterMandala />
 

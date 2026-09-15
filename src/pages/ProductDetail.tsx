@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Loader2, ArrowLeft, ShoppingBag, ShieldCheck, Truck, Sparkles } from "lucide-react";
+import { ArrowLeft, ShoppingBag, ShieldCheck, Truck, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useStoreCart } from "@/stores/storeCart";
 import { toast } from "sonner";
