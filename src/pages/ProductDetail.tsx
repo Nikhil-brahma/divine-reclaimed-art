@@ -120,7 +120,7 @@ const ProductDetail = () => {
   const images = (product.images && product.images.length > 0) ? product.images : ["/placeholder.svg"];
   const selectedRawImage = images[selectedImage] || images[0];
   const selectedDisplayImage = resolveSiteContentImageUrlSync(selectedRawImage, { width: 960, quality: 78, resize: "contain" });
-  const selectedSrcSet = buildSiteContentSrcSet(selectedRawImage, [480, 720, 960, 1280]);
+  const selectedSrcSet = buildSiteContentSrcSet(selectedRawImage, [480, 720, 960, 1280], { resize: "contain", quality: 78 });
   const soldOut = product.stock <= 0;
 
   const handleAdd = () => {
@@ -162,8 +162,8 @@ const ProductDetail = () => {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Images */}
             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-              <div className="aspect-square rounded-2xl overflow-hidden glass-card mb-4">
-                <img src={selectedDisplayImage} srcSet={selectedSrcSet || undefined} sizes="(min-width: 768px) 50vw, 100vw" alt={product.title} width="960" height="960" className="w-full h-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
+              <div className="aspect-square rounded-2xl overflow-hidden glass-card bg-muted/30 p-3 sm:p-5 mb-4">
+                <img src={selectedDisplayImage} srcSet={selectedSrcSet || undefined} sizes="(min-width: 768px) 50vw, 100vw" alt={product.title} width="960" height="960" className="w-full h-full object-contain object-center" loading="eager" fetchPriority="high" decoding="async" />
               </div>
               {images.length > 1 && (
                 <div className="flex gap-3 overflow-x-auto pb-1">
@@ -172,7 +172,7 @@ const ProductDetail = () => {
                             aria-label={`View image ${i + 1} of ${product.title}`}
                             aria-pressed={i === selectedImage}
                             className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${i === selectedImage ? "border-primary" : "border-transparent hover:border-primary/40"}`}>
-                      <img src={resolveSiteContentImageUrlSync(img, { width: 160, height: 160, quality: 65 })} alt={`${product.title} — view ${i + 1}`} width="80" height="80" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                      <img src={resolveSiteContentImageUrlSync(img, { width: 160, height: 160, quality: 65, resize: "contain" })} alt={`${product.title} — view ${i + 1}`} width="80" height="80" className="w-full h-full object-contain object-center bg-muted/30 p-1" loading="lazy" decoding="async" />
                     </button>
                   ))}
                 </div>
@@ -239,13 +239,13 @@ const ProductDetail = () => {
                         className="group flex items-center gap-3 bg-card/70 hover:bg-card border border-border/50 hover:border-primary/50 rounded-xl p-2 pr-4 transition-colors"
                       >
                         <img
-                          src={resolveSiteContentImageUrlSync(v.images?.[0], { width: 96, height: 96, quality: 65 })}
+                          src={resolveSiteContentImageUrlSync(v.images?.[0], { width: 96, height: 96, quality: 65, resize: "contain" })}
                           alt={v.title}
                           width="48"
                           height="48"
                           loading="lazy"
                           decoding="async"
-                          className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
+                          className="w-12 h-12 rounded-lg object-contain object-center bg-muted/30 p-1 flex-shrink-0"
                         />
                         <div className="text-left">
                           <p className="font-body text-xs text-foreground group-hover:text-primary transition-colors leading-tight">
