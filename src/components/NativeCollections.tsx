@@ -4,8 +4,10 @@ import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import GlassProductCard from "@/components/GlassProductCard";
+import { Button } from "@/components/ui/button";
 import { resolveSiteContentImageUrlSync, buildSiteContentSrcSet } from "@/lib/siteContentImages";
 import { cachedPublicRequest } from "@/lib/publicDataCache";
+import { toast } from "sonner";
 
 interface Product {
   id: string;
@@ -23,6 +25,7 @@ interface Product {
 }
 
 const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+const PAGE_SIZE = 24;
 
 // Card moved to src/components/GlassProductCard.tsx (shared site-wide).
 
@@ -31,54 +34,83 @@ const NativeCollections = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [mediaMap, setMediaMap] = useState<Record<string, { hero_url: string | null; angle_urls: string[]; spin_urls: string[] } | null>>({});
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [featuredLoaded, setFeaturedLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
-  useEffect(() => {
-    (async () => {
-      const list = await cachedPublicRequest("products:home", async () => {
+  const fetchProductPage = async (offset: number) => {
+    return cachedPublicRequest(`products:home:${offset}`, async () => {
         const { data, error } = await supabase
           .from("products")
           .select("id, handle, title, description, price, compare_at_price, currency, stock, category, tags, images, status, parent_product_id")
           .eq("status", "active")
           .is("parent_product_id", null)
           .order("updated_at", { ascending: false })
-          .limit(24);
+          .range(offset, offset + PAGE_SIZE);
         if (error) throw error;
         return (data || []) as Product[];
-      }, 60_000).catch((error) => {
+      }, 60_000);
+  };
+
+  const loadMediaForProducts = async (list: Product[]) => {
+    if (!list.length) return;
+    const ids = list.map((p) => p.id);
+    const mediaRows = await cachedPublicRequest(`product-media:${ids.join(",")}`, async () => {
+      const { data } = await (supabase as any)
+        .from("product_media")
+        .select("product_id, hero_url, angle_urls, spin_urls")
+        .in("product_id", ids);
+      return data || [];
+    }, 300_000);
+    const map: Record<string, any> = {};
+    for (const p of list) map[p.id] = null;
+    for (const row of mediaRows) map[row.product_id] = row;
+    setMediaMap((current) => ({ ...current, ...map }));
+  };
+
+  const deferMediaLoad = (list: Product[]) => {
+    const load = () => { void loadMediaForProducts(list); };
+    if ("requestIdleCallback" in window) window.requestIdleCallback(load, { timeout: 4000 });
+    else globalThis.setTimeout(load, 2500);
+  };
+
+  useEffect(() => {
+    (async () => {
+      const page = await fetchProductPage(0).catch((error) => {
         console.error(error);
         return [] as Product[];
       });
+      const list = page.slice(0, PAGE_SIZE);
       setProducts(list);
+      setHasMore(page.length > PAGE_SIZE);
       setLoading(false);
-
-      // Enhanced media is non-critical; wait until the browser has finished first-screen work.
-      if (list.length) {
-        const loadMedia = async () => {
-          const mediaRows = await cachedPublicRequest("product-media:home", async () => {
-            const { data } = await (supabase as any)
-              .from("product_media")
-              .select("product_id, hero_url, angle_urls, spin_urls")
-              .in("product_id", list.map((p) => p.id));
-            return data || [];
-          }, 300_000);
-          const map: Record<string, any> = {};
-          for (const p of list) map[p.id] = null;
-          for (const row of mediaRows) map[row.product_id] = row;
-          setMediaMap(map);
-        };
-        if ("requestIdleCallback" in window) window.requestIdleCallback(() => { void loadMedia(); }, { timeout: 4000 });
-        else globalThis.setTimeout(() => { void loadMedia(); }, 2500);
-      }
+      deferMediaLoad(list);
     })();
   }, []);
 
+  const handleViewMore = async () => {
+    if (loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    try {
+      const page = await fetchProductPage(products.length);
+      const nextProducts = page.slice(0, PAGE_SIZE);
+      setProducts((current) => [...current, ...nextProducts]);
+      setHasMore(page.length > PAGE_SIZE);
+      deferMediaLoad(nextProducts);
+    } catch (error) {
+      console.error(error);
+      toast.error("More products could not be loaded. Please try again.");
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+
   const featuredRaw = products[0]?.images?.[0];
-  const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72 });
-  const featuredSrcSet = featuredRaw ? buildSiteContentSrcSet(featuredRaw, [480, 720, 960, 1280]) : "";
+  const featuredImage = resolveSiteContentImageUrlSync(featuredRaw, { width: 960, quality: 72, resize: "contain" });
+  const featuredSrcSet = featuredRaw ? buildSiteContentSrcSet(featuredRaw, [480, 720, 960, 1280], { resize: "contain" }) : "";
 
   return (
     <section ref={sectionRef} id="collections" className="deferred-section relative py-32 bg-background overflow-hidden">
@@ -136,11 +168,7 @@ const NativeCollections = () => {
                   {!featuredLoaded && (
                     <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60 z-10" />
                   )}
-                  <motion.div
-                    className="absolute inset-0"
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ duration: 0.8 }}
-                  >
+                  <motion.div className="absolute inset-0 p-3 sm:p-5">
                     <img
                       src={featuredImage}
                       srcSet={featuredSrcSet || undefined}
@@ -150,7 +178,7 @@ const NativeCollections = () => {
                       height={1152}
                       onLoad={() => setFeaturedLoaded(true)}
                       onError={() => setFeaturedLoaded(true)}
-                      className={`w-full h-full object-cover object-center ${featuredLoaded ? "opacity-100" : "opacity-0"}`}
+                      className={`w-full h-full object-contain object-center transition-opacity duration-300 ${featuredLoaded ? "opacity-100" : "opacity-0"}`}
                       loading="lazy"
                       fetchPriority="low"
                       decoding="async"
@@ -187,6 +215,21 @@ const NativeCollections = () => {
                 <GlassProductCard key={p.id} product={p} index={i} media={mediaMap[p.id] ?? null} />
               ))}
             </div>
+            {hasMore && (
+              <div className="flex justify-center mt-12">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={handleViewMore}
+                  disabled={loadingMore}
+                  className="min-w-52 border-primary/50 bg-background/80 text-foreground hover:bg-primary hover:text-primary-foreground"
+                >
+                  {loadingMore ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : null}
+                  {loadingMore ? "Loading Products" : "View More Products"}
+                </Button>
+              </div>
+            )}
           </>
         )}
       </motion.div>

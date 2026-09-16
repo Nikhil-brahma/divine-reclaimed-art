@@ -68,9 +68,9 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
 
   const heroImg = media?.hero_url || product.images?.[0] || "/placeholder.svg";
   const spinFrames = media?.spin_urls || [];
-  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg, { width: 720, quality: 70 });
-  const heroSrcSet = buildSiteContentSrcSet(heroImg);
-  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames, { width: 720, quality: 65 }) : [];
+  const displayHeroImg = resolveSiteContentImageUrlSync(heroImg, { width: 720, quality: 70, resize: "contain" });
+  const heroSrcSet = buildSiteContentSrcSet(heroImg, undefined, { resize: "contain" });
+  const displaySpinFrames = spinFrames.length ? resolveSiteContentImageUrlsSync(spinFrames, { width: 720, quality: 65, resize: "contain" }) : [];
   const currentImg = spinning && displaySpinFrames.length > 1 ? displaySpinFrames[spinFrame % displaySpinFrames.length] : displayHeroImg;
   const soldOut = product.stock <= 0;
   const aura = AURA_COLORS[product.category || "default"] || AURA_COLORS.default;
@@ -151,7 +151,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
             {!imgLoaded && (
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60 z-10" />
             )}
-            <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+            <div className="absolute inset-0 p-2 sm:p-3">
               <img
                 src={currentImg}
                 srcSet={!spinning ? heroSrcSet : undefined}
@@ -161,7 +161,7 @@ export const GlassProductCard = ({ product, index = 0, media: mediaProp }: Props
                 height={800}
                 onLoad={() => setImgLoaded(true)}
                 onError={() => setImgLoaded(true)}
-                className={`w-full h-full object-cover object-center xl:object-[center_30%] ${imgLoaded ? "opacity-100" : "opacity-0"}`}
+                className={`w-full h-full object-contain object-center transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0"}`}
                 loading="lazy"
                 fetchPriority="low"
                 decoding="async"

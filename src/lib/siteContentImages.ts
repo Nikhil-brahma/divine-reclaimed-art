@@ -53,11 +53,15 @@ export const resolveSiteContentImageUrlsSync = (urls?: string[] | null, transfor
 };
 
 // Build a srcSet string for responsive product images.
-export const buildSiteContentSrcSet = (src?: string | null, widths: number[] = [320, 480, 720, 960]): string => {
+export const buildSiteContentSrcSet = (
+  src?: string | null,
+  widths: number[] = [320, 480, 720, 960],
+  transform: Omit<ImageTransform, "width"> = {},
+): string => {
   const path = extractSiteContentPath(src);
   if (!path) return "";
   return widths
-    .map((w) => `${resolveSiteContentImageUrlSync(src, { width: w, quality: 70 })} ${w}w`)
+    .map((w) => `${resolveSiteContentImageUrlSync(src, { ...transform, width: w, quality: transform.quality ?? 70 })} ${w}w`)
     .join(", ");
 };
 
