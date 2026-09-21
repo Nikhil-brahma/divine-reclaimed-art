@@ -7,7 +7,13 @@ export default defineTool({
     "Returns Punarvsu brand information: mission, sacred textile process, artisan team, contact and shipping details. Use for questions about the brand's story, ethics, or how to reach them.",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: () => {
+  handler: (_args, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true,
+      };
+    }
     const info = {
       brand: "Punarvsu",
       tagline: "India's first brand making luxury bags from sacred temple textiles (Bhagwan ki Poshak).",

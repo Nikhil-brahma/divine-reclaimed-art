@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { Loader2 } from "lucide-react";
 
 export default function CustomerAuth() {
   const nav = useNavigate();
@@ -15,6 +17,7 @@ export default function CustomerAuth() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -33,7 +36,7 @@ export default function CustomerAuth() {
     setLoading(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: normalized,
           password,
           options: {
@@ -42,8 +45,12 @@ export default function CustomerAuth() {
           },
         });
         if (error) throw error;
-        toast.success("Account created. You can sign in now.");
-        setMode("signin");
+        if (data.session) {
+          toast.success("Account created");
+        } else {
+          toast.success("Check your email to confirm your account");
+          setMode("signin");
+        }
         setLoading(false);
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email: normalized, password });
@@ -54,6 +61,20 @@ export default function CustomerAuth() {
       toast.error(err.message);
       setLoading(false);
     }
+  };
+
+  const signInWithGoogle = async () => {
+    setGoogleLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+      extraParams: { prompt: "select_account" },
+    });
+    if (result.error) {
+      toast.error(result.error.message);
+      setGoogleLoading(false);
+      return;
+    }
+    if (!result.redirected) nav("/account", { replace: true });
   };
 
   return (
@@ -102,7 +123,16 @@ export default function CustomerAuth() {
             autoComplete={mode === "signin" ? "current-password" : "new-password"}
           />
           <Button type="submit" disabled={loading} className="w-full">
-            {loading ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+            {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />Please wait…</> : mode === "signin" ? "Sign in" : "Create account"}
+          </Button>
+          <div className="flex items-center gap-3" aria-hidden="true">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-xs text-muted-foreground">or</span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+          <Button type="button" variant="outline" disabled={googleLoading} onClick={signInWithGoogle} className="w-full">
+            {googleLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+            Continue with Google
           </Button>
           <button
             type="button"
