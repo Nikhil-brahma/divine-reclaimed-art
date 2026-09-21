@@ -3,7 +3,7 @@
 // supabase function: mcp
 // Bundled from src/lib/mcp/index.ts by @lovable.dev/mcp-js.
 // src/lib/mcp/index.ts
-import { defineMcp } from "npm:@lovable.dev/mcp-js@0.20.0";
+import { auth, defineMcp } from "npm:@lovable.dev/mcp-js@0.20.0";
 
 // src/lib/mcp/tools/list-products.ts
 import { defineTool } from "npm:@lovable.dev/mcp-js@0.20.0";
@@ -18,7 +18,13 @@ var list_products_default = defineTool({
     limit: z.number().int().min(1).max(50).optional().describe("Max number of products to return (default 20).")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
-  handler: async ({ limit }) => {
+  handler: async ({ limit }, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true
+      };
+    }
     const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
     if (!token) {
       return {
@@ -84,7 +90,13 @@ var get_product_default = defineTool2({
     handle: z2.string().min(1).describe("Product handle/slug, e.g. 'temple-tote'.")
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
-  handler: async ({ handle }) => {
+  handler: async ({ handle }, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true
+      };
+    }
     const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
     if (!token) {
       return {
@@ -154,7 +166,13 @@ var brand_info_default = defineTool3({
   description: "Returns Punarvsu brand information: mission, sacred textile process, artisan team, contact and shipping details. Use for questions about the brand's story, ethics, or how to reach them.",
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
-  handler: () => {
+  handler: (_args, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true
+      };
+    }
     const info = {
       brand: "Punarvsu",
       tagline: "India's first brand making luxury bags from sacred temple textiles (Bhagwan ki Poshak).",
@@ -182,11 +200,21 @@ var brand_info_default = defineTool3({
 });
 
 // src/lib/mcp/index.ts
+var backendUrl = process.env["SUPABASE_URL"] ?? process.env["VITE_SUPABASE_URL"];
+if (!backendUrl) {
+  throw new Error("Backend URL is required to secure the MCP server.");
+}
+var authIssuer = `${backendUrl.replace(/\/+$/, "")}/auth/v1`;
 var mcp_default = defineMcp({
   name: "punarvsu-mcp",
   title: "Punarvsu",
   version: "0.1.0",
   instructions: "Tools for Punarvsu \u2014 sacred temple-textile handcrafted bags. Use `list_products` to browse the live catalog, `get_product` for full details on a specific bag by handle, and `brand_info` for brand story, artisans, shipping and contact.",
+  auth: auth.oauth.issuer({
+    issuer: authIssuer,
+    acceptedAudiences: "authenticated",
+    jwksUri: `${authIssuer}/.well-known/jwks.json`
+  }),
   tools: [list_products_default, get_product_default, brand_info_default]
 });
 

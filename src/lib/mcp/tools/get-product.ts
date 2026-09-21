@@ -13,7 +13,13 @@ export default defineTool({
     handle: z.string().min(1).describe("Product handle/slug, e.g. 'temple-tote'."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
-  handler: async ({ handle }) => {
+  handler: async ({ handle }, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true,
+      };
+    }
     const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
     if (!token) {
       return {

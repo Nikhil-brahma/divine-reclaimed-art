@@ -19,7 +19,13 @@ export default defineTool({
       .describe("Max number of products to return (default 20)."),
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
-  handler: async ({ limit }) => {
+  handler: async ({ limit }, ctx) => {
+    if (!ctx.isAuthenticated() || !ctx.getUserId()) {
+      return {
+        content: [{ type: "text", text: "Sign in is required to use this tool." }],
+        isError: true,
+      };
+    }
     const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
     if (!token) {
       return {
