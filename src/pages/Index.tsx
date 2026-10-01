@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SEOHead from "@/components/SEOHead";
@@ -6,18 +6,19 @@ import StructuredData from "@/components/StructuredData";
 import AmbientSoundToggle from "@/components/AmbientSoundToggle";
 import UspStrip from "@/components/UspStrip";
 import DeferredRender from "@/components/DeferredRender";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 
-const GoldenCursor = lazy(() => import("@/components/GoldenCursor"));
-const CollectionsSection = lazy(() => import("@/components/NativeCollections"));
-const SocialProofSection = lazy(() => import("@/components/SocialProofSection"));
-const UrgencySection = lazy(() => import("@/components/UrgencySection"));
-const FAQSection = lazy(() => import("@/components/FAQSection"));
-const Footer = lazy(() => import("@/components/Footer"));
-const SectionDivider = lazy(() => import("@/components/SectionDivider"));
-const SacredJourneyTimeline = lazy(() => import("@/components/SacredJourneyTimeline"));
-const ShopByOccasion = lazy(() => import("@/components/ShopByOccasion"));
-const BhagwanVastraStory = lazy(() => import("@/components/BhagwanVastraStory"));
-const SeoContentBlock = lazy(() => import("@/components/SeoContentBlock"));
+const GoldenCursor = lazyWithRetry(() => import("@/components/GoldenCursor"));
+const CollectionsSection = lazyWithRetry(() => import("@/components/NativeCollections"));
+const SocialProofSection = lazyWithRetry(() => import("@/components/SocialProofSection"));
+const UrgencySection = lazyWithRetry(() => import("@/components/UrgencySection"));
+const FAQSection = lazyWithRetry(() => import("@/components/FAQSection"));
+const Footer = lazyWithRetry(() => import("@/components/Footer"));
+const SectionDivider = lazyWithRetry(() => import("@/components/SectionDivider"));
+const SacredJourneyTimeline = lazyWithRetry(() => import("@/components/SacredJourneyTimeline"));
+const ShopByOccasion = lazyWithRetry(() => import("@/components/ShopByOccasion"));
+const BhagwanVastraStory = lazyWithRetry(() => import("@/components/BhagwanVastraStory"));
+const SeoContentBlock = lazyWithRetry(() => import("@/components/SeoContentBlock"));
 
 // Home page is a tight conversion funnel:
 // Hero → Shop the collection → Trust (reviews) → How it's made → Scarcity → FAQ.

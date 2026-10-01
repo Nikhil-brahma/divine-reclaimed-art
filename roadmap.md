@@ -7,3 +7,8 @@
 - [x] Defer below-fold rendering and pause hidden timers
 - [x] Unblock font loading
 - [x] Verify mobile/desktop performance and core flows
+
+# Loading resilience
+
+- [x] Recover from stale dynamically loaded files without a blank screen
+- [x] Verify normal and failed loading states

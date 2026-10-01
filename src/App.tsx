@@ -4,32 +4,34 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { trackPageView } from "@/lib/metaPixel";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 import { Sparkles } from "lucide-react";
 import Index from "./pages/Index";
 import ScrollToTop from "./components/ScrollToTop";
+import AppErrorBoundary from "./components/AppErrorBoundary";
 import { EditModeProvider } from "./contexts/EditModeContext";
 import EditModeBanner from "./components/EditModeBanner";
 import GlobalEditLayer from "./components/GlobalEditLayer";
 
-const SacredAIOrb = lazy(() => import("./components/SacredAIOrb"));
-const ProductDetail = lazy(() => import("./pages/ProductDetail"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const SEODashboard = lazy(() => import("./pages/SEODashboard"));
-const Admin = lazy(() => import("./pages/Admin"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Privacy = lazy(() => import("./pages/Privacy"));
-const Terms = lazy(() => import("./pages/Terms"));
-const Shipping = lazy(() => import("./pages/Shipping"));
-const Studio = lazy(() => import("./pages/Studio"));
-const SacredKnowledge = lazy(() => import("./pages/SacredKnowledge"));
-const AuthPage = lazy(() => import("./pages/Auth"));
-const CustomerAuth = lazy(() => import("./pages/CustomerAuth"));
-const Account = lazy(() => import("./pages/Account"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const SacredAIOrb = lazyWithRetry(() => import("./components/SacredAIOrb"));
+const ProductDetail = lazyWithRetry(() => import("./pages/ProductDetail"));
+const Blog = lazyWithRetry(() => import("./pages/Blog"));
+const BlogPost = lazyWithRetry(() => import("./pages/BlogPost"));
+const SEODashboard = lazyWithRetry(() => import("./pages/SEODashboard"));
+const Admin = lazyWithRetry(() => import("./pages/Admin"));
+const About = lazyWithRetry(() => import("./pages/About"));
+const Contact = lazyWithRetry(() => import("./pages/Contact"));
+const Privacy = lazyWithRetry(() => import("./pages/Privacy"));
+const Terms = lazyWithRetry(() => import("./pages/Terms"));
+const Shipping = lazyWithRetry(() => import("./pages/Shipping"));
+const Studio = lazyWithRetry(() => import("./pages/Studio"));
+const SacredKnowledge = lazyWithRetry(() => import("./pages/SacredKnowledge"));
+const AuthPage = lazyWithRetry(() => import("./pages/Auth"));
+const CustomerAuth = lazyWithRetry(() => import("./pages/CustomerAuth"));
+const Account = lazyWithRetry(() => import("./pages/Account"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -94,17 +96,19 @@ const AppContent = () => {
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <EditModeProvider>
-            <AppContent />
-          </EditModeProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <AppErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <EditModeProvider>
+              <AppContent />
+            </EditModeProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </AppErrorBoundary>
   );
 };
 
