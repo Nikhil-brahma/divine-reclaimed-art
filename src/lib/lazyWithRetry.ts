@@ -7,7 +7,7 @@ export const isChunkLoadError = (error: unknown) => {
   return /Failed to fetch dynamically imported module|Importing a module script failed|Loading chunk [\d]+ failed|ChunkLoadError/i.test(message);
 };
 
-export const lazyWithRetry = <T extends ComponentType<unknown>>(
+export const lazyWithRetry = <T extends ComponentType<any>>(
   importer: () => Promise<{ default: T }>,
 ): LazyExoticComponent<T> =>
   lazy(async () => {

@@ -1,13 +1,14 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { useEffect, useRef, lazy, Suspense, useState } from "react";
+import { useEffect, useRef, Suspense, useState } from "react";
 import heroBg from "@/assets/hero-bg-1920.webp";
 import heroBgSmall from "@/assets/hero-bg-768.webp";
 import heroBgMedium from "@/assets/hero-bg-1280.webp";
 import TextReveal from "@/components/TextReveal";
 import EditableText from "@/components/EditableText";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 
-const SacredParticles = lazy(() => import("@/components/SacredParticles"));
+const SacredParticles = lazyWithRetry(() => import("@/components/SacredParticles"));
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
