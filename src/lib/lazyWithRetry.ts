@@ -1,6 +1,7 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 
 const RELOAD_KEY = "punarvsu:chunk-reload";
+const RELOAD_COOLDOWN_MS = 30_000;
 
 export const isChunkLoadError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
@@ -12,12 +13,12 @@ export const lazyWithRetry = <T extends ComponentType<any>>(
 ): LazyExoticComponent<T> =>
   lazy(async () => {
     try {
-      const module = await importer();
-      sessionStorage.removeItem(RELOAD_KEY);
-      return module;
+      return await importer();
     } catch (error) {
-      if (isChunkLoadError(error) && sessionStorage.getItem(RELOAD_KEY) !== "1") {
-        sessionStorage.setItem(RELOAD_KEY, "1");
+      const previousReload = Number(sessionStorage.getItem(RELOAD_KEY) || 0);
+      const canReload = Date.now() - previousReload > RELOAD_COOLDOWN_MS;
+      if (isChunkLoadError(error) && canReload) {
+        sessionStorage.setItem(RELOAD_KEY, Date.now().toString());
         const freshUrl = new URL(window.location.href);
         freshUrl.searchParams.set("refresh", Date.now().toString());
         window.location.replace(freshUrl.toString());

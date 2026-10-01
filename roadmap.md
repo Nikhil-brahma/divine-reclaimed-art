@@ -10,5 +10,5 @@
 
 # Loading resilience
 
-- [ ] Recover from stale dynamically loaded files without a blank screen
-- [ ] Verify normal and failed loading states
+- [x] Recover from stale dynamically loaded files without a blank screen
+- [x] Verify normal and failed loading states
