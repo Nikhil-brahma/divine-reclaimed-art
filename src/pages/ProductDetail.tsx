@@ -277,6 +277,21 @@ const ProductDetail = () => {
                 {soldOut ? "Sold Out" : "Add to Cart"}
               </button>
 
+              {soldOut && (
+                <div className="mt-4 rounded-2xl glass-card p-5 text-center">
+                  <p className="font-body text-sm text-foreground mb-3">
+                    This piece is out of stock. Contact us for a custom order or bulk gifting plan.
+                  </p>
+                  <a
+                    href={`https://wa.me/919220464425?text=${encodeURIComponent(`Namaste Punarvsu, I'm interested in "${product.title}" — custom order / bulk plan.`)}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="inline-block border border-primary text-primary px-6 py-2.5 rounded-full font-body text-xs tracking-[0.2em] uppercase hover:bg-primary/10"
+                  >
+                    Contact on WhatsApp
+                  </a>
+                </div>
+              )}
+
               <div className="grid grid-cols-3 gap-3 mt-6">
                 {[
                   { icon: ShieldCheck, label: "Sacredly upcycled" },
