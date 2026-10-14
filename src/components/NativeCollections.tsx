@@ -146,11 +146,30 @@ const NativeCollections = () => {
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-20 max-w-md mx-auto rounded-2xl glass-card p-12">
-            <ShoppingBag className="w-16 h-16 text-primary/60 mx-auto mb-4" />
-            <h3 className="font-display text-2xl text-foreground mb-2">Your collection awaits</h3>
-            <p className="font-body text-muted-foreground text-sm">
-              Add your first product in the <Link to="/admin" className="text-primary underline">admin panel</Link> and it will appear here instantly.
+          <div className="text-center max-w-xl mx-auto rounded-2xl glass-card p-8 sm:p-12">
+            <ShoppingBag className="w-14 h-14 text-primary/70 mx-auto mb-4" />
+            <h3 className="font-display text-2xl sm:text-3xl text-foreground mb-3">Our current editions are out of stock</h3>
+            <p className="font-body text-muted-foreground text-sm mb-6">
+              Every Punarvsu piece is handcrafted in small batches from sacred temple vastra. New pieces are on the way — meanwhile, our artisans can craft a custom order or a bulk set for weddings, shagun, pooja and corporate gifting.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href={`https://wa.me/919220464425?text=${encodeURIComponent("Namaste Punarvsu, I would like to place a custom order.")}`}
+                target="_blank" rel="noopener noreferrer"
+                className="bg-gradient-saffron text-primary-foreground px-6 py-3 rounded-full font-body text-xs tracking-[0.2em] uppercase hover:opacity-90 shadow-sacred"
+              >
+                Custom Order
+              </a>
+              <a
+                href={`https://wa.me/919220464425?text=${encodeURIComponent("Namaste Punarvsu, I would like to know about bulk / wedding gifting plans.")}`}
+                target="_blank" rel="noopener noreferrer"
+                className="border border-primary text-primary px-6 py-3 rounded-full font-body text-xs tracking-[0.2em] uppercase hover:bg-primary/10"
+              >
+                Bulk & Gifting Plans
+              </a>
+            </div>
+            <p className="font-body text-xs text-muted-foreground mt-5">
+              Or reach us at 09220464425 · <Link to="/contact" className="text-primary underline">Contact page</Link>
             </p>
           </div>
         ) : (
