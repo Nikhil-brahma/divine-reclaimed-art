@@ -221,6 +221,48 @@ export type Database = {
         }
         Relationships: []
       }
+      custom_order_requests: {
+        Row: {
+          created_at: string
+          design: string
+          email: string
+          id: string
+          name: string
+          needed_by: string | null
+          notes: string | null
+          occasion: string
+          phone: string
+          quantity: number
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          design: string
+          email: string
+          id?: string
+          name: string
+          needed_by?: string | null
+          notes?: string | null
+          occasion: string
+          phone: string
+          quantity: number
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          design?: string
+          email?: string
+          id?: string
+          name?: string
+          needed_by?: string | null
+          notes?: string | null
+          occasion?: string
+          phone?: string
+          quantity?: number
+          status?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string
