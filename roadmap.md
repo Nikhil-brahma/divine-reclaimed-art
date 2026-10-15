@@ -12,3 +12,9 @@
 
 - [x] Recover from stale dynamically loaded files without a blank screen
 - [x] Verify normal and failed loading states
+
+# Custom orders
+
+- [x] Add validated custom-order form and collection/product links
+- [x] Store submissions privately with editor-only access
+- [x] Verify submission and validation end to end

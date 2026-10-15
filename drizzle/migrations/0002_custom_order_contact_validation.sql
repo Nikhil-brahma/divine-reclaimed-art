@@ -1,0 +1,2 @@
+ALTER TABLE public.custom_order_requests ADD CONSTRAINT custom_order_phone_format CHECK (phone ~ '^[+0-9][0-9 -]{5,19}$');
+ALTER TABLE public.custom_order_requests ADD CONSTRAINT custom_order_nonblank_fields CHECK (char_length(btrim(name)) >= 1 AND char_length(btrim(design)) >= 3 AND char_length(btrim(occasion)) >= 1);
