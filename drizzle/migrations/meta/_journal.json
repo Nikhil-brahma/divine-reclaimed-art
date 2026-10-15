@@ -15,6 +15,13 @@
       "when": 1792057578463,
       "tag": "0001_custom_order_date_validation",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792057638594,
+      "tag": "0002_custom_order_contact_validation",
+      "breakpoints": true
     }
   ]
 }
