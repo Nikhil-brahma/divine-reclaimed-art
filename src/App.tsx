@@ -23,6 +23,7 @@ const SEODashboard = lazyWithRetry(() => import("./pages/SEODashboard"));
 const Admin = lazyWithRetry(() => import("./pages/Admin"));
 const About = lazyWithRetry(() => import("./pages/About"));
 const Contact = lazyWithRetry(() => import("./pages/Contact"));
+const CustomOrder = lazyWithRetry(() => import("./pages/CustomOrder"));
 const Privacy = lazyWithRetry(() => import("./pages/Privacy"));
 const Terms = lazyWithRetry(() => import("./pages/Terms"));
 const Shipping = lazyWithRetry(() => import("./pages/Shipping"));
@@ -57,6 +58,7 @@ const AppContent = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/custom-order" element={<CustomOrder />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/shipping" element={<Shipping />} />

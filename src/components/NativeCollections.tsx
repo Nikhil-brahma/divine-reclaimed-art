@@ -153,13 +153,12 @@ const NativeCollections = () => {
               Every Punarvsu piece is handcrafted in small batches from sacred temple vastra. New pieces are on the way — meanwhile, our artisans can craft a custom order or a bulk set for weddings, shagun, pooja and corporate gifting.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={`https://wa.me/919220464425?text=${encodeURIComponent("Namaste Punarvsu, I would like to place a custom order.")}`}
-                target="_blank" rel="noopener noreferrer"
+              <Link
+                to="/custom-order"
                 className="bg-gradient-saffron text-primary-foreground px-6 py-3 rounded-full font-body text-xs tracking-[0.2em] uppercase hover:opacity-90 shadow-sacred"
               >
                 Custom Order
-              </a>
+              </Link>
               <a
                 href={`https://wa.me/919220464425?text=${encodeURIComponent("Namaste Punarvsu, I would like to know about bulk / wedding gifting plans.")}`}
                 target="_blank" rel="noopener noreferrer"
