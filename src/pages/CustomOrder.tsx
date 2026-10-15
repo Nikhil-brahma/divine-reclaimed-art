@@ -79,7 +79,7 @@ const CustomOrder = () => {
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="co-qty" className={label}>Quantity</label>
-                <input id="co-qty" type="number" min={1} inputMode="numeric" value={form.quantity as string} onChange={set("quantity")} className={field} placeholder="e.g. 50" />
+                <input id="co-qty" type="number" min={1} max={100000} inputMode="numeric" value={form.quantity} onChange={set("quantity")} className={field} placeholder="e.g. 50" />
                 {err("quantity")}
               </div>
               <div>

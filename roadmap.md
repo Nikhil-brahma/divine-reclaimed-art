@@ -17,4 +17,4 @@
 
 - [x] Add validated custom-order form and collection/product links
 - [x] Store submissions privately with editor-only access
-- [ ] Verify submission and validation end to end
+- [x] Verify submission and validation end to end

@@ -15,4 +15,4 @@ export const customOrderSchema = z.object({
   notes: z.string().trim().max(1000).optional(),
 });
 
-export type CustomOrderInput = z.input<typeof customOrderSchema>;
+export type CustomOrderInput = Omit<z.input<typeof customOrderSchema>, "quantity"> & { quantity: string };
