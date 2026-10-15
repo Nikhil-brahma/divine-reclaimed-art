@@ -33,14 +33,19 @@ const CustomOrder = () => {
     setErrors({});
     setSending(true);
     const d = parsed.data;
-    const { error } = await supabase.from("custom_order_requests").insert({
-      design: d.design, quantity: d.quantity, occasion: d.occasion, needed_by: d.neededBy || null,
-      name: d.name, email: d.email, phone: d.phone, notes: d.notes || null,
-    });
-    setSending(false);
-    if (error) { console.error(error); toast.error("Could not send your request. Please try again."); return; }
-    setDone(true);
-    setForm(empty);
+    try {
+      const { error } = await supabase.from("custom_order_requests").insert({
+        design: d.design, quantity: d.quantity, occasion: d.occasion, needed_by: d.neededBy || null,
+        name: d.name, email: d.email, phone: d.phone, notes: d.notes || null,
+      });
+      if (error) throw error;
+      setDone(true);
+      setForm(empty);
+    } catch {
+      toast.error("Could not send your request. Please try again or call 09220464425.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const err = (k: string) => errors[k] && <p className="text-destructive text-xs mt-1 font-body">{errors[k]}</p>;
@@ -58,17 +63,17 @@ const CustomOrder = () => {
           <div className="glass-card rounded-2xl p-10 text-center">
             <CheckCircle2 className="w-12 h-12 text-primary mx-auto mb-4" />
             <h2 className="font-display text-2xl text-foreground mb-2">Request received</h2>
-            <p className="font-body text-muted-foreground mb-6">Thank you. We'll contact you within 1–2 working days.</p>
+            <p className="font-body text-muted-foreground mb-6">Thank you. Your request has been saved for our team to review.</p>
             <div className="flex gap-3 justify-center flex-wrap">
               <Button variant="outline" onClick={() => setDone(false)}>Send another</Button>
               <Button asChild><Link to="/">Back to home</Link></Button>
             </div>
           </div>
         ) : (
-          <form onSubmit={submit} noValidate className="space-y-5 glass-card rounded-2xl p-6 sm:p-10">
+          <form onSubmit={submit} noValidate className="space-y-5">
             <div>
               <label htmlFor="co-design" className={label}>Preferred design</label>
-              <textarea id="co-design" rows={4} value={form.design} onChange={set("design")} className={`${field} resize-none`} placeholder="Colours, fabric, size, motifs, embroidery, packaging…" />
+              <textarea id="co-design" rows={4} maxLength={1000} value={form.design} onChange={set("design")} className={`${field} resize-none`} placeholder="Colours, fabric, size, motifs, embroidery, packaging…" />
               {err("design")}
             </div>
             <div className="grid sm:grid-cols-2 gap-5">
@@ -94,29 +99,29 @@ const CustomOrder = () => {
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="co-name" className={label}>Your name</label>
-                <input id="co-name" value={form.name} onChange={set("name")} className={field} autoComplete="name" />
+                <input id="co-name" maxLength={100} value={form.name} onChange={set("name")} className={field} autoComplete="name" />
                 {err("name")}
               </div>
               <div>
                 <label htmlFor="co-phone" className={label}>Phone / WhatsApp</label>
-                <input id="co-phone" type="tel" value={form.phone} onChange={set("phone")} className={field} autoComplete="tel" />
+                <input id="co-phone" type="tel" maxLength={20} value={form.phone} onChange={set("phone")} className={field} autoComplete="tel" />
                 {err("phone")}
               </div>
             </div>
             <div>
               <label htmlFor="co-email" className={label}>Email</label>
-              <input id="co-email" type="email" value={form.email} onChange={set("email")} className={field} autoComplete="email" />
+              <input id="co-email" type="email" maxLength={255} value={form.email} onChange={set("email")} className={field} autoComplete="email" />
               {err("email")}
             </div>
             <div>
               <label htmlFor="co-notes" className={label}>Anything else (optional)</label>
-              <textarea id="co-notes" rows={3} value={form.notes} onChange={set("notes")} className={`${field} resize-none`} />
+              <textarea id="co-notes" rows={3} maxLength={1000} value={form.notes} onChange={set("notes")} className={`${field} resize-none`} />
               {err("notes")}
             </div>
-            <button type="submit" disabled={sending} className="w-full bg-gradient-saffron text-primary-foreground px-8 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase shadow-sacred flex items-center justify-center gap-2 disabled:opacity-50">
+            <Button type="submit" disabled={sending} className="w-full h-auto whitespace-normal bg-gradient-saffron text-primary-foreground px-8 py-4 rounded-sm font-body text-sm tracking-[0.2em] uppercase shadow-sacred">
               {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               {sending ? "Sending…" : "Request Custom Order"}
-            </button>
+            </Button>
           </form>
         )}
       </main>
