@@ -25,7 +25,7 @@ export default defineTool({
         sacred_textile_saved_kg: 3200,
         hours_per_piece: "8-15 hours handcrafted, UV sterilized, no machines",
       },
-      shipping: "Free above ₹5,000 | Ships across India | 5-10 business days",
+      shipping: "Free above ₹999 | Ships across India | 3-7 business days",
       returns: "No returns — each bag carries sacred temple blessings",
       contact: {
         email: "punarvsu.com@gmail.com",

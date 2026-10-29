@@ -24,8 +24,8 @@ const Shipping = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Shipping Policy — India & worldwide delivery"
-        description="Punarvsu ships pan-India in 3–7 days (free above ₹999) and worldwide via tracked courier. Read delivery timelines, charges, and packaging notes."
+        title="Shipping Policy — Pan-India delivery"
+        description="Punarvsu ships pan-India in 3–7 days, free above ₹999. Read delivery timelines, charges, and packaging notes."
       />
       <StructuredData />
       <Navbar />
@@ -55,8 +55,7 @@ const Shipping = () => {
               </ShippingCard>
 
               <ShippingCard icon={Globe} title="International Shipping">
-                <p>We ship worldwide! International shipping rates are calculated at checkout based on destination and package weight.</p>
-                <p><strong className="text-foreground">Estimated delivery:</strong> 10–21 business days depending on the destination country.</p>
+                <p>International shipping is not yet live. If you are abroad and need a piece urgently — for a wedding, a diksha, a housewarming — email us at <a href="mailto:punarvsu.com@gmail.com" className="text-gold hover:underline">punarvsu.com@gmail.com</a> and we can arrange a one-off courier at cost.</p>
               </ShippingCard>
 
               <ShippingCard icon={Truck} title="Tracking & Updates">
@@ -102,7 +101,7 @@ const Shipping = () => {
               <p className="mb-2">For any shipping-related queries, reach out to us:</p>
               <p>
                 <strong className="text-foreground">Email:</strong>{" "}
-                <a href="mailto:nikhilrawat508@gmail.com" className="text-gold hover:underline">nikhilrawat508@gmail.com</a>
+                <a href="mailto:punarvsu.com@gmail.com" className="text-gold hover:underline">punarvsu.com@gmail.com</a>
               </p>
               <p>
                 <strong className="text-foreground">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN

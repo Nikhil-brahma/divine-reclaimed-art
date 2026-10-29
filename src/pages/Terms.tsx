@@ -121,7 +121,7 @@ const Terms = () => {
               <p className="mb-2">Questions about these Terms & Conditions can be directed to:</p>
               <p>
                 <strong className="text-foreground">Email:</strong>{" "}
-                <a href="mailto:nikhilrawat508@gmail.com" className="text-gold hover:underline">nikhilrawat508@gmail.com</a>
+                <a href="mailto:punarvsu.com@gmail.com" className="text-gold hover:underline">punarvsu.com@gmail.com</a>
               </p>
               <p>
                 <strong className="text-foreground">Address:</strong> Maharana Pratap Community Centre, Sector-9, Rohini, Delhi Kender Rajapur Sec-9, New Delhi, DL, 110085, IN

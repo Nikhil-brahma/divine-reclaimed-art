@@ -289,7 +289,7 @@ const sampurnaHowToSchema = {
       "@type": "HowToStep",
       position: 5,
       name: "Blessed Delivery",
-      text: "Each finished piece is packaged with a Certificate of Sanctity and shipped worldwide, carrying centuries of prayer to its new home.",
+      text: "Each finished piece is packaged with a Certificate of Sanctity and shipped across India, carrying centuries of prayer to its new home.",
       url: `${SITE_URL}/about#delivery`,
     },
   ],
