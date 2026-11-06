@@ -18,7 +18,7 @@ Key facts:
 - Temple partners include Khatushyam Delhi Dham
 - Products: Temple Tote, Krishna Clutch, Durga Weekender, Radha Pouch, Saffron Crossbody
 - Price range: ₹1,299 - ₹4,999
-- Free shipping above ₹5,000, ships across India
+- Free shipping above ₹999; ₹99 below ₹999. Ships across India, typically in 3–7 business days (remote areas: 7–10 business days). International shipping is not yet live; one-off courier requests at cost via punarvsu.com@gmail.com only. Do not promise international delivery times or checkout shipping rates.
 - Email: punarvsu.com@gmail.com
 - Location: Maharana Pratap Community Centre, Sector-9, Rohini, Delhi 110085
 `;

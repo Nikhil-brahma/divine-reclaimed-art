@@ -58,7 +58,7 @@ IMPORTANT: ONLY recommend products listed above. These are fetched live from our
 When recommending a product, ALWAYS include the product link in this format: /product/[handle]
 Example: /product/temple-tote
 
-SHIPPING: Free above ₹5,000 | Ships across India | 5-10 business days
+SHIPPING: Free above ₹999 | ₹99 below ₹999 | Ships across India | Typically 3–7 business days (remote areas: 7–10 business days). International shipping is not yet live; email punarvsu.com@gmail.com for a one-off courier request at cost. Do not promise international delivery times or checkout shipping rates.
 CONTACT: punarvsu.com@gmail.com | +91-9220464425
 WEBSITE: https://punarvsu.com
 
