@@ -1,18 +1,18 @@
 import { readFileSync } from "node:fs";
-import { render, cleanup } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
-import { afterEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import StructuredData from "./StructuredData";
 
-afterEach(cleanup);
-
 function productShippingAnswer(): string {
-  const { container } = render(
+  const html = renderToStaticMarkup(
     <MemoryRouter initialEntries={["/products/test-potli"]}>
       <StructuredData productData={{ name: "Test Potli", description: "", image: "", price: "999" }} />
     </MemoryRouter>,
   );
-  const schemas = Array.from(container.querySelectorAll('script[type="application/ld+json"]'))
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  const schemas = Array.from(container.querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"]'))
     .map((script) => JSON.parse(script.textContent ?? "{}"));
   const faq = schemas.find((schema) => schema["@type"] === "FAQPage");
   return faq?.mainEntity.find((question: { name: string }) => question.name === "How long does shipping take?")?.acceptedAnswer.text ?? "";
