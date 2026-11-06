@@ -14,7 +14,7 @@ Key facts:
 - Each bag takes 8-15 hours, fully handmade
 - 3,200+ kg textile saved from landfills
 - Temple partners include Khatushyam Delhi Dham
-- Free shipping above ₹5,000, ships across India
+- Free shipping above ₹999; ₹99 below ₹999. Ships across India, typically in 3–7 business days (remote areas: 7–10 business days). International shipping is not yet live; one-off courier requests at cost via punarvsu.com@gmail.com only. Do not promise international delivery times or checkout shipping rates.
 - Email: punarvsu.com@gmail.com
 - Location: Maharana Pratap Community Centre, Sector-9, Rohini, Delhi 110085
 - Website: https://punarvsu.com

@@ -320,7 +320,7 @@ const productFaqSchema = (name: string) => ({
       name: "How long does shipping take?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Within India: 3–10 business days, free above ₹999. International: 10–21 business days with rates calculated at checkout.",
+        text: "Delivery across India typically takes 3–7 business days (remote areas: 7–10 business days). Shipping is free above ₹999; orders below ₹999 have a ₹99 shipping fee. International shipping is not yet live. Email punarvsu.com@gmail.com to request a one-off courier at cost.",
       },
     },
     {
