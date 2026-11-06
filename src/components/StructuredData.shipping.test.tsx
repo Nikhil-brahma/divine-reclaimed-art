@@ -20,7 +20,7 @@ function productShippingAnswer(): string {
 
 function shippingFacts(): string[] {
   return [productShippingAnswer(), ...["customer-chat", "seo-optimizer", "auto-seo-engine"].map((name) => {
-    const source = readFileSync(new URL(`../../supabase/functions/${name}/index.ts`, import.meta.url), "utf8");
+    const source = readFileSync(`${process.cwd()}/supabase/functions/${name}/index.ts`, "utf8");
     return source.split("\n").find((line) => /SHIPPING:|Free shipping above/.test(line)) ?? "";
   })];
 }
